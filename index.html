@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>경영컨설팅 | 중소기업·소상공인 현장 중심 컨설팅</title>
+  <meta name="description" content="경영학 박사·경영지도사·대학 겸임교수가 직접 진단하고 실행합니다. 재무, 원가, 정책자금, 인증, 스마트공장 등 중소기업 현장 중심 컨설팅." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --navy: #0F2448;
+      --navy-dark: #0a1a35;
+      --navy-mid: #1a3a6e;
+      --accent: #c9a84c;
+      --accent-light: rgba(201,168,76,0.12);
+      --accent-hover: #e8c56a;
+      --bg-gray: #f7f9fc;
+      --bg-blue: #f0f4f9;
+      --border: #e8edf5;
+      --muted: #6b7280;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #1a202c;
+      background: #fff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Utility ── */
+    .container { max-width: 1152px; margin: 0 auto; padding: 0 1.5rem; }
+    .container-sm { max-width: 896px; margin: 0 auto; padding: 0 1.5rem; }
+    .text-accent { color: var(--accent); }
+    .text-navy { color: var(--navy); }
+    .text-muted { color: var(--muted); }
+    .font-serif { font-family: 'Noto Serif KR', serif; }
+    .section-badge {
+      display: inline-block;
+      padding: .25rem .75rem;
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 700;
+      background: rgba(15,36,72,.08);
+      color: var(--navy);
+      margin-bottom: 1rem;
+      letter-spacing: .05em;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: .75rem;
+    }
+    .section-sub { color: var(--muted); max-width: 540px; margin: 0 auto; font-size: .9rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
+    .card {
+      background: #fff;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      transition: box-shadow .3s, transform .3s;
+    }
+    .card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .tag {
+      display: inline-block;
+      padding: .15rem .5rem;
+      border-radius: .25rem;
+      font-size: .7rem;
+      font-weight: 600;
+      background: rgba(201,168,76,.1);
+      color: #8a6520;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .9rem 2rem;
+      border-radius: .6rem;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      background: var(--accent);
+      color: var(--navy);
+      box-shadow: 0 4px 20px rgba(201,168,76,.3);
+      transition: transform .2s, opacity .2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { transform: scale(1.04); opacity: .95; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .9rem 2rem;
+      border-radius: .6rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,.35);
+      transition: background .2s;
+      text-decoration: none;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.1); }
+
+    /* Fade-in on scroll */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-d1 { transition-delay: .1s; }
+    .fade-up-d2 { transition-delay: .2s; }
+    .fade-up-d3 { transition-delay: .3s; }
+    .fade-up-d4 { transition-delay: .4s; }
+
+    /* ── Header ── */
+    #header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background .3s, box-shadow .3s;
+    }
+    #header.scrolled {
+      background: rgba(15,36,72,.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,.18);
+    }
+    .header-inner {
+      max-width: 1152px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: .5rem;
+      cursor: pointer; border: none; background: none;
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: .4rem;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: var(--navy);
+      font-weight: 900; font-size: .8rem;
+    }
+    .logo-text { color: #fff; font-weight: 700; font-size: .95rem; }
+    .nav-desktop { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-desktop button {
+      color: rgba(255,255,255,.8); font-size: .85rem; font-weight: 500;
+      background: none; border: none; cursor: pointer;
+      transition: color .2s;
+    }
+    .nav-desktop button:hover { color: #fff; }
+    .nav-cta {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .45rem 1rem; border-radius: .4rem;
+      font-size: .8rem; font-weight: 600;
+      background: var(--accent); color: var(--navy);
+      border: none; cursor: pointer; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .9; }
+    .mobile-toggle {
+      display: none; background: none; border: none;
+      color: #fff; cursor: pointer; padding: .4rem;
+    }
+    .mobile-menu {
+      display: none;
+      background: rgba(15,36,72,.98);
+      padding: .5rem 1.5rem 1.25rem;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu button {
+      display: block; width: 100%;
+      color: rgba(255,255,255,.8); font-size: 1rem; font-weight: 500;
+      background: none; border: none; border-bottom: 1px solid rgba(255,255,255,.1);
+      padding: .75rem 0; text-align: left; cursor: pointer;
+      transition: color .2s;
+    }
+    .mobile-menu button:hover { color: #fff; }
+    .mobile-menu .mobile-cta {
+      display: block; width: 100%; margin-top: .75rem;
+      padding: .75rem; border-radius: .4rem;
+      background: var(--accent); color: var(--navy);
+      font-weight: 700; font-size: .9rem;
+      border: none; cursor: pointer; text-align: center;
+    }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #0F2448 0%, #1a3a6e 40%, #0d1f3c 100%);
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1758518729706-b1810dd39cc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080');
+      background-size: cover; background-position: center;
+      opacity: .1;
+    }
+    .hero-blob1 {
+      position: absolute; top: 80px; right: 40px;
+      width: 256px; height: 256px; border-radius: 50%;
+      background: var(--accent); filter: blur(80px); opacity: .05;
+    }
+    .hero-blob2 {
+      position: absolute; bottom: 80px; left: 40px;
+      width: 192px; height: 192px; border-radius: 50%;
+      background: #60a5fa; filter: blur(60px); opacity: .05;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .45rem 1rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 500;
+      border: 1px solid rgba(201,168,76,.4);
+      background: rgba(201,168,76,.08);
+      color: var(--accent); margin-bottom: 2rem;
+    }
+    .hero-h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 1.2rem;
+    }
+    .hero-sub { color: rgba(255,255,255,.7); font-size: clamp(.9rem,2vw,1.05rem); margin-bottom: .6rem; }
+    .hero-tag { color: rgba(255,255,255,.45); font-size: .82rem; letter-spacing: .05em; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 3rem; }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+    .hero-badge {
+      padding: .45rem 1rem; border-radius: 999px; font-size: .82rem;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.9);
+    }
+    .scroll-indicator {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,.4); animation: bounce 1.8s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+    /* ── Trust Bar ── */
+    #trust-bar {
+      background: #0c1e3e;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: .65rem 1rem;
+    }
+    .trust-bar-inner {
+      max-width: 896px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: .5rem 1.5rem;
+    }
+    .trust-bar-item { display: flex; align-items: center; gap: .4rem; }
+    .trust-bar-item .icon { color: var(--accent); opacity: .8; display: flex; }
+    .trust-bar-item span { color: rgba(255,255,255,.55); font-size: .72rem; font-weight: 500; }
+    .trust-bar-dot { color: rgba(255,255,255,.2); font-size: .72rem; }
+
+    /* ── Trust Section ── */
+    #trust { padding: 5rem 0; background: #fff; }
+    .cred-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .cred-card {
+      border-radius: 1rem; overflow: hidden;
+      border: 2px solid var(--navy);
+      background: #fff;
+      text-align: center;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .cred-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.12); transform: translateY(-6px); }
+    .cred-top { height: 6px; background: linear-gradient(90deg, var(--accent), #e8c56a); }
+    .cred-body { padding: 1.5rem; }
+    .cred-pill {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .2rem .7rem; border-radius: 999px;
+      font-size: .7rem; font-weight: 900;
+      background: var(--navy); color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .cred-icon {
+      width: 56px; height: 56px; border-radius: .7rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      background: rgba(15,36,72,.06); color: var(--navy);
+      transition: transform .3s;
+    }
+    .cred-card:hover .cred-icon { transform: scale(1.1); }
+    .cred-title { font-weight: 900; font-size: .95rem; color: var(--navy); margin-bottom: .4rem; }
+    .cred-desc { font-size: .72rem; color: var(--muted); line-height: 1.6; }
+    .trust-footer {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+      gap: .75rem; padding: 1rem 1.25rem; border-radius: .75rem;
+      background: #f0f4f9; border: 1px solid #dce6f0;
+    }
+    .trust-footer .icon { color: var(--navy); display: flex; flex-shrink: 0; }
+    .trust-footer p { font-size: .85rem; color: var(--navy); }
+    .trust-footer .check { color: var(--accent); display: flex; flex-shrink: 0; }
+
+    /* ── Services ── */
+    #services { padding: 5rem 0; background: var(--bg-gray); }
+    .svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .svc-card {
+      background: #fff; border-radius: .75rem; overflow: hidden;
+      cursor: pointer; transition: box-shadow .3s, transform .3s;
+    }
+    .svc-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .svc-card.primary { border: 2px solid var(--navy); }
+    .svc-card.secondary { border: 1px solid var(--border); }
+    .svc-top-bar { height: 4px; background: linear-gradient(90deg, var(--navy), #2a5298); }
+    .svc-body { padding: 1.25rem; }
+    .svc-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .75rem; }
+    .svc-icon {
+      width: 44px; height: 44px; border-radius: .5rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .3s;
+    }
+    .svc-card:hover .svc-icon { transform: scale(1.1); }
+    .svc-icon.primary-icon { background: var(--navy); color: var(--accent); }
+    .svc-icon.secondary-icon { background: rgba(15,36,72,.06); color: var(--navy); }
+    .svc-badge { font-size: .7rem; font-weight: 700; padding: .15rem .5rem; border-radius: 999px; background: rgba(201,168,76,.15); color: #8a6520; }
+    .svc-title { font-weight: 700; font-size: .95rem; color: var(--navy); margin-bottom: .4rem; }
+    .svc-desc { font-size: .82rem; color: var(--muted); line-height: 1.6; margin-bottom: .75rem; }
+    .svc-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+    /* ── Results ── */
+    #results { padding: 5rem 0; background: var(--bg-gray); }
+    .result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .result-card { background: #fff; border-radius: 1rem; overflow: hidden; border: 1px solid var(--border); transition: box-shadow .3s, transform .3s; }
+    .result-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .result-top { height: 4px; background: linear-gradient(90deg, var(--accent), #e8c56a); }
+    .result-body { padding: 1.5rem; }
+    .result-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .result-emoji { font-size: 1.4rem; }
+    .result-tag { font-size: .7rem; font-weight: 700; padding: .25rem .65rem; border-radius: 999px; background: rgba(15,36,72,.07); color: var(--navy); }
+    .result-label { display: flex; align-items: center; gap: .4rem; font-size: .7rem; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .4rem; }
+    .result-label .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-red { background: #f87171; }
+    .dot-blue { background: #60a5fa; }
+    .label-red { color: #c0392b; }
+    .label-blue { color: #2563eb; }
+    .result-text { font-size: .82rem; color: #333; line-height: 1.6; }
+    .result-divider { display: flex; align-items: center; gap: .5rem; margin: .75rem 0; }
+    .result-divider .line { flex: 1; height: 1px; background: var(--border); }
+    .result-divider .arrow { color: var(--navy); display: flex; }
+    .result-divider .arrow-gold { color: var(--accent); display: flex; }
+    .result-box {
+      border-radius: .75rem; padding: .75rem 1rem;
+      background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.25);
+    }
+    .result-box-label { display: flex; align-items: center; gap: .4rem; font-size: .7rem; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: #8a6520; margin-bottom: .25rem; }
+    .result-box-text { font-size: .82rem; font-weight: 700; color: var(--navy); }
+
+    /* ── Digital ── */
+    #digital { padding: 3rem 0; background: #fff; border-top: 1px solid var(--border); }
+    .digital-inner { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1.5rem; }
+    .digital-label-wrap { flex-shrink: 0; }
+    .digital-pill { display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .75rem; border-radius: 999px; font-size: .75rem; font-weight: 600; background: rgba(15,36,72,.06); color: var(--navy); }
+    .digital-sub { font-size: .75rem; color: var(--muted); margin-top: .5rem; max-width: 240px; }
+    .digital-divider { width: 1px; height: 40px; background: var(--border); flex-shrink: 0; align-self: center; }
+    .digital-items { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .digital-item { display: flex; align-items: center; gap: .5rem; padding: .45rem .75rem; border-radius: .5rem; border: 1px solid var(--border); background: var(--bg-gray); font-size: .75rem; font-weight: 500; color: #4a5568; }
+    .digital-item .dicon { color: var(--navy); display: flex; }
+
+    /* ── Process ── */
+    #process { padding: 5rem 0; background: var(--bg-blue); }
+    .step-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; position: relative; }
+    .step-wrap { position: relative; }
+    .step-connector {
+      display: none;
+      position: absolute; z-index: 0;
+      top: 24px; left: calc(100% - 6px);
+      width: calc(100% - 16px); height: 2px;
+      background: linear-gradient(90deg, #c8d4e8 0%, transparent 100%);
+    }
+    .step-card { position: relative; z-index: 1; padding: 1.25rem; background: #fff; border-radius: .75rem; border: 1px solid var(--border); height: 100%; transition: box-shadow .3s; }
+    .step-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .step-num { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-weight: 700; font-size: .9rem; background: var(--navy); color: var(--accent); }
+    .step-title { font-weight: 700; font-size: .85rem; color: var(--navy); margin-bottom: .5rem; }
+    .step-desc { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Pain Points ── */
+    #pain { padding: 5rem 0; background: #fff; }
+    .pain-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    .pain-card { display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem; border-radius: .75rem; border: 1px solid var(--border); background: #fff; transition: box-shadow .3s, transform .3s; }
+    .pain-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+    .pain-icon { width: 40px; height: 40px; border-radius: .5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(201,168,76,.12); color: #8a6520; transition: transform .3s; }
+    .pain-card:hover .pain-icon { transform: scale(1.05); }
+    .pain-title { font-weight: 600; font-size: .82rem; color: var(--navy); margin-bottom: .3rem; line-height: 1.4; }
+    .pain-desc { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+    .pain-cta { margin-top: 3rem; padding: 2rem; border-radius: 1rem; text-align: center; background: linear-gradient(135deg,#0F2448 0%,#1a3a6e 100%); }
+    .pain-cta h3 { color: #fff; font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
+    .pain-cta p { color: rgba(255,255,255,.7); font-size: .85rem; margin-bottom: 1.5rem; }
+
+    /* ── About ── */
+    #about { padding: 5rem 0; background: var(--bg-gray); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img { border-radius: 1rem; overflow: hidden; aspect-ratio: 4/3; background: var(--navy); position: relative; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+    .about-img-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; }
+    .about-img-caption-inner { background: rgba(15,36,72,.88); border-radius: .75rem; padding: 1rem; }
+    .about-img-caption-inner .sub { font-size: .82rem; font-weight: 600; color: var(--accent); margin-bottom: .3rem; }
+    .about-img-caption-inner .quote { font-size: .75rem; color: #fff; line-height: 1.6; }
+    .about-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1rem; }
+    .about-stat { text-align: center; padding: .75rem; background: #fff; border-radius: .75rem; border: 1px solid var(--border); }
+    .about-stat .num { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: .15rem; }
+    .about-stat .label { font-size: .7rem; color: var(--muted); }
+    .about-cred-list { display: flex; flex-direction: column; gap: .75rem; }
+    .about-cred-item { display: flex; align-items: center; gap: .75rem; }
+    .about-cred-icon { width: 32px; height: 32px; border-radius: .4rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(15,36,72,.07); color: var(--navy); }
+    .about-cred-text { font-size: .85rem; font-weight: 500; color: var(--navy); }
+    .about-cred-check { margin-left: auto; color: var(--accent); display: flex; flex-shrink: 0; }
+    .about-body-text { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; font-size: .88rem; }
+
+    /* ── Contact ── */
+    #contact { padding: 5rem 0; background: linear-gradient(135deg,#0F2448 0%,#1a3a6e 100%); }
+    .contact-header { text-align: center; margin-bottom: 3rem; }
+    .free-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .35rem 1rem; border-radius: 999px; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; background: var(--accent); color: var(--navy); margin-bottom: 1.5rem; }
+    .worry-box { display: inline-flex; flex-direction: column; gap: .6rem; text-align: left; padding: 1.25rem 1.5rem; border-radius: .75rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); margin-bottom: 2rem; }
+    .worry-box .worry-title { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .25rem; }
+    .worry-item { display: flex; align-items: center; gap: .6rem; }
+    .worry-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .worry-text { font-size: .85rem; color: rgba(255,255,255,.7); }
+    .contact-h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800; color: #fff; margin-bottom: .75rem; }
+    .contact-sub { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.7; }
+    .contact-form-wrap { background: #fff; border-radius: 1.25rem; padding: 2rem; margin-bottom: 2rem; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--navy); margin-bottom: .4rem; }
+    .form-group label .req { color: #ef4444; }
+    .form-input {
+      width: 100%; padding: .75rem 1rem; border-radius: .5rem;
+      border: 1px solid #e0e7ef; background: #f8fafc;
+      font-size: .85rem; color: var(--navy);
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .form-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(15,36,72,.1); }
+    .form-group-full { margin-bottom: 1.25rem; }
+    .form-privacy { font-size: .72rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .form-submit {
+      width: 100%; padding: 1rem; border-radius: .5rem;
+      background: var(--navy); color: #fff;
+      font-weight: 700; font-size: 1rem;
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(15,36,72,.25);
+      transition: transform .2s;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .form-submit:hover { transform: scale(1.01); }
+    .form-success { text-align: center; padding: 3rem 1rem; }
+    .form-success .success-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; background: rgba(15,36,72,.08); color: var(--navy); }
+    .form-success h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: .5rem; }
+    .form-success p { color: var(--muted); font-size: .9rem; }
+    .contact-quick { border-radius: 1.25rem; padding: 1.75rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+    .contact-tel {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      width: 100%; padding: 1.25rem 2rem; border-radius: .75rem;
+      font-weight: 700; font-size: 1.2rem;
+      background: var(--accent); color: var(--navy);
+      box-shadow: 0 8px 32px rgba(201,168,76,.45);
+      text-decoration: none; margin-bottom: .75rem;
+      transition: transform .2s;
+    }
+    .contact-tel:hover { transform: scale(1.02); }
+    .contact-mail {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      width: 100%; padding: .75rem 1.5rem; border-radius: .5rem;
+      font-size: .85rem; font-weight: 500;
+      color: rgba(255,255,255,.55); text-decoration: none;
+      transition: color .2s;
+    }
+    .contact-mail:hover { color: rgba(255,255,255,.8); }
+    .contact-hours { text-align: center; font-size: .72rem; color: rgba(255,255,255,.3); margin-top: 1rem; }
+    .contact-assurance { text-align: center; font-size: .72rem; color: rgba(255,255,255,.3); margin-top: .5rem; letter-spacing: .03em; }
+    .contact-reply { text-align: center; font-size: .72rem; color: rgba(255,255,255,.3); margin-top: 1.5rem; letter-spacing: .03em; }
+
+    /* ── Footer ── */
+    footer { padding: 2.5rem 0; background: var(--navy-dark); border-top: 1px solid #1a2e50; }
+    .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .footer-logo { display: flex; align-items: center; gap: .5rem; }
+    .footer-logo-icon { width: 28px; height: 28px; border-radius: .35rem; display: flex; align-items: center; justify-content: center; background: var(--accent); color: var(--navy); font-weight: 900; font-size: .75rem; }
+    .footer-logo-text { color: #fff; font-weight: 700; font-size: .85rem; }
+    .footer-tagline { color: rgba(255,255,255,.4); font-size: .72rem; margin-top: .25rem; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: center; }
+    .footer-nav button { color: rgba(255,255,255,.5); font-size: .72rem; background: none; border: none; cursor: pointer; transition: color .2s; }
+    .footer-nav button:hover { color: rgba(255,255,255,.8); }
+    .footer-copy { color: rgba(255,255,255,.3); font-size: .72rem; text-align: right; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .cred-grid, .step-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-desktop, .nav-cta { display: none !important; }
+      .mobile-toggle { display: block !important; }
+      .logo-text { display: none; }
+      .grid-2, .grid-3, .grid-4, .svc-grid, .result-grid, .pain-grid, .about-grid, .form-grid-2 { grid-template-columns: 1fr !important; }
+      .cred-grid, .step-grid { grid-template-columns: 1fr 1fr; }
+      .digital-divider { display: none; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 320px; justify-content: center; }
+      .trust-bar-dot { display: none; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .footer-copy { text-align: center; }
+    }
+    @media (min-width: 1024px) {
+      .step-connector { display: block; }
+    }
+    @media (max-width: 480px) {
+      .cred-grid, .step-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header id="header">
+  <div class="header-inner">
+    <button class="logo" onclick="scrollTo('hero')">
+      <div class="logo-icon">경</div>
+      <span class="logo-text">경영컨설팅</span>
+    </button>
+    <nav class="nav-desktop">
+      <button onclick="scrollTo('trust')">신뢰 요소</button>
+      <button onclick="scrollTo('services')">컨설팅 분야</button>
+      <button onclick="scrollTo('process')">진행 프로세스</button>
+      <button onclick="scrollTo('about')">컨설턴트 소개</button>
+      <button onclick="scrollTo('contact')">문의하기</button>
+    </nav>
+    <button class="nav-cta" onclick="scrollTo('contact')">
+      <i data-lucide="phone" style="width:14px;height:14px"></i>
+      무료 상담 신청
+    </button>
+    <button class="mobile-toggle" onclick="toggleMenu()" aria-label="메뉴">
+      <i id="menu-icon" data-lucide="menu" style="width:22px;height:22px"></i>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <button onclick="scrollTo('trust')">신뢰 요소</button>
+    <button onclick="scrollTo('services')">컨설팅 분야</button>
+    <button onclick="scrollTo('process')">진행 프로세스</button>
+    <button onclick="scrollTo('about')">컨설턴트 소개</button>
+    <button onclick="scrollTo('contact')">문의하기</button>
+    <button class="mobile-cta" onclick="scrollTo('contact')">무료 상담 신청</button>
+  </div>
+</header>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-inner">
+    <div class="fade-up">
+      <div class="hero-label">
+        <i data-lucide="star" style="width:12px;height:12px;fill:currentColor"></i>
+        경영학 박사 · 경영지도사 · 대학 겸임교수 보유
+      </div>
+    </div>
+    <h1 class="hero-h1 fade-up fade-up-d1">
+      중소기업과 소상공인의 <span class="text-accent">경영 문제</span>를<br>
+      현장 중심 컨설팅으로 해결합니다.
+    </h1>
+    <p class="hero-sub fade-up fade-up-d2">
+      재무, 원가, 정책자금, 인증, 스마트공장, 디지털전환 등 실행 중심 지원
+    </p>
+    <p class="hero-tag fade-up fade-up-d2">
+      이론이 아닌 실무&nbsp;·&nbsp;서류가 아닌 현장&nbsp;·&nbsp;보고서가 아닌 실행
+    </p>
+    <div class="hero-btns fade-up fade-up-d3">
+      <button class="btn-primary" onclick="scrollTo('contact')">
+        <i data-lucide="phone" style="width:18px;height:18px"></i>
+        무료 상담 신청하기
+      </button>
+      <button class="btn-outline" onclick="scrollTo('services')">
+        <i data-lucide="search" style="width:18px;height:18px"></i>
+        컨설팅 분야 보기
+      </button>
+    </div>
+    <div class="hero-badges fade-up fade-up-d4">
+      <span class="hero-badge">#경영컨설팅</span>
+      <span class="hero-badge">#재무진단</span>
+      <span class="hero-badge">#정책자금</span>
+      <span class="hero-badge">#인증컨설팅</span>
+      <span class="hero-badge">#소상공인</span>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <i data-lucide="chevron-down" style="width:28px;height:28px"></i>
+  </div>
+</section>
+
+<!-- ── Trust Bar ── -->
+<div id="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-bar-item">
+      <span class="icon"><i data-lucide="graduation-cap" style="width:14px;height:14px"></i></span>
+      <span>경영학 박사</span>
+    </div>
+    <span class="trust-bar-dot hidden-mobile">·</span>
+    <div class="trust-bar-item">
+      <span class="icon"><i data-lucide="award" style="width:14px;height:14px"></i></span>
+      <span>공인 경영지도사</span>
+    </div>
+    <span class="trust-bar-dot hidden-mobile">·</span>
+    <div class="trust-bar-item">
+      <span class="icon"><i data-lucide="book-open" style="width:14px;height:14px"></i></span>
+      <span>대학교 겸임교수</span>
+    </div>
+    <span class="trust-bar-dot hidden-mobile">·</span>
+    <div class="trust-bar-item">
+      <span class="icon"><i data-lucide="briefcase" style="width:14px;height:14px"></i></span>
+      <span>중소기업 실무 경험</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Trust Section ── -->
+<section id="trust">
+  <div class="container">
+    <div class="text-center fade-up" style="margin-bottom:3rem">
+      <span class="section-badge">CREDENTIALS</span>
+      <h2 class="section-title">이 사람, <span class="text-accent">믿어도 됩니다.</span></h2>
+      <p class="section-sub">학문과 현장, 두 가지를 모두 갖춘 검증된 경영 전문가입니다.</p>
+    </div>
+    <div class="cred-grid">
+      <div class="cred-card fade-up">
+        <div class="cred-top"></div>
+        <div class="cred-body">
+          <div class="cred-pill">
+            <i data-lucide="graduation-cap" style="width:11px;height:11px"></i> 경영학 박사
+          </div>
+          <div class="cred-icon"><i data-lucide="graduation-cap" style="width:32px;height:32px"></i></div>
+          <div class="cred-title">Ph.D.</div>
+          <p class="cred-desc">학문적 깊이로 경영 문제를 체계적으로 진단·분석합니다.</p>
+        </div>
+      </div>
+      <div class="cred-card fade-up fade-up-d1">
+        <div class="cred-top"></div>
+        <div class="cred-body">
+          <div class="cred-pill">
+            <i data-lucide="award" style="width:11px;height:11px"></i> 경영지도사
+          </div>
+          <div class="cred-icon"><i data-lucide="award" style="width:32px;height:32px"></i></div>
+          <div class="cred-title">공인 자격</div>
+          <p class="cred-desc">중소벤처기업부 공인 경영지도사 자격 보유.</p>
+        </div>
+      </div>
+      <div class="cred-card fade-up fade-up-d2">
+        <div class="cred-top"></div>
+        <div class="cred-body">
+          <div class="cred-pill">
+            <i data-lucide="book-open" style="width:11px;height:11px"></i> 대학 겸임교수
+          </div>
+          <div class="cred-icon"><i data-lucide="book-open" style="width:32px;height:32px"></i></div>
+          <div class="cred-title">이론 + 현장</div>
+          <p class="cred-desc">경영학과 겸임교수로서 최신 이론을 현장에 접목합니다.</p>
+        </div>
+      </div>
+      <div class="cred-card fade-up fade-up-d3">
+        <div class="cred-top"></div>
+        <div class="cred-body">
+          <div class="cred-pill">
+            <i data-lucide="briefcase" style="width:11px;height:11px"></i> 중소기업 실무
+          </div>
+          <div class="cred-icon"><i data-lucide="briefcase" style="width:32px;height:32px"></i></div>
+          <div class="cred-title">관리부장 경험</div>
+          <p class="cred-desc">중소기업 관리부장 실무 경험으로 현장 언어를 압니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="trust-footer fade-up">
+      <span class="icon"><i data-lucide="building-2" style="width:18px;height:18px"></i></span>
+      <p><strong>정부지원사업 현장클리닉 수행 경험</strong> <span class="text-muted">· 중소기업 컨설팅 다수 수행 실적 보유</span></p>
+      <span class="check"><i data-lucide="check-circle-2" style="width:16px;height:16px"></i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Services ── -->
+<section id="services">
+  <div class="container">
+    <div class="text-center fade-up" style="margin-bottom:3.5rem">
+      <span class="section-badge">SERVICES</span>
+      <h2 class="section-title">주요 <span class="text-accent">경영컨설팅 분야</span></h2>
+      <p class="section-sub">중소기업과 소상공인이 직면하는 현실적인 경영 문제를 현장에서 직접 해결합니다.</p>
+    </div>
+    <div class="svc-grid">
+      <!-- 핵심 1 -->
+      <div class="svc-card primary fade-up" onclick="scrollTo('contact')">
+        <div class="svc-top-bar"></div>
+        <div class="svc-body">
+          <div class="svc-head">
+            <div class="svc-icon primary-icon"><i data-lucide="line-chart" style="width:26px;height:26px"></i></div>
+            <span class="svc-badge">핵심</span>
+          </div>
+          <div class="svc-title">경영컨설팅</div>
+          <p class="svc-desc">경영전략 수립, 조직관리, 영업력 강화 등 중소기업 종합 경영개선</p>
+          <div class="svc-tags"><span class="tag">경영전략</span><span class="tag">수익개선</span></div>
+        </div>
+      </div>
+      <!-- 핵심 2 -->
+      <div class="svc-card primary fade-up fade-up-d1" onclick="scrollTo('contact')">
+        <div class="svc-top-bar"></div>
+        <div class="svc-body">
+          <div class="svc-head">
+            <div class="svc-icon primary-icon"><i data-lucide="users" style="width:26px;height:26px"></i></div>
+            <span class="svc-badge">핵심</span>
+          </div>
+          <div class="svc-title">소상공인 컨설팅</div>
+          <p class="svc-desc">수익 구조 개선과 지속 성장을 위한 맞춤형 현장 방문 컨설팅</p>
+          <div class="svc-tags"><span class="tag">현장방문</span><span class="tag">수익구조</span></div>
+        </div>
+      </div>
+      <!-- 일반 3 -->
+      <div class="svc-card secondary fade-up fade-up-d2" onclick="scrollTo('contact')">
+        <div class="svc-body">
+          <div class="svc-head">
+            <div class="svc-icon secondary-icon"><i data-lucide="coins" style="width:26px;height:26px"></i></div>
+          </div>
+          <div class="svc-title">재무·원가·재고관리</div>
+          <p class="svc-desc">재무 구조 진단, 원가 분석, 재고 최적화로 실질 이익 구조 개선</p>
+          <div class="svc-tags"><span class="tag">재무진단</span><span class="tag">원가절감</span></div>
+        </div>
+      </div>
+      <!-- 일반 4 -->
+      <div class="svc-card secondary fade-up" onclick="scrollTo('contact')">
+        <div class="svc-body">
+          <div class="svc-head">
+            <div class="svc-icon secondary-icon"><i data-lucide="file-text" style="width:26px;height:26px"></i></div>
+          </div>
+          <div class="svc-title">정책자금 및 정부지원사업</div>
+          <p class="svc-desc">정책자금·창업지원금·R&amp;D 지원 발굴부터 신청까지 전 과정 지원</p>
+          <div class="svc-tags"><span class="tag">정책자금</span><span class="tag">보조금</span></div>
+        </div>
+      </div>
+      <!-- 일반 5 -->
+      <div class="svc-card secondary fade-up fade-up-d1" onclick="scrollTo('contact')">
+        <div class="svc-body">
+          <div class="svc-head">
+            <div class="svc-icon secondary-icon"><i data-lucide="shield" style="width:26px;height:26px"></i></div>
+          </div>
+          <div class="svc-title">인증 컨설팅</div>
+          <p class="svc-desc">벤처기업·뿌리기업·소부장 인증 전략 수립 및 서류 작성 지원</p>
+          <div class="svc-tags"><span class="tag">벤처인증</span><span class="tag">뿌리·소부장</span></div>
+        </div>
+      </div>
+      <!-- 일반 6 -->
+      <div class="svc-card secondary fade-up fade-up-d2" onclick="scrollTo('contact')">
+        <div class="svc-body">
+          <div class="svc-head">
+            <div class="svc-icon secondary-icon"><i data-lucide="factory" style="width:26px;height:26px"></i></div>
+          </div>
+          <div class="svc-title">스마트공장 및 디지털전환</div>
+          <p class="svc-desc">제조 현장 스마트공장 구축, 업무 디지털화, 생산성 향상 지원</p>
+          <div class="svc-tags"><span class="tag">스마트공장</span><span class="tag">디지털전환</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center fade-up" style="margin-top:3rem">
+      <button class="btn-primary" style="background:var(--navy);color:#fff;box-shadow:none" onclick="scrollTo('contact')">
+        <i data-lucide="message-square" style="width:18px;height:18px"></i>
+        분야별 상담 문의하기
+        <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── Results ── -->
+<section id="results" style="padding:5rem 0; background:var(--bg-gray)">
+  <div class="container">
+    <div class="text-center fade-up" style="margin-bottom:3rem">
+      <span class="section-badge">CASE STUDY</span>
+      <h2 class="section-title font-serif">실제로 <span class="text-accent">이렇게 개선됩니다</span></h2>
+      <p class="section-sub">현장에서 확인한 실제 문제와 해결 방식입니다.</p>
+    </div>
+    <div class="result-grid">
+      <!-- Case 1 -->
+      <div class="result-card fade-up">
+        <div class="result-top"></div>
+        <div class="result-body">
+          <div class="result-head">
+            <span class="result-emoji">📦</span>
+            <span class="result-tag">재고관리</span>
+          </div>
+          <div class="result-label label-red"><span class="dot dot-red"></span>문제</div>
+          <p class="result-text">재고 파악이 안 돼 중복 발주가 반복됐습니다.</p>
+          <div class="result-divider"><div class="line"></div><span class="arrow"><i data-lucide="chevron-down" style="width:14px;height:14px"></i></span><div class="line"></div></div>
+          <div class="result-label label-blue"><span class="dot dot-blue"></span>해결</div>
+          <p class="result-text">재고관리 체계 수립과 발주 프로세스 전면 개선</p>
+          <div class="result-divider"><div class="line"></div><span class="arrow-gold"><i data-lucide="chevron-down" style="width:14px;height:14px"></i></span><div class="line"></div></div>
+          <div class="result-box">
+            <div class="result-box-label"><i data-lucide="check-circle-2" style="width:12px;height:12px;color:var(--accent)"></i>결과</div>
+            <div class="result-box-text">재고 비용 절감 · 운영 효율 향상</div>
+          </div>
+        </div>
+      </div>
+      <!-- Case 2 -->
+      <div class="result-card fade-up fade-up-d1">
+        <div class="result-top"></div>
+        <div class="result-body">
+          <div class="result-head">
+            <span class="result-emoji">📊</span>
+            <span class="result-tag">원가분석</span>
+          </div>
+          <div class="result-label label-red"><span class="dot dot-red"></span>문제</div>
+          <p class="result-text">매출은 늘었는데 이익이 남지 않았습니다.</p>
+          <div class="result-divider"><div class="line"></div><span class="arrow"><i data-lucide="chevron-down" style="width:14px;height:14px"></i></span><div class="line"></div></div>
+          <div class="result-label label-blue"><span class="dot dot-blue"></span>해결</div>
+          <p class="result-text">원가 구조 분석 및 수익성 낮은 품목 구조조정</p>
+          <div class="result-divider"><div class="line"></div><span class="arrow-gold"><i data-lucide="chevron-down" style="width:14px;height:14px"></i></span><div class="line"></div></div>
+          <div class="result-box">
+            <div class="result-box-label"><i data-lucide="check-circle-2" style="width:12px;height:12px;color:var(--accent)"></i>결과</div>
+            <div class="result-box-text">영업이익률 개선 · 순이익 확대</div>
+          </div>
+        </div>
+      </div>
+      <!-- Case 3 -->
+      <div class="result-card fade-up fade-up-d2">
+        <div class="result-top"></div>
+        <div class="result-body">
+          <div class="result-head">
+            <span class="result-emoji">🏛️</span>
+            <span class="result-tag">정책자금</span>
+          </div>
+          <div class="result-label label-red"><span class="dot dot-red"></span>문제</div>
+          <p class="result-text">정부지원사업이 있는지조차 몰랐습니다.</p>
+          <div class="result-divider"><div class="line"></div><span class="arrow"><i data-lucide="chevron-down" style="width:14px;height:14px"></i></span><div class="line"></div></div>
+          <div class="result-label label-blue"><span class="dot dot-blue"></span>해결</div>
+          <p class="result-text">기업 상황에 맞는 사업 발굴 및 신청 전 과정 지원</p>
+          <div class="result-divider"><div class="line"></div><span class="arrow-gold"><i data-lucide="chevron-down" style="width:14px;height:14px"></i></span><div class="line"></div></div>
+          <div class="result-box">
+            <div class="result-box-label"><i data-lucide="check-circle-2" style="width:12px;height:12px;color:var(--accent)"></i>결과</div>
+            <div class="result-box-text">정책자금 확보 · 사업화 자금 마련</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-muted fade-up" style="font-size:.72rem;margin-top:2rem">
+      * 위 사례는 실제 컨설팅 현장에서 확인된 유형을 바탕으로 구성되었습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ── Digital ── -->
+<div id="digital">
+  <div class="container">
+    <div class="digital-inner fade-up">
+      <div class="digital-label-wrap">
+        <div class="digital-pill">
+          <i data-lucide="lightbulb" style="width:12px;height:12px"></i>
+          경영컨설팅 보조 솔루션
+        </div>
+        <p class="digital-sub">필요 시 경영 개선을 돕는 디지털 도구를 추가로 지원합니다.</p>
+      </div>
+      <div class="digital-divider"></div>
+      <div class="digital-items">
+        <div class="digital-item"><span class="dicon"><i data-lucide="database" style="width:18px;height:18px"></i></span>재고관리 시스템</div>
+        <div class="digital-item"><span class="dicon"><i data-lucide="settings" style="width:18px;height:18px"></i></span>생산관리 시스템</div>
+        <div class="digital-item"><span class="dicon"><i data-lucide="users" style="width:18px;height:18px"></i></span>회원관리 시스템</div>
+        <div class="digital-item"><span class="dicon"><i data-lucide="layout-dashboard" style="width:18px;height:18px"></i></span>Google Sheets 업무자동화</div>
+        <div class="digital-item"><span class="dicon"><i data-lucide="bot" style="width:18px;height:18px"></i></span>AI 기반 분석 리포트</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Process ── -->
+<section id="process">
+  <div class="container">
+    <div class="text-center fade-up" style="margin-bottom:3.5rem">
+      <span class="section-badge">PROCESS</span>
+      <h2 class="section-title">컨설팅 <span class="text-accent">진행 프로세스</span></h2>
+      <p class="section-sub">처음 상담부터 변화가 정착되기까지, 4단계의 체계적인 프로세스로 함께합니다.</p>
+    </div>
+    <div class="step-grid">
+      <div class="step-wrap fade-up">
+        <div class="step-connector"></div>
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-title">상담 및 현황 파악</div>
+          <p class="step-desc">무료 상담으로 기업 현황·문제점을 파악, 현장 방문으로 실제 업무 흐름을 확인합니다.</p>
+        </div>
+      </div>
+      <div class="step-wrap fade-up fade-up-d1">
+        <div class="step-connector"></div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-title">자료 분석 및 문제 진단</div>
+          <p class="step-desc">재무제표·원가자료·재고 현황 분석으로 문제의 근본 원인을 진단합니다.</p>
+        </div>
+      </div>
+      <div class="step-wrap fade-up fade-up-d2">
+        <div class="step-connector"></div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-title">개선 전략 수립</div>
+          <p class="step-desc">진단 결과를 토대로 단기·중기 실행 계획을 수립합니다. 현실적이고 실행 가능한 방안입니다.</p>
+        </div>
+      </div>
+      <div class="step-wrap fade-up fade-up-d3">
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-title">실행 지원 및 사후관리</div>
+          <p class="step-desc">전략 실행 과정에서 지속 지원하고 성과를 모니터링합니다. 변화가 정착될 때까지 함께합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pain Points ── -->
+<section id="pain">
+  <div class="container">
+    <div class="text-center fade-up" style="margin-bottom:3.5rem">
+      <span class="section-badge" style="background:rgba(201,168,76,.12);color:#8a6520">이런 분들께 필요합니다</span>
+      <h2 class="section-title"><span class="text-accent">지금 이 상황</span>이라면<br>상담이 필요합니다</h2>
+      <p class="section-sub">아래 항목 중 하나라도 해당된다면, 무료 상담을 통해 현황을 점검받아보세요.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card fade-up">
+        <div class="pain-icon"><i data-lucide="bar-chart-3" style="width:22px;height:22px"></i></div>
+        <div>
+          <div class="pain-title">매출은 있지만 이익이 남지 않는 기업</div>
+          <p class="pain-desc">매출은 늘었는데 수익이 없다면 원가·비용 구조부터 진단이 필요합니다.</p>
+        </div>
+      </div>
+      <div class="pain-card fade-up fade-up-d1">
+        <div class="pain-icon"><i data-lucide="clipboard-list" style="width:22px;height:22px"></i></div>
+        <div>
+          <div class="pain-title">재고와 원가 관리가 어려운 기업</div>
+          <p class="pain-desc">적정 재고 관리와 원가 분석 없이는 수익성 개선이 불가능합니다.</p>
+        </div>
+      </div>
+      <div class="pain-card fade-up fade-up-d2">
+        <div class="pain-icon"><i data-lucide="coins" style="width:22px;height:22px"></i></div>
+        <div>
+          <div class="pain-title">정부지원사업을 활용하고 싶은 기업</div>
+          <p class="pain-desc">정책자금, 지원사업 정보와 신청 노하우가 없어 기회를 놓치고 있다면.</p>
+        </div>
+      </div>
+      <div class="pain-card fade-up">
+        <div class="pain-icon"><i data-lucide="shield" style="width:22px;height:22px"></i></div>
+        <div>
+          <div class="pain-title">인증을 준비하는 제조기업</div>
+          <p class="pain-desc">벤처, 뿌리, 소부장 인증 준비는 복잡하고 오래 걸립니다. 전문가의 도움이 필요합니다.</p>
+        </div>
+      </div>
+      <div class="pain-card fade-up fade-up-d1">
+        <div class="pain-icon"><i data-lucide="zap" style="width:22px;height:22px"></i></div>
+        <div>
+          <div class="pain-title">수기 업무로 비효율이 큰 기업</div>
+          <p class="pain-desc">엑셀, 수기 장부로 업무를 관리하며 반복 실수와 시간 낭비가 발생한다면.</p>
+        </div>
+      </div>
+      <div class="pain-card fade-up fade-up-d2">
+        <div class="pain-icon"><i data-lucide="map-pin" style="width:22px;height:22px"></i></div>
+        <div>
+          <div class="pain-title">소상공인 경영개선을 원하는 사업자</div>
+          <p class="pain-desc">소규모 사업장도 체계적인 경영 관리와 개선 전략이 필요합니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="pain-cta fade-up">
+      <h3>해당 사항이 있으신가요?</h3>
+      <p>첫 상담은 무료입니다. 부담 없이 현황을 공유해주세요.</p>
+      <button class="btn-primary" onclick="scrollTo('contact')">
+        <i data-lucide="phone" style="width:16px;height:16px"></i>
+        지금 무료 상담 신청
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-up">
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1758519288417-d359ac3c494d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800" alt="컨설팅 미팅" />
+          <div class="about-img-caption">
+            <div class="about-img-caption-inner">
+              <div class="sub">현장형 경영컨설턴트</div>
+              <p class="quote">"중소기업과 소상공인의 현실을 이해하는<br>실행형 파트너가 되겠습니다."</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="about-stat"><div class="num">PhD</div><div class="label">경영학 박사</div></div>
+          <div class="about-stat"><div class="num">현장</div><div class="label">중심 컨설팅</div></div>
+          <div class="about-stat"><div class="num">실무</div><div class="label">기업 관리부장</div></div>
+        </div>
+      </div>
+      <div class="fade-up fade-up-d1">
+        <span class="section-badge">ABOUT</span>
+        <h2 class="section-title font-serif" style="line-height:1.4;margin-bottom:1rem">
+          이론과 현장,<br>두 가지를 모두 아는<br><span class="text-accent">컨설턴트</span>
+        </h2>
+        <p class="about-body-text">
+          경영학 박사 과정에서 쌓은 학문적 기반과, 중소기업 관리부장으로서 직접 현장을 이끈 실무 경험을 동시에 보유하고 있습니다. 대학교 겸임교수로서 최신 경영 이론과 트렌드를 현장에 접목하며, 정부지원사업과 현장클리닉 컨설팅을 통해 실질적인 성과를 만들어왔습니다.
+        </p>
+        <p class="about-body-text">
+          공공기관 제출용 보고서가 아닌, 실제로 변화를 만드는 컨설팅을 합니다. 중소기업과 소상공인의 언어로 소통하고, 실행 가능한 전략을 함께 만듭니다.
+        </p>
+        <div class="about-cred-list">
+          <div class="about-cred-item">
+            <div class="about-cred-icon"><i data-lucide="graduation-cap" style="width:18px;height:18px"></i></div>
+            <span class="about-cred-text">경영학 박사</span>
+            <span class="about-cred-check"><i data-lucide="check-circle-2" style="width:16px;height:16px"></i></span>
+          </div>
+          <div class="about-cred-item">
+            <div class="about-cred-icon"><i data-lucide="award" style="width:18px;height:18px"></i></div>
+            <span class="about-cred-text">경영지도사</span>
+            <span class="about-cred-check"><i data-lucide="check-circle-2" style="width:16px;height:16px"></i></span>
+          </div>
+          <div class="about-cred-item">
+            <div class="about-cred-icon"><i data-lucide="book-open" style="width:18px;height:18px"></i></div>
+            <span class="about-cred-text">대학교 경영학과 겸임교수</span>
+            <span class="about-cred-check"><i data-lucide="check-circle-2" style="width:16px;height:16px"></i></span>
+          </div>
+          <div class="about-cred-item">
+            <div class="about-cred-icon"><i data-lucide="briefcase" style="width:18px;height:18px"></i></div>
+            <span class="about-cred-text">중소기업 관리부장 실무 경험</span>
+            <span class="about-cred-check"><i data-lucide="check-circle-2" style="width:16px;height:16px"></i></span>
+          </div>
+          <div class="about-cred-item">
+            <div class="about-cred-icon"><i data-lucide="building-2" style="width:18px;height:18px"></i></div>
+            <span class="about-cred-text">정부지원사업 컨설팅 수행</span>
+            <span class="about-cred-check"><i data-lucide="check-circle-2" style="width:16px;height:16px"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container-sm">
+    <div class="contact-header fade-up">
+      <div class="free-badge">✓ 무료 진단</div>
+      <div class="worry-box">
+        <p class="worry-title">혹시 이런 고민이 있으십니까?</p>
+        <div class="worry-item"><span class="worry-dot"></span><p class="worry-text">매출은 나오는데 돈이 안 남는다</p></div>
+        <div class="worry-item"><span class="worry-dot"></span><p class="worry-text">재고가 맞지 않는다</p></div>
+        <div class="worry-item"><span class="worry-dot"></span><p class="worry-text">정부지원사업은 있는데 어떻게 해야 할지 모르겠다</p></div>
+      </div>
+      <h2 class="contact-h2">현재 문제를 정확히<br><span class="text-accent">진단해드립니다</span></h2>
+      <p class="contact-sub">간단한 상황만 말씀해주시면<br>현재 문제와 개선 방향을 정리해드립니다.</p>
+    </div>
+
+    <!-- Form -->
+    <div class="contact-form-wrap fade-up" id="form-wrap">
+      <div id="form-success" class="form-success" style="display:none">
+        <div class="success-icon"><i data-lucide="check-circle-2" style="width:32px;height:32px"></i></div>
+        <h3>상담 신청이 완료되었습니다!</h3>
+        <p>빠른 시일 내에 연락드리겠습니다. 감사합니다.</p>
+      </div>
+      <form id="contact-form" onsubmit="submitForm(event)">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>이름 <span class="req">*</span></label>
+            <input class="form-input" type="text" name="name" required placeholder="홍길동" />
+          </div>
+          <div class="form-group">
+            <label>연락처 <span class="req">*</span></label>
+            <input class="form-input" type="tel" name="phone" required placeholder="010-9463-4999" />
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>기업명 / 상호명</label>
+            <input class="form-input" type="text" name="company" placeholder="(주)OO기업" />
+          </div>
+          <div class="form-group">
+            <label>상담 분야 <span class="req">*</span></label>
+            <select class="form-input" name="field" required style="cursor:pointer">
+              <option value="" disabled selected>분야를 선택해주세요</option>
+              <option>중소기업 경영컨설팅</option>
+              <option>소상공인 컨설팅</option>
+              <option>재무·원가·재고관리</option>
+              <option>정책자금 및 정부지원사업</option>
+              <option>인증컨설팅 (벤처·뿌리·소부장)</option>
+              <option>스마트공장·디지털전환</option>
+              <option>ESG·탄소중립·에너지</option>
+              <option>디지털 솔루션 (시스템 구축)</option>
+              <option>기타</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group-full">
+          <label style="display:block;font-size:.82rem;font-weight:600;color:var(--navy);margin-bottom:.4rem">문의 내용 <span class="req">*</span></label>
+          <textarea class="form-input" name="message" required rows="5" placeholder="현황이나 어려움을 자유롭게 적어주세요. 구체적으로 작성하실수록 더 정확한 안내가 가능합니다." style="resize:none;line-height:1.6"></textarea>
+        </div>
+        <p class="form-privacy">* 입력하신 정보는 상담 목적으로만 활용되며, 제3자에게 제공되지 않습니다.</p>
+        <button class="form-submit" type="submit">
+          <i data-lucide="mail" style="width:18px;height:18px"></i>
+          진단 신청하기
+        </button>
+      </form>
+    </div>
+
+    <!-- Quick Contact -->
+    <div class="contact-quick fade-up">
+      <a class="contact-tel" href="tel:010-9463-4999">
+        <i data-lucide="phone" style="width:24px;height:24px"></i>
+        무료 진단 요청 (전화)
+      </a>
+      <a class="contact-mail" href="mailto:skghgns@gmail.com">
+        <i data-lucide="mail" style="width:15px;height:15px"></i>
+        이메일로 문의하기
+      </a>
+      <p class="contact-hours">평일 09:00 – 18:00 · 문의 후 1영업일 이내 회신</p>
+    </div>
+    <p class="contact-reply fade-up">문의 후 1영업일 이내에 답변드립니다</p>
+    <p class="contact-assurance fade-up">상담 내용은 외부에 절대 공유되지 않습니다</p>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-icon">경</div>
+          <span class="footer-logo-text">경영컨설팅</span>
+        </div>
+        <p class="footer-tagline">중소기업과 소상공인의 성장 파트너</p>
+      </div>
+      <nav class="footer-nav">
+        <button onclick="scrollTo('trust')">신뢰요소</button>
+        <button onclick="scrollTo('services')">컨설팅분야</button>
+        <button onclick="scrollTo('process')">프로세스</button>
+        <button onclick="scrollTo('about')">소개</button>
+        <button onclick="scrollTo('contact')">문의</button>
+      </nav>
+      <p class="footer-copy">© 2026 경영컨설팅. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Lucide icons init
+  lucide.createIcons();
+
+  // ── Scroll helper
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── Header scroll effect
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ── Mobile menu toggle
+  let menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('menu-icon');
+    menu.classList.toggle('open', menuOpen);
+    icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+
+  // ── Intersection Observer for fade-up
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── Hero fade-up on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('#hero .fade-up').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+  });
+
+  // ── Form submit
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+</body>
+</html>
