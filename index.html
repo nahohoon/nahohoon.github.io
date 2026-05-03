@@ -36,8 +36,9 @@
       font-family: 'Noto Sans KR', sans-serif;
       color: #1a202c;
       background: #fff;
-      line-height: 1.6;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      letter-spacing: -.01em;
     }
 
     /* ── Utility ── */
@@ -47,6 +48,7 @@
     .text-navy { color: var(--navy); }
     .text-muted { color: var(--muted); }
     .font-serif { font-family: 'Noto Serif KR', serif; }
+    h1,h2,h3 { font-family: 'Noto Serif KR', serif; letter-spacing: -.03em; line-height: 1.4; }
     .section-badge {
       display: inline-block;
       padding: .25rem .75rem;
@@ -59,10 +61,13 @@
       letter-spacing: .05em;
     }
     .section-title {
+      font-family: 'Noto Serif KR', serif;
       font-size: clamp(1.6rem, 3vw, 2rem);
       font-weight: 800;
       color: var(--navy);
       margin-bottom: .75rem;
+      letter-spacing: -.04em;
+      line-height: 1.35;
     }
     .section-sub { color: var(--muted); max-width: 540px; margin: 0 auto; font-size: .9rem; }
     .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem; }
@@ -150,7 +155,35 @@
       background: var(--accent); color: var(--navy);
       font-weight: 900; font-size: .8rem;
     }
-    .logo-text { color: #fff; font-weight: 700; font-size: .95rem; }
+    .logo-bar {
+      width: 2.5px;
+      border-radius: 2px;
+      background: #c9a84c;
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -.02em;
+      line-height: 1.25;
+      display: flex;
+      align-items: baseline;
+      gap: .3em;
+    }
+    .logo-name { color: #fff; }
+    .logo-brand { color: #c9a84c; }
+    .logo-sub {
+      color: rgba(255,255,255,0.35);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: .65rem;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 3px;
+    }
     .nav-desktop { display: flex; align-items: center; gap: 1.5rem; }
     .nav-desktop button {
       color: rgba(255,255,255,.8); font-size: .85rem; font-weight: 500;
@@ -231,7 +264,8 @@
       font-size: clamp(1.9rem, 4.5vw, 3.2rem);
       font-weight: 800;
       color: #fff;
-      line-height: 1.35;
+      line-height: 1.38;
+      letter-spacing: -.04em;
       margin-bottom: 1.2rem;
     }
     .hero-sub { color: rgba(255,255,255,.7); font-size: clamp(.9rem,2vw,1.05rem); margin-bottom: .6rem; }
@@ -293,7 +327,7 @@
       transition: transform .3s;
     }
     .cred-card:hover .cred-icon { transform: scale(1.1); }
-    .cred-title { font-weight: 900; font-size: .95rem; color: var(--navy); margin-bottom: .4rem; }
+    .cred-title { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: .95rem; color: var(--navy); margin-bottom: .4rem; letter-spacing: -.02em; }
     .cred-desc { font-size: .72rem; color: var(--muted); line-height: 1.6; }
     .trust-footer {
       display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
@@ -383,7 +417,7 @@
     .step-card { position: relative; z-index: 1; padding: 1.25rem; background: #fff; border-radius: .75rem; border: 1px solid var(--border); height: 100%; transition: box-shadow .3s; }
     .step-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); }
     .step-num { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-weight: 700; font-size: .9rem; background: var(--navy); color: var(--accent); }
-    .step-title { font-weight: 700; font-size: .85rem; color: var(--navy); margin-bottom: .5rem; }
+    .step-title { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: .85rem; color: var(--navy); margin-bottom: .5rem; letter-spacing: -.02em; }
     .step-desc { font-size: .75rem; color: var(--muted); line-height: 1.6; }
 
     /* ── Pain Points ── */
@@ -393,7 +427,7 @@
     .pain-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
     .pain-icon { width: 40px; height: 40px; border-radius: .5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(201,168,76,.12); color: #8a6520; transition: transform .3s; }
     .pain-card:hover .pain-icon { transform: scale(1.05); }
-    .pain-title { font-weight: 600; font-size: .82rem; color: var(--navy); margin-bottom: .3rem; line-height: 1.4; }
+    .pain-title { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: .82rem; color: var(--navy); margin-bottom: .3rem; line-height: 1.45; letter-spacing: -.02em; }
     .pain-desc { font-size: .75rem; color: var(--muted); line-height: 1.6; }
     .pain-cta { margin-top: 3rem; padding: 2rem; border-radius: 1rem; text-align: center; background: linear-gradient(135deg,#0F2448 0%,#1a3a6e 100%); }
     .pain-cta h3 { color: #fff; font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
@@ -429,7 +463,7 @@
     .worry-item { display: flex; align-items: center; gap: .6rem; }
     .worry-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
     .worry-text { font-size: .85rem; color: rgba(255,255,255,.7); }
-    .contact-h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800; color: #fff; margin-bottom: .75rem; }
+    .contact-h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800; color: #fff; margin-bottom: .75rem; letter-spacing: -.04em; line-height: 1.35; }
     .contact-sub { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.7; }
     .contact-form-wrap { background: #fff; border-radius: 1.25rem; padding: 2rem; margin-bottom: 2rem; }
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
@@ -461,16 +495,27 @@
     .form-success h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: .5rem; }
     .form-success p { color: var(--muted); font-size: .9rem; }
     .contact-quick { border-radius: 1.25rem; padding: 1.75rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+    .contact-kakao {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      width: 100%; padding: 1.1rem 2rem; border-radius: .75rem;
+      font-weight: 700; font-size: 1.1rem;
+      background: #FEE500; color: #3A1D1D;
+      box-shadow: 0 8px 32px rgba(254,229,0,.4);
+      text-decoration: none; margin-bottom: .4rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .contact-kakao:hover { transform: scale(1.03); box-shadow: 0 12px 40px rgba(254,229,0,.6); }
+    .kakao-hint { text-align:center; font-size:.72rem; color:rgba(255,255,255,.5); margin-top:6px; margin-bottom:.75rem; }
     .contact-tel {
       display: flex; align-items: center; justify-content: center; gap: .75rem;
-      width: 100%; padding: 1.25rem 2rem; border-radius: .75rem;
-      font-weight: 700; font-size: 1.2rem;
-      background: var(--accent); color: var(--navy);
-      box-shadow: 0 8px 32px rgba(201,168,76,.45);
+      width: 100%; padding: .85rem 2rem; border-radius: .75rem;
+      font-weight: 600; font-size: 1rem;
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.2);
       text-decoration: none; margin-bottom: .75rem;
-      transition: transform .2s;
+      transition: background .2s, color .2s;
     }
-    .contact-tel:hover { transform: scale(1.02); }
+    .contact-tel:hover { background: rgba(255,255,255,0.15); color: #fff; }
     .contact-mail {
       display: flex; align-items: center; justify-content: center; gap: .5rem;
       width: 100%; padding: .75rem 1.5rem; border-radius: .5rem;
@@ -488,7 +533,20 @@
     .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
     .footer-logo { display: flex; align-items: center; gap: .5rem; }
     .footer-logo-icon { width: 28px; height: 28px; border-radius: .35rem; display: flex; align-items: center; justify-content: center; background: var(--accent); color: var(--navy); font-weight: 900; font-size: .75rem; }
-    .footer-logo-text { color: #fff; font-weight: 700; font-size: .85rem; }
+    .footer-logo-text {
+      color: #fff;
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700;
+      font-size: .88rem;
+      letter-spacing: -.02em;
+    }
+    .footer-logo-sub {
+      color: rgba(255,255,255,.3);
+      font-size: .58rem;
+      font-family: 'Noto Sans KR', sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
     .footer-tagline { color: rgba(255,255,255,.4); font-size: .72rem; margin-top: .25rem; }
     .footer-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: center; }
     .footer-nav button { color: rgba(255,255,255,.5); font-size: .72rem; background: none; border: none; cursor: pointer; transition: color .2s; }
@@ -526,8 +584,13 @@
 <header id="header">
   <div class="header-inner">
     <button class="logo" onclick="scrollTo('hero')">
-      <div class="logo-icon">경</div>
-      <span class="logo-text">경영컨설팅</span>
+      <div style="display:flex;align-items:stretch;gap:.7rem">
+        <span class="logo-bar"></span>
+        <div style="display:flex;flex-direction:column;align-items:flex-start">
+          <span class="logo-text"><span class="logo-name">나호훈</span><span class="logo-brand">경영컨설팅</span></span>
+          <span class="logo-sub">Management Consulting</span>
+        </div>
+      </div>
     </button>
     <nav class="nav-desktop">
       <button onclick="scrollTo('trust')">신뢰 요소</button>
@@ -536,10 +599,10 @@
       <button onclick="scrollTo('about')">컨설턴트 소개</button>
       <button onclick="scrollTo('contact')">문의하기</button>
     </nav>
-    <button class="nav-cta" onclick="scrollTo('contact')">
-      <i data-lucide="phone" style="width:14px;height:14px"></i>
-      무료 상담 신청
-    </button>
+    <button class="nav-cta" onclick="window.open('https://open.kakao.com/o/sqxjVgti','_blank')">
+        <i data-lucide="message-circle" style="width:14px;height:14px"></i>
+        카카오톡 무료 진단 요청
+      </button>
     <button class="mobile-toggle" onclick="toggleMenu()" aria-label="메뉴">
       <i id="menu-icon" data-lucide="menu" style="width:22px;height:22px"></i>
     </button>
@@ -550,7 +613,7 @@
     <button onclick="scrollTo('process')">진행 프로세스</button>
     <button onclick="scrollTo('about')">컨설턴트 소개</button>
     <button onclick="scrollTo('contact')">문의하기</button>
-    <button class="mobile-cta" onclick="scrollTo('contact')">무료 상담 신청</button>
+    <button class="mobile-cta" onclick="window.open('https://open.kakao.com/o/sqxjVgti','_blank')">카카오톡 무료 진단 요청</button>
   </div>
 </header>
 
@@ -577,9 +640,9 @@
       이론이 아닌 실무&nbsp;·&nbsp;서류가 아닌 현장&nbsp;·&nbsp;보고서가 아닌 실행
     </p>
     <div class="hero-btns fade-up fade-up-d3">
-      <button class="btn-primary" onclick="scrollTo('contact')">
-        <i data-lucide="phone" style="width:18px;height:18px"></i>
-        무료 상담 신청하기
+      <button class="btn-primary" onclick="window.open('https://open.kakao.com/o/sqxjVgti','_blank')" style="background:#FEE500;color:#3A1D1D;box-shadow:0 4px 20px rgba(254,229,0,.35)">
+        <i data-lucide="message-circle" style="width:18px;height:18px"></i>
+        카카오톡 무료 진단 요청
       </button>
       <button class="btn-outline" onclick="scrollTo('services')">
         <i data-lucide="search" style="width:18px;height:18px"></i>
@@ -767,7 +830,7 @@
       </div>
     </div>
     <div class="text-center fade-up" style="margin-top:3rem">
-      <button class="btn-primary" style="background:var(--navy);color:#fff;box-shadow:none" onclick="scrollTo('contact')">
+      <button class="btn-primary" style="background:var(--navy);color:#fff;box-shadow:none" onclick="window.open('https://open.kakao.com/o/sqxjVgti','_blank')">
         <i data-lucide="message-square" style="width:18px;height:18px"></i>
         분야별 상담 문의하기
         <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
@@ -974,9 +1037,9 @@
     <div class="pain-cta fade-up">
       <h3>해당 사항이 있으신가요?</h3>
       <p>첫 상담은 무료입니다. 부담 없이 현황을 공유해주세요.</p>
-      <button class="btn-primary" onclick="scrollTo('contact')">
-        <i data-lucide="phone" style="width:16px;height:16px"></i>
-        지금 무료 상담 신청
+      <button class="btn-primary" onclick="window.open('https://open.kakao.com/o/sqxjVgti','_blank')">
+        <i data-lucide="message-circle" style="width:16px;height:16px"></i>
+        카카오톡 무료 진단 요청
       </button>
     </div>
   </div>
@@ -1113,9 +1176,15 @@
 
     <!-- Quick Contact -->
     <div class="contact-quick fade-up">
+      <p style="text-align:center;font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:10px">아래 버튼으로 바로 상담 가능합니다</p>
+      <a class="contact-kakao" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#3A1D1D" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.554 5.084 3.938 6.562l-1.002 3.73a.3.3 0 0 0 .46.326l4.26-2.837A12.14 12.14 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3Z"/></svg>
+        카카오톡 무료 진단 요청
+      </a>
+      <p class="kakao-hint">간단히 상황만 말씀해주시면 방향을 바로 정리해드립니다</p>
       <a class="contact-tel" href="tel:010-9463-4999">
-        <i data-lucide="phone" style="width:24px;height:24px"></i>
-        무료 진단 요청 (전화)
+        <i data-lucide="phone" style="width:20px;height:20px"></i>
+        전화 상담 &nbsp;010-9463-4999
       </a>
       <a class="contact-mail" href="mailto:skghgns@gmail.com">
         <i data-lucide="mail" style="width:15px;height:15px"></i>
@@ -1133,9 +1202,9 @@
   <div class="container">
     <div class="footer-inner">
       <div>
-        <div class="footer-logo">
-          <div class="footer-logo-icon">경</div>
-          <span class="footer-logo-text">경영컨설팅</span>
+        <div class="footer-logo" style="flex-direction:column;align-items:flex-start;gap:.2rem">
+          <span class="footer-logo-text">나호훈 경영컨설팅</span>
+          <span class="footer-logo-sub">Management Consulting</span>
         </div>
         <p class="footer-tagline">중소기업과 소상공인의 성장 파트너</p>
       </div>
