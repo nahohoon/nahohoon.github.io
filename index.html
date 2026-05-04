@@ -292,7 +292,7 @@
       }
       #quick-nav {
         position: sticky;
-        top: 60px;
+        top: 64px;
         z-index: 190;
         background: #fff;
       }
@@ -592,14 +592,25 @@
     .float-scroll-top:hover { background: var(--navy); }
 
     /* ── Responsive ── */
-    @media (max-width: 1100px) {
-      .nav-desktop a { font-size: .72rem; padding: .3rem .4rem; }
+    /* ── PC 헤더 로고/메뉴 강화 ── */
+    @media (min-width: 961px) {
+      .header-inner { height: 66px; }
+      .logo-text { font-size: 1.08rem; }
+      .logo-sub { font-size: .66rem; }
+      .nav-desktop a { font-size: .88rem; font-weight: 600; padding: .4rem .65rem; }
+      .nav-cta { font-size: .86rem; padding: .55rem 1.15rem; }
     }
     @media (max-width: 960px) {
       .nav-desktop { display: none !important; }
       .nav-cta { display: none !important; }
-      .mobile-toggle { display: block !important; }
-      .logo-text .logo-brand { display: none; }
+      .mobile-toggle { display: block !important; flex-shrink: 0; }
+      /* 모바일에서도 전체 브랜드 지명 표시 */
+      .logo-text .logo-brand { display: inline; }
+      .logo { min-width: 0; }
+      .logo-text { font-size: 1.08rem; font-weight: 800; white-space: nowrap; }
+      .logo-sub { font-size: .68rem; letter-spacing: .16em; }
+      .logo-bar { width: 3px; }
+      .header-inner { height: 64px; padding: 0 1.2rem; }
       .field-grid { grid-template-columns: repeat(2,1fr); }
       .cred-grid { grid-template-columns: repeat(2,1fr); }
       .step-grid { grid-template-columns: repeat(2,1fr); }
