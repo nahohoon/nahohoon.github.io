@@ -297,8 +297,8 @@
     .hcb-pc { display: inline; }
     /* PC에서 전문분야보기 버튼 표시, 모바일 숨김 */
     .btn-outline-pc { display: inline-flex; }
-    /* hero-badges: PC만 표시 */
-    .hero-badges-pc { display: flex; }
+    /* hero-badges: PC/모바일 모두 숨김 */
+    .hero-badges-pc { display: none; }
 
     @media (max-width: 768px) {
       /* 모바일 Hero inner 패딩 */
@@ -714,7 +714,7 @@
       .hero-label { margin-bottom: 1rem; font-size: .64rem; padding: .32rem .7rem; }
       .hero-h1 { margin-bottom: .85rem; }
       .mobile-title { font-size: clamp(1.35rem, 5.5vw, 1.7rem); line-height: 1.42; }
-      .hero-sub { font-size: .82rem; line-height: 1.5; }
+      .hero-sub { font-size: .82rem; line-height: 1.5; word-break: keep-all; }
       .hero-tag { font-size: .7rem; line-height: 1.5; margin-bottom: 1.15rem; }
       .hero-btns { gap: .6rem; margin-bottom: 1.1rem; }
       .btn-kakao, .btn-outline { max-width: 280px; padding: .75rem 1.2rem; font-size: .9rem; }
