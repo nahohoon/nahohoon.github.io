@@ -220,9 +220,13 @@
     }
     .hero-h1 {
       font-family: 'Noto Serif KR', serif;
-      font-size: clamp(1.85rem, 4.5vw, 3rem);
-      font-weight: 800; color: #fff; line-height: 1.38; letter-spacing: -.04em;
-      margin-bottom: 1.1rem;
+      font-size: clamp(1.55rem, 3.8vw, 2.75rem);
+      font-weight: 800; color: #fff; line-height: 1.45; letter-spacing: -.04em;
+      margin-bottom: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;
+      word-break: keep-all;
+    }
+    @media (max-width: 640px) {
+      .hero-h1 { font-size: clamp(1.35rem, 5.5vw, 1.65rem); line-height: 1.5; }
     }
     .hero-sub { color: rgba(255,255,255,.7); font-size: clamp(.88rem,2vw,1rem); margin-bottom: .5rem; }
     .hero-tag { color: rgba(255,255,255,.42); font-size: .8rem; letter-spacing: .04em; margin-bottom: 2.25rem; }
@@ -231,6 +235,38 @@
     .hero-badge { padding: .4rem .9rem; border-radius: 999px; font-size: .78rem; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.85); }
     .scroll-indicator { position: absolute; bottom: 1.75rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.35); animation: bounce 1.8s ease-in-out infinite; }
     @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ── Quick Nav ── */
+    #quick-nav {
+      position: sticky; top: 60px; z-index: 150;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .quick-nav-inner {
+      display: flex; gap: .5rem; overflow-x: auto;
+      padding: .65rem 1.25rem;
+      scrollbar-width: none; -ms-overflow-style: none;
+      max-width: 1152px; margin: 0 auto;
+    }
+    .quick-nav-inner::-webkit-scrollbar { display: none; }
+    .qnav-btn {
+      flex: 0 0 auto;
+      padding: .45rem 1rem; border-radius: 999px;
+      background: var(--bg-gray); color: var(--navy);
+      font-size: .78rem; font-weight: 700;
+      text-decoration: none; white-space: nowrap;
+      border: 1.5px solid transparent;
+      transition: background .2s, color .2s, border-color .2s;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .qnav-btn:hover, .qnav-btn.active {
+      background: var(--navy); color: #fff; border-color: var(--navy);
+    }
+    /* PC에서는 중앙 정렬, 모바일에서 가로 스크롤 */
+    @media (min-width: 960px) {
+      .quick-nav-inner { justify-content: center; }
+    }
 
     /* ── Trust Bar ── */
     #trust-bar { background: #0c1e3e; border-bottom: 1px solid rgba(255,255,255,.06); padding: .6rem 1rem; }
@@ -631,8 +667,9 @@
       </div>
     </div>
     <h1 class="hero-h1 fade-up fade-up-d1">
-      중소기업·소상공인의 재무, 지원사업, 인증,<br>
-      디지털 전환 문제를 <span class="text-accent">현장에서 해결</span>합니다.
+      중소기업·소상공인의<br>
+      재무·지원사업·인증·디지털 전환 문제를<br>
+      <span class="text-accent">현장에서 해결</span>합니다.
     </h1>
     <p class="hero-sub fade-up fade-up-d2">
       경영학 박사·경영지도사·겸임교수가 직접 진단하고 실행합니다
@@ -662,6 +699,18 @@
     <i data-lucide="chevron-down" style="width:26px;height:26px"></i>
   </div>
 </section>
+
+<!-- ── Quick Nav ── -->
+<nav id="quick-nav" aria-label="빠른 이동">
+  <div class="quick-nav-inner">
+    <a href="#svc-management" class="qnav-btn">경영컨설팅</a>
+    <a href="#svc-small" class="qnav-btn">소상공인</a>
+    <a href="#svc-finance" class="qnav-btn">재무·원가</a>
+    <a href="#svc-policy" class="qnav-btn">정부지원</a>
+    <a href="#svc-cert" class="qnav-btn">인증</a>
+    <a href="#svc-smart" class="qnav-btn">스마트공장</a>
+  </div>
+</nav>
 
 <!-- ── Trust Bar ── -->
 <div id="trust-bar">
@@ -790,8 +839,8 @@
         <div class="cred-body">
           <div class="cred-pill"><i data-lucide="graduation-cap" style="width:11px;height:11px"></i> 경영학 박사</div>
           <div class="cred-icon"><i data-lucide="graduation-cap" style="width:28px;height:28px"></i></div>
-          <div class="cred-title">Ph.D.</div>
-          <p class="cred-desc">학문적 깊이로 경영 문제를 체계적으로 진단·분석합니다.</p>
+          <div class="cred-title">경영학 박사</div>
+          <p class="cred-desc">경영 문제를 재무·전략 관점에서 체계적으로 진단합니다.</p>
         </div>
       </div>
       <div class="cred-card fade-up fade-up-d1">
@@ -799,8 +848,8 @@
         <div class="cred-body">
           <div class="cred-pill"><i data-lucide="award" style="width:11px;height:11px"></i> 경영지도사</div>
           <div class="cred-icon"><i data-lucide="award" style="width:28px;height:28px"></i></div>
-          <div class="cred-title">공인 자격</div>
-          <p class="cred-desc">중소벤처기업부 공인 경영지도사 자격 보유.</p>
+          <div class="cred-title">경영지도사</div>
+          <p class="cred-desc">중소기업 경영개선을 지원하는 공인 전문자격을 보유하고 있습니다.</p>
         </div>
       </div>
       <div class="cred-card fade-up fade-up-d2">
@@ -808,8 +857,8 @@
         <div class="cred-body">
           <div class="cred-pill"><i data-lucide="book-open" style="width:11px;height:11px"></i> 대학 겸임교수</div>
           <div class="cred-icon"><i data-lucide="book-open" style="width:28px;height:28px"></i></div>
-          <div class="cred-title">이론 + 현장</div>
-          <p class="cred-desc">경영학과 겸임교수로서 최신 이론을 현장에 접목합니다.</p>
+          <div class="cred-title">대학 겸임교수</div>
+          <p class="cred-desc">경영학 이론을 실제 기업 현장에 맞게 적용합니다.</p>
         </div>
       </div>
       <div class="cred-card fade-up fade-up-d3">
@@ -817,8 +866,8 @@
         <div class="cred-body">
           <div class="cred-pill"><i data-lucide="briefcase" style="width:11px;height:11px"></i> 중소기업 실무</div>
           <div class="cred-icon"><i data-lucide="briefcase" style="width:28px;height:28px"></i></div>
-          <div class="cred-title">관리부장 경험</div>
-          <p class="cred-desc">중소기업 관리부장 실무 경험으로 현장 언어를 압니다.</p>
+          <div class="cred-title">중소기업 실무</div>
+          <p class="cred-desc">기업 내부 관리업무 경험을 바탕으로 현장 언어를 이해합니다.</p>
         </div>
       </div>
     </div>
@@ -1271,9 +1320,9 @@
           </div>
         </div>
         <div class="about-stats">
-          <div class="about-stat"><div class="num">PhD</div><div class="label">경영학 박사</div></div>
-          <div class="about-stat"><div class="num">현장</div><div class="label">중심 컨설팅</div></div>
-          <div class="about-stat"><div class="num">실무</div><div class="label">기업 관리부장</div></div>
+          <div class="about-stat"><div class="num">박사</div><div class="label">경영학 기반 분석</div></div>
+          <div class="about-stat"><div class="num">현장</div><div class="label">중소기업 컨설팅</div></div>
+          <div class="about-stat"><div class="num">실무</div><div class="label">기업 관리부장 경험</div></div>
         </div>
       </div>
       <div class="fade-up fade-up-d1">
@@ -1481,17 +1530,31 @@
   }
 
   // ── Smooth scroll for anchor links
+  const SCROLL_OFFSET = 120; // quick-nav(~48px) + header(60px) + buffer
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
         e.preventDefault();
-        const offset = 68;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        const top = target.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET;
         window.scrollTo({ top, behavior: 'smooth' });
       }
     });
   });
+
+  // ── Quick-nav active state on scroll
+  const qnavLinks = document.querySelectorAll('.qnav-btn');
+  const svcSections = Array.from(qnavLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function updateQnav() {
+    let current = '';
+    svcSections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 160) current = '#' + sec.id;
+    });
+    qnavLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === current);
+    });
+  }
+  window.addEventListener('scroll', updateQnav, { passive: true });
 </script>
 </body>
 </html>
