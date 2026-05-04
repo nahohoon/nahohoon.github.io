@@ -286,15 +286,19 @@
     }
     /* 모바일: 헤더 바로 아래 sticky 고정 */
     @media (max-width: 960px) {
+      #header {
+        background: rgba(10,26,53,.97);
+        box-shadow: 0 2px 12px rgba(0,0,0,.18);
+      }
       #quick-nav {
         position: sticky;
         top: 60px;
         z-index: 190;
         background: #fff;
       }
-      .quick-nav-inner { justify-content: flex-start; padding: 8px 12px; gap: 7px; }
-      .qnav-btn { font-size: 13px; font-weight: 800; padding: 8px 13px; }
-      #hero { min-height: auto; padding: 40px 0 44px; }
+      .quick-nav-inner { justify-content: flex-start; padding: 6px 10px; gap: 6px; }
+      .qnav-btn { font-size: 12px; font-weight: 800; padding: 6px 11px; }
+      #hero { min-height: auto; padding: 24px 0 34px; }
     }
 
     /* ── Trust Bar ── */
@@ -615,13 +619,18 @@
       .footer-copy { text-align: center; }
       /* 모바일 floating 카카오 숨김 (Hero에 이미 버튼 있음) */
       #floating-kakao { display: none; }
+      /* 모바일 scroll indicator 숨김 */
+      .scroll-indicator { display: none; }
       /* 모바일 Hero 내부 간격 축소 */
-      .hero-inner { padding: 3.8rem 1.25rem 2.5rem; }
-      .hero-label { margin-bottom: 1.2rem; font-size: .68rem; }
+      .hero-inner { padding: 2.6rem 1.15rem 2rem; }
+      .hero-label { margin-bottom: 1rem; font-size: .64rem; padding: .32rem .7rem; }
       .hero-h1 { margin-bottom: .85rem; }
-      .hero-sub { font-size: .9rem; line-height: 1.55; }
-      .hero-tag { font-size: .76rem; line-height: 1.6; margin-bottom: 1.5rem; }
-      .hero-btns { gap: .7rem; margin-bottom: 1.5rem; }
+      .mobile-title { font-size: clamp(1.35rem, 5.5vw, 1.7rem); line-height: 1.42; }
+      .hero-sub { font-size: .82rem; line-height: 1.5; }
+      .hero-tag { font-size: .7rem; line-height: 1.5; margin-bottom: 1.15rem; }
+      .hero-btns { gap: .6rem; margin-bottom: 1.1rem; }
+      .btn-kakao, .btn-outline { max-width: 280px; padding: .75rem 1.2rem; font-size: .9rem; }
+      .hero-badge { font-size: .68rem; padding: .32rem .7rem; }
     }
     @media (max-width: 520px) {
       .field-grid { grid-template-columns: 1fr; }
