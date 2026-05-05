@@ -135,6 +135,53 @@
     @media(max-width:960px){.nav-desktop{display:none!important}.nav-cta{display:none!important}.mobile-toggle{display:block!important}}
     @media(max-width:768px){.prob-grid,.eff-grid,.cert-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.sol-item{grid-template-columns:1fr}.sol-num{display:none}.footer-inner{flex-direction:column;align-items:center;text-align:center}#floating-kakao{display:none}.cta-btns{flex-direction:column;align-items:center}.btn-kakao,.btn-tel{width:100%;max-width:300px}}
     @media(min-width:961px){.header-inner{height:74px}.logo-text{font-size:1.15rem;font-weight:800}.logo-brand{color:#FEE500}}
+    /* 모바일 줄바꿈·좌우 밀림 최소 보정 */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  .container,
+  .container-sm,
+  .ph-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-x: hidden;
+  }
+
+  .page-hero h1,
+  .section-title,
+  .contact-h2 {
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .page-hero p,
+  .section-sub,
+  .contact-sub,
+  .cert-desc,
+  .case-text,
+  .prob-card p,
+  .eff-card p {
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    word-break: keep-all;
+    line-height: 1.75;
+    text-align: justify;
+  }
+}
   </style>
 </head>
 <body>
