@@ -135,48 +135,6 @@
     @media(max-width:960px){.nav-desktop{display:none!important}.nav-cta{display:none!important}.mobile-toggle{display:block!important}}
     @media(max-width:768px){.prob-grid,.eff-grid,.level-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.sol-item{grid-template-columns:1fr}.sol-num{display:none}.level-grid{grid-template-columns:repeat(2,1fr)}.footer-inner{flex-direction:column;align-items:center;text-align:center}#floating-kakao{display:none}.cta-btns{flex-direction:column;align-items:center}.btn-kakao,.btn-tel{width:100%;max-width:300px}}
     @media(min-width:961px){.header-inner{height:74px}.logo-text{font-size:1.15rem;font-weight:800}.logo-brand{color:#FEE500}}
-
-
-    /* ── Mobile overflow & Korean line-break final fix ── */
-    html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
-    img, svg, video, canvas, iframe { max-width: 100%; }
-    .container, .container-sm, .ph-inner, .cta-inner, .header-inner { max-width: 100%; }
-    .section-title, .page-hero h1, .cta-inner h2 {
-      word-break: keep-all;
-      overflow-wrap: normal;
-      text-wrap: balance;
-    }
-    .section-sub, .page-hero p, .cta-inner p, .cred-desc, .prob-card p, .cert-desc, .eff-card p, .case-text {
-      word-break: keep-all;
-      overflow-wrap: break-word;
-    }
-    .mobile-line { display: inline; }
-    .mobile-justify { text-align: center; }
-    @media (max-width: 768px) {
-      body { position: relative; }
-      section { max-width: 100%; overflow-x: hidden; }
-      .container, .container-sm { padding-left: 1.15rem; padding-right: 1.15rem; }
-      .section-title { max-width: 330px; margin-left: auto; margin-right: auto; line-height: 1.42; }
-      .section-sub { max-width: 330px; margin-left: auto; margin-right: auto; text-align: justify; text-align-last: center; line-height: 1.9; }
-      .page-hero h1 { max-width: 330px; margin-left: auto; margin-right: auto; line-height: 1.42; }
-      .page-hero p { max-width: 330px; margin-left: auto; margin-right: auto; text-align: justify; text-align-last: center; line-height: 1.9; }
-      .cta-inner h2 { max-width: 335px; margin-left: auto; margin-right: auto; line-height: 1.45; }
-      .cta-inner p { max-width: 330px; margin-left: auto; margin-right: auto; text-align: justify; text-align-last: center; line-height: 1.85; }
-      .mobile-line { display: block; }
-      .mobile-justify { text-align: justify; text-align-last: center; }
-      .logo-text { font-size: clamp(.86rem, 4.5vw, 1.05rem) !important; }
-      .logo-sub { font-size: clamp(.48rem, 2.3vw, .62rem) !important; letter-spacing: .12em !important; }
-      .logo-symbol { width: 30px !important; height: 30px !important; }
-      .logo-bar { height: 34px !important; }
-      .header-inner { padding-left: .9rem !important; padding-right: .9rem !important; }
-    }
-    @media (max-width: 390px) {
-      .section-title, .page-hero h1, .cta-inner h2 { max-width: 300px; }
-      .section-sub, .page-hero p, .cta-inner p { max-width: 300px; }
-      .logo-text { font-size: .9rem !important; }
-      .logo-sub { font-size: .5rem !important; }
-    }
-
   </style>
 </head>
 <body>
