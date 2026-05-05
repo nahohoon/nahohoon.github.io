@@ -135,6 +135,48 @@
     @media(max-width:960px){.nav-desktop{display:none!important}.nav-cta{display:none!important}.mobile-toggle{display:block!important}}
     @media(max-width:768px){.prob-grid,.eff-grid,.cert-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.sol-item{grid-template-columns:1fr}.sol-num{display:none}.footer-inner{flex-direction:column;align-items:center;text-align:center}#floating-kakao{display:none}.cta-btns{flex-direction:column;align-items:center}.btn-kakao,.btn-tel{width:100%;max-width:300px}}
     @media(min-width:961px){.header-inner{height:74px}.logo-text{font-size:1.15rem;font-weight:800}.logo-brand{color:#FEE500}}
+
+
+    /* ── Mobile overflow & Korean line-break final fix ── */
+    html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    .container, .container-sm, .ph-inner, .cta-inner, .header-inner { max-width: 100%; }
+    .section-title, .page-hero h1, .cta-inner h2 {
+      word-break: keep-all;
+      overflow-wrap: normal;
+      text-wrap: balance;
+    }
+    .section-sub, .page-hero p, .cta-inner p, .cred-desc, .prob-card p, .cert-desc, .eff-card p, .case-text {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .mobile-line { display: inline; }
+    .mobile-justify { text-align: center; }
+    @media (max-width: 768px) {
+      body { position: relative; }
+      section { max-width: 100%; overflow-x: hidden; }
+      .container, .container-sm { padding-left: 1.15rem; padding-right: 1.15rem; }
+      .section-title { max-width: 330px; margin-left: auto; margin-right: auto; line-height: 1.42; }
+      .section-sub { max-width: 330px; margin-left: auto; margin-right: auto; text-align: justify; text-align-last: center; line-height: 1.9; }
+      .page-hero h1 { max-width: 330px; margin-left: auto; margin-right: auto; line-height: 1.42; }
+      .page-hero p { max-width: 330px; margin-left: auto; margin-right: auto; text-align: justify; text-align-last: center; line-height: 1.9; }
+      .cta-inner h2 { max-width: 335px; margin-left: auto; margin-right: auto; line-height: 1.45; }
+      .cta-inner p { max-width: 330px; margin-left: auto; margin-right: auto; text-align: justify; text-align-last: center; line-height: 1.85; }
+      .mobile-line { display: block; }
+      .mobile-justify { text-align: justify; text-align-last: center; }
+      .logo-text { font-size: clamp(.86rem, 4.5vw, 1.05rem) !important; }
+      .logo-sub { font-size: clamp(.48rem, 2.3vw, .62rem) !important; letter-spacing: .12em !important; }
+      .logo-symbol { width: 30px !important; height: 30px !important; }
+      .logo-bar { height: 34px !important; }
+      .header-inner { padding-left: .9rem !important; padding-right: .9rem !important; }
+    }
+    @media (max-width: 390px) {
+      .section-title, .page-hero h1, .cta-inner h2 { max-width: 300px; }
+      .section-sub, .page-hero p, .cta-inner p { max-width: 300px; }
+      .logo-text { font-size: .9rem !important; }
+      .logo-sub { font-size: .5rem !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -402,7 +444,7 @@
   <div class="container">
     <div class="text-center fade-up">
       <span class="section-badge">EXPECTED EFFECTS</span>
-      <h2 class="section-title">인증 취득이 가져오는 <span class="text-accent">실질적 혜택</span></h2>
+      <h2 class="section-title"><span class="mobile-line">인증 취득이 가져오는</span><span class="mobile-line text-accent">실질적 혜택</span></h2>
       <p class="section-sub">이노비즈·메인비즈 인증과 기업부설연구소 설립이 경영에 미치는 실질적 효과입니다.</p>
     </div>
     <div class="eff-grid">
@@ -505,7 +547,7 @@
   <div class="container-sm">
     <div class="text-center fade-up">
       <span class="section-badge">CERTIFICATION STRATEGY</span>
-      <h2 class="section-title">인증은 서류가 아니라 <span class="text-accent">기업 활용 전략</span>입니다</h2>
+      <h2 class="section-title"><span class="mobile-line">인증은 서류가 아니라</span><span class="mobile-line text-accent">기업 활용 전략입니다</span></h2>
       <p class="section-sub">벤처기업·뿌리기업확인·소부장 확인 등 우리 기업에 맞는 인증은 단순 서류가 아니라 지원사업, 정책자금, 금융조건, 평가 대응과 연결되는 활용 전략입니다. 특히 10인 미만 제조 소기업은 뿌리기업확인을 통해 환경·에너지 절감 사업 참여 가능성을 검토할 수 있고, 소부장 확인은 벤처평가와 금융 우대 검토에 활용될 수 있습니다.</p>
     </div>
   </div>
@@ -513,8 +555,8 @@
 
 <section id="cta">
   <div class="cta-inner">
-    <h2><span class="nowrap">벤처·뿌리기업·소부장 등</span><br><span class="nowrap">우리 기업에 맞는 인증 전략을 확인합니다</span></h2>
-    <p>벤처·뿌리기업확인·소부장 확인 등 현재 기업에 맞는 인증과 실제 활용 가능성을 먼저 점검해 드립니다.</p>
+    <h2><span class="mobile-line">벤처·뿌리기업·소부장 등</span><span class="mobile-line">우리 기업에 맞는</span><span class="mobile-line">인증 전략을 확인합니다</span></h2>
+    <p class="mobile-justify">벤처·뿌리기업확인·소부장 확인 등 현재 기업에 맞는 인증과 실제 활용 가능성을 먼저 점검해 드립니다.</p>
     <div class="cta-btns">
       <a class="btn-kakao" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.554 5.084 3.938 6.562l-1.002 3.73a.3.3 0 0 0 .46.326l4.26-2.837A12.14 12.14 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3Z"/></svg>
