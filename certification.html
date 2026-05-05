@@ -54,7 +54,7 @@
     .ph-tag{padding:.3rem .8rem;border-radius:999px;font-size:.73rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8)}
     .section-badge{display:inline-block;padding:.25rem .75rem;border-radius:999px;font-size:.7rem;font-weight:700;background:rgba(15,36,72,.08);color:var(--navy);margin-bottom:.75rem;letter-spacing:.05em}
     .section-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-weight:800;color:var(--navy);margin-bottom:.6rem;letter-spacing:-.04em;line-height:1.35}
-    .section-sub{color:var(--muted);max-width:560px;margin:0 auto;font-size:.88rem}
+    .section-sub{color:var(--muted);max-width:680px;margin:0 auto;font-size:.88rem;line-height:1.85;word-break:keep-all}.nowrap{white-space:nowrap}
     #problem{padding:4rem 0;background:var(--bg-gray)}
     .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.25rem}
     .prob-card{background:#fff;border-radius:1rem;border:1px solid var(--border);padding:1.4rem 1.25rem;transition:box-shadow .3s,transform .3s}
@@ -108,9 +108,9 @@
     .case-result-box{margin-top:.85rem;padding:.7rem .9rem;border-radius:.65rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25)}
     .case-result-text{font-size:.82rem;font-weight:700;color:var(--navy)}
     #cta{padding:4rem 0;background:linear-gradient(135deg,#0F2448 0%,#1a3a6e 100%)}
-    .cta-inner{max-width:760px;margin:0 auto;text-align:center;padding:0 1.5rem}
-    .cta-inner h2{font-family:'Noto Serif KR',serif;font-size:clamp(1.45rem,3.2vw,2rem);font-weight:800;color:#fff;letter-spacing:-.04em;margin-bottom:.75rem;line-height:1.38;word-break:keep-all;max-width:720px;margin-left:auto;margin-right:auto}
-    .cta-inner p{color:rgba(255,255,255,.65);font-size:.88rem;line-height:1.75;margin:0 auto 2rem;word-break:keep-all;max-width:680px}
+    .cta-inner{max-width:980px;margin:0 auto;text-align:center;padding:0 1.5rem}
+    .cta-inner h2{font-family:'Noto Serif KR',serif;font-size:clamp(1.55rem,3vw,2.15rem);font-weight:800;color:#fff;letter-spacing:-.04em;margin-bottom:.85rem;line-height:1.45;word-break:keep-all;max-width:900px;margin-left:auto;margin-right:auto}
+    .cta-inner p{color:rgba(255,255,255,.68);font-size:.9rem;line-height:1.85;margin:0 auto 2rem;word-break:keep-all;max-width:760px}
     .cta-btns{display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;margin-bottom:1.25rem}
     .btn-kakao{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.9rem 1.85rem;border-radius:.6rem;font-weight:700;font-size:.95rem;cursor:pointer;border:none;background:#FEE500;color:#3A1D1D;box-shadow:0 4px 20px rgba(254,229,0,.35);transition:transform .2s,box-shadow .2s;text-decoration:none;font-family:'Noto Sans KR',sans-serif}
     .btn-kakao:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(254,229,0,.55)}
@@ -131,7 +131,7 @@
     .fade-up{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
     .fade-up.visible{opacity:1;transform:translateY(0)}
     .fade-up-d1{transition-delay:.08s}.fade-up-d2{transition-delay:.16s}.fade-up-d3{transition-delay:.24s}
-    @media(max-width:768px){.cta-inner{max-width:360px}.cta-inner h2{font-size:1.35rem;line-height:1.45;max-width:330px}.cta-inner p{font-size:.82rem;max-width:320px}}
+    @media(max-width:768px){.cta-inner{max-width:100%;padding:0 1.2rem}.cta-inner h2{font-size:1.42rem;line-height:1.55;max-width:360px}.cta-inner p{font-size:.84rem;line-height:1.85;max-width:360px}.section-sub{max-width:360px;font-size:.84rem;line-height:1.85}}
     @media(max-width:960px){.nav-desktop{display:none!important}.nav-cta{display:none!important}.mobile-toggle{display:block!important}}
     @media(max-width:768px){.prob-grid,.eff-grid,.cert-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.sol-item{grid-template-columns:1fr}.sol-num{display:none}.footer-inner{flex-direction:column;align-items:center;text-align:center}#floating-kakao{display:none}.cta-btns{flex-direction:column;align-items:center}.btn-kakao,.btn-tel{width:100%;max-width:300px}}
     @media(min-width:961px){.header-inner{height:74px}.logo-text{font-size:1.15rem;font-weight:800}.logo-brand{color:#FEE500}}
@@ -181,8 +181,8 @@
   <div class="ph-blob1"></div><div class="ph-blob2"></div>
   <div class="ph-inner">
     <div class="page-badge"><i data-lucide="award" style="width:12px;height:12px"></i> 인증·평가 컨설팅</div>
-    <h1>인증 하나가<br><span style="color:var(--accent)">정부 지원·신뢰도·수주</span>를 바꿉니다</h1>
-    <p>벤처기업 인증, 기업부설연구소 설립, 메인비즈 인증, 이노비즈 인증까지 중소기업 맞춤 인증 컨설팅을 제공합니다. 경영학 박사·경영지도사가 신청부터 사후 유지까지 책임집니다.</p>
+    <h1><span class="nowrap">인증 하나가</span><br><span style="color:var(--accent)">정부 지원·신뢰도·수주</span>를 바꿉니다</h1>
+    <p>벤처기업 인증, 뿌리기업확인, 소부장 확인, 기업부설연구소 설립, 메인비즈·이노비즈 인증까지 기업 상황에 맞는 인증 전략을 설계합니다. 신청부터 실제 활용까지 함께 점검합니다.</p>
     <div class="ph-tags">
       <span class="ph-tag">#벤처기업인증</span>
       <span class="ph-tag">#기업부설연구소설립</span>
@@ -506,15 +506,15 @@
     <div class="text-center fade-up">
       <span class="section-badge">CERTIFICATION STRATEGY</span>
       <h2 class="section-title">인증은 서류가 아니라 <span class="text-accent">기업 활용 전략</span>입니다</h2>
-      <p class="section-sub">벤처기업·뿌리기업확인·소부장 확인 등 우리 기업에 필요한 인증은 단순 서류가 아니라 지원사업, 정책자금, 금융조건, 평가 대응과 연결되는 활용 전략입니다. 특히 10인 미만 제조 소기업은 뿌리기업확인을 통해 환경·에너지 절감 사업 참여 가능성을 검토할 수 있고, 소부장 확인은 벤처평가와 금융 우대 검토에 활용될 수 있습니다.</p>
+      <p class="section-sub">벤처기업·뿌리기업확인·소부장 확인 등 우리 기업에 맞는 인증은 단순 서류가 아니라 지원사업, 정책자금, 금융조건, 평가 대응과 연결되는 활용 전략입니다. 특히 10인 미만 제조 소기업은 뿌리기업확인을 통해 환경·에너지 절감 사업 참여 가능성을 검토할 수 있고, 소부장 확인은 벤처평가와 금융 우대 검토에 활용될 수 있습니다.</p>
     </div>
   </div>
 </section>
 
 <section id="cta">
   <div class="cta-inner">
-    <h2>벤처·뿌리기업·소부장까지,<br>우리 기업에 맞는 인증 전략을 확인합니다</h2>
-    <p>벤처·이노비즈·메인비즈·기업부설연구소·뿌리기업확인·소부장 확인 중 현재 기업에 필요한 인증과 실제 활용 가능성을 먼저 점검해 드립니다.</p>
+    <h2><span class="nowrap">벤처·뿌리기업·소부장 등</span><br><span class="nowrap">우리 기업에 맞는 인증 전략을 확인합니다</span></h2>
+    <p>벤처·뿌리기업확인·소부장 확인 등 현재 기업에 맞는 인증과 실제 활용 가능성을 먼저 점검해 드립니다.</p>
     <div class="cta-btns">
       <a class="btn-kakao" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.554 5.084 3.938 6.562l-1.002 3.73a.3.3 0 0 0 .46.326l4.26-2.837A12.14 12.14 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3Z"/></svg>
