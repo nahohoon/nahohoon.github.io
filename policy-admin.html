@@ -294,7 +294,6 @@
       try {
         var res = await fetch(GAS_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'updateStatus', receiptNo: receiptNo, status: newStatus })
         });
         var text = await res.text();
