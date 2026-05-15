@@ -357,7 +357,8 @@
 </footer>
 
 <script>
-  const GAS_URL = '';
+  /* 웹앱 배포 URL — docs/policy-diagnosis-gas-setup.md 참고 */
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
 
   async function submitDiagnosisForm(event) {
     event.preventDefault();
@@ -379,10 +380,21 @@
         var res = await fetch(GAS_URL.trim(), {
           method: 'POST',
           mode: 'cors',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error('bad status');
+        var text = await res.text();
+        var result;
+        try {
+          result = JSON.parse(text);
+        } catch (parseErr) {
+          throw new Error('invalid json');
+        }
+        if (!res.ok || result.success !== true) {
+          var errMsg = (result && result.error) ? result.error : '전송 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.';
+          alert(errMsg);
+          return;
+        }
       } catch (err) {
         alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.');
         return;
