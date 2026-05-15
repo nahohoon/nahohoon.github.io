@@ -251,6 +251,7 @@
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
 
     const STATUS_LIST = ['신규', '상담중', '자료요청', '진행중', '보류', '완료', '부결'];
+    const NEXT_ACTION_LIST = ['전화상담', '자료요청', '현장방문', '신청서작성', '기관연결', '재연락예정'];
 
     const FIELDS = [
       { key: '접수일', label: '접수일' },
@@ -325,7 +326,10 @@
       var memo = getField(row, '상담메모');
       return '<div class="memo-editor">' +
         '<div><div class="memo-editor-label">다음액션</div>' +
-          '<input class="memo-editor-input" type="text" data-field="nextAction" data-receipt="' + escapeHtml(receiptNo) + '" value="' + escapeHtml(nextAction) + '" placeholder="다음 액션을 입력하세요"></div>' +
+          '<select class="memo-editor-input" data-field="nextAction" data-receipt="' + escapeHtml(receiptNo) + '">' +
+            '<option value="">-- 선택 --</option>' +
+            NEXT_ACTION_LIST.map(function(s) { return '<option value="' + escapeHtml(s) + '"' + (s === nextAction ? ' selected' : '') + '>' + escapeHtml(s) + '</option>'; }).join('') +
+          '</select></div>' +
         '<div><div class="memo-editor-label">상담메모</div>' +
           '<textarea class="memo-editor-input" data-field="memo" rows="3" placeholder="상담메모를 입력하세요">' + escapeHtml(memo) + '</textarea></div>' +
         '<button type="button" class="btn-save-memo" data-receipt="' + escapeHtml(receiptNo) + '" onclick="saveMemoAction(this)">메모 저장</button>' +
