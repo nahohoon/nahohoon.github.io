@@ -170,6 +170,45 @@
       background: #fff;
       cursor: pointer;
     }
+    .memo-editor {
+      margin-top: .75rem;
+      padding-top: .65rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .memo-editor-label {
+      font-size: .68rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: .15rem;
+    }
+    .memo-editor-input {
+      width: 100%;
+      padding: .45rem .55rem;
+      border: 1px solid var(--border);
+      border-radius: .4rem;
+      font-size: .78rem;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #1a202c;
+      background: #fff;
+      resize: vertical;
+    }
+    .memo-editor-input:focus { outline: none; border-color: var(--navy); }
+    .btn-save-memo {
+      align-self: flex-end;
+      padding: .35rem .85rem;
+      border-radius: .4rem;
+      font-size: .75rem;
+      font-weight: 700;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .btn-save-memo:hover { background: var(--navy-dark); }
   </style>
 </head>
 <body>
@@ -226,7 +265,7 @@
       { key: '자금유형', label: '자금유형', alt: ['fundType'] },
       { key: '예상가능성', label: '예상가능성' },
       { key: '추천사업', label: '추천사업' },
-      { key: '다음액션', label: '다음액션' }
+      { key: '다음액션', label: '다음액션', skipInGrid: true }
     ];
 
     var pipelineData = [];
@@ -281,6 +320,43 @@
       return '<select class="status-change-select" data-receipt="' + escapeHtml(receiptNo) + '" data-old="' + escapeHtml(status) + '" onchange="updateStatus(this)">' + opts + '</select>';
     }
 
+    function buildMemoActionEditor(row, receiptNo) {
+      var nextAction = getField(row, '다음액션');
+      var memo = getField(row, '상담메모');
+      return '<div class="memo-editor">' +
+        '<div><div class="memo-editor-label">다음액션</div>' +
+          '<input class="memo-editor-input" type="text" data-field="nextAction" data-receipt="' + escapeHtml(receiptNo) + '" value="' + escapeHtml(nextAction) + '" placeholder="다음 액션을 입력하세요"></div>' +
+        '<div><div class="memo-editor-label">상담메모</div>' +
+          '<textarea class="memo-editor-input" data-field="memo" rows="3" placeholder="상담메모를 입력하세요">' + escapeHtml(memo) + '</textarea></div>' +
+        '<button type="button" class="btn-save-memo" data-receipt="' + escapeHtml(receiptNo) + '" onclick="saveMemoAction(this)">메모 저장</button>' +
+      '</div>';
+    }
+
+    async function saveMemoAction(buttonEl) {
+      var editor = buttonEl.closest('.memo-editor');
+      var receiptNo = buttonEl.getAttribute('data-receipt');
+      var nextAction = editor.querySelector('[data-field="nextAction"]').value;
+      var memo = editor.querySelector('[data-field="memo"]').value;
+
+      try {
+        var res = await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'updateMemoAction', receiptNo: receiptNo, nextAction: nextAction, memo: memo })
+        });
+        var text = await res.text();
+        var result;
+        try { result = JSON.parse(text); } catch (e) { throw new Error('응답 JSON 파싱 실패'); }
+        if (result.success) {
+          alert('상담메모와 다음액션이 저장되었습니다.');
+          loadPipeline();
+        } else {
+          alert(result.message || '저장 실패');
+        }
+      } catch (err) {
+        alert(err.message || '저장 실패');
+      }
+    }
+
     async function updateStatus(selectEl) {
       var newStatus = selectEl.value;
       var receiptNo = selectEl.getAttribute('data-receipt');
@@ -329,10 +405,6 @@
           '</div>';
       });
 
-      var memoHtml = memo
-        ? '<div class="field full"><span class="field-label">상담메모</span><div class="memo-box">' + escapeHtml(memo) + '</div></div>'
-        : '<div class="field full"><span class="field-label">상담메모</span><span class="field-value empty">-</span></div>';
-
       return '<article class="consult-card">' +
         '<div class="card-head">' +
           '<div><div class="card-meta">' + escapeHtml(received) + '</div><div class="card-title">' + escapeHtml(company) + '</div></div>' +
@@ -341,7 +413,8 @@
             buildStatusSelect(status, receiptNo) +
           '</div>' +
         '</div>' +
-        '<div class="card-grid">' + gridHtml + memoHtml + '</div>' +
+        '<div class="card-grid">' + gridHtml + '</div>' +
+        buildMemoActionEditor(row, receiptNo) +
       '</article>';
     }
 
