@@ -106,6 +106,17 @@
       font-family: 'Noto Sans KR', sans-serif;
     }
     .btn-outline:hover { background: rgba(255,255,255,.1); }
+    .btn-hero-diagnosis {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .85rem 1.75rem; border-radius: .6rem;
+      font-weight: 700; font-size: .95rem; cursor: pointer;
+      background: rgba(201,168,76,.12);
+      color: #e8c56a;
+      border: 1.5px solid rgba(201,168,76,.5);
+      transition: background .2s, border-color .2s, color .2s; text-decoration: none;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .btn-hero-diagnosis:hover { background: rgba(201,168,76,.2); border-color: var(--accent); color: #f5e6b3; }
     .btn-navy {
       display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
       padding: .7rem 1.5rem; border-radius: .5rem;
@@ -698,7 +709,7 @@
       .result-grid, .pain-grid { grid-template-columns: 1fr; }
       .form-grid-2 { grid-template-columns: 1fr; }
       .hero-btns { flex-direction: column; align-items: center; }
-      .btn-kakao, .btn-outline { width: 100%; max-width: 300px; }
+      .btn-kakao, .btn-outline, .btn-hero-diagnosis { width: 100%; max-width: 300px; }
       .trust-bar-dot { display: none; }
       .footer-inner { flex-direction: column; align-items: center; text-align: center; }
       .footer-copy { text-align: center; }
@@ -714,7 +725,7 @@
       .hero-sub { font-size: .82rem; line-height: 1.5; word-break: keep-all; }
       .hero-tag { font-size: .7rem; line-height: 1.5; margin-bottom: 1.15rem; }
       .hero-btns { gap: .6rem; margin-bottom: 1.1rem; }
-      .btn-kakao, .btn-outline { max-width: 280px; padding: .75rem 1.2rem; font-size: .9rem; }
+      .btn-kakao, .btn-outline, .btn-hero-diagnosis { max-width: 280px; padding: .75rem 1.2rem; font-size: .9rem; }
       .hero-badge { font-size: .68rem; padding: .32rem .7rem; }
     }
     @media (max-width: 520px) {
@@ -836,6 +847,10 @@
       <a class="btn-kakao" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.554 5.084 3.938 6.562l-1.002 3.73a.3.3 0 0 0 .46.326l4.26-2.837A12.14 12.14 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3Z"/></svg>
         카카오톡 무료 진단 요청
+      </a>
+      <a class="btn-hero-diagnosis" href="policy-diagnosis.html">
+        <i data-lucide="clipboard-check" style="width:18px;height:18px"></i>
+        정책자금 무료진단 받기
       </a>
       <a class="btn-outline btn-outline-pc" href="#field-summary">
         <i data-lucide="search" style="width:17px;height:17px"></i>
