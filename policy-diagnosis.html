@@ -229,6 +229,15 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="businessForm">사업자형태 <span class="req">*</span></label>
+            <select class="form-input" id="businessForm" name="businessForm" required>
+              <option value="" disabled selected>선택해 주세요</option>
+              <option>개인사업자</option>
+              <option>법인사업자</option>
+              <option>미등록</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="revenue">연매출 규모 <span class="req">*</span></label>
             <select class="form-input" id="revenue" name="revenue" required>
               <option value="" disabled selected>선택해 주세요</option>
@@ -387,6 +396,7 @@
     });
     const phoneValue = formatPhoneNumber(document.getElementById('phone').value || '');
     payload.phone = phoneValue;
+    payload.businessForm = document.getElementById('businessForm').value;
     payload.privacyAgree = agree.checked ? '동의' : '미동의';
 
     if (typeof GAS_URL === 'string' && GAS_URL.trim()) {
