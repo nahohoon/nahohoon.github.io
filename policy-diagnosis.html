@@ -196,15 +196,15 @@
         <div class="pd-form-grid">
           <div class="form-group">
             <label for="companyName">업체명 <span class="req">*</span></label>
-            <input class="form-input" id="companyName" name="companyName" type="text" required autocomplete="organization" placeholder="사업자등록증 상호" />
+            <input class="form-input" id="companyName" name="companyName" type="text" required autocomplete="organization" placeholder="사업자등록증 상호" lang="ko" />
           </div>
           <div class="form-group">
             <label for="contactName">대표자명 또는 담당자명 <span class="req">*</span></label>
-            <input class="form-input" id="contactName" name="contactName" type="text" required autocomplete="name" placeholder="성함" />
+            <input class="form-input" id="contactName" name="contactName" type="text" required autocomplete="name" placeholder="성함" lang="ko" />
           </div>
           <div class="form-group">
             <label for="phone">연락처 <span class="req">*</span></label>
-            <input class="form-input" id="phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" />
+            <input class="form-input" id="phone" name="phone" type="tel" required inputmode="numeric" autocomplete="tel" placeholder="010-0000-0000" />
           </div>
           <div class="form-group">
             <label for="email">이메일 <span class="req">*</span></label>
@@ -212,11 +212,11 @@
           </div>
           <div class="form-group">
             <label for="region">지역 <span class="req">*</span></label>
-            <input class="form-input" id="region" name="region" type="text" required placeholder="시·도 및 시·군·구" />
+            <input class="form-input" id="region" name="region" type="text" required placeholder="시·도 및 시·군·구" lang="ko" />
           </div>
           <div class="form-group">
             <label for="industry">업종 <span class="req">*</span></label>
-            <input class="form-input" id="industry" name="industry" type="text" required placeholder="대표 업종 또는 업태" />
+            <input class="form-input" id="industry" name="industry" type="text" required placeholder="대표 업종 또는 업태" lang="ko" />
           </div>
           <div class="form-group">
             <label for="bizType">사업자 유형 <span class="req">*</span></label>
@@ -263,7 +263,7 @@
           </div>
           <div class="form-group pd-span-full">
             <label for="concerns">현재 애로사항</label>
-            <textarea class="form-input" id="concerns" name="concerns" placeholder="자금 필요 배경, 급한 일정, 기존 대출 여부 등을 자유롭게 적어 주세요."></textarea>
+            <textarea class="form-input" id="concerns" name="concerns" placeholder="자금 필요 배경, 급한 일정, 기존 대출 여부 등을 자유롭게 적어 주세요." lang="ko"></textarea>
           </div>
           <div class="form-group">
             <label for="taxDelinq">세금 체납 여부 <span class="req">*</span></label>
@@ -361,6 +361,17 @@
   // 예: https://script.google.com/macros/s/XXXXX/exec
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
 
+  function formatPhoneNumber(value) {
+    const numbers = String(value || '').replace(/\D/g, '');
+    if (numbers.length <= 3) {
+      return numbers;
+    }
+    if (numbers.length <= 7) {
+      return numbers.replace(/(\d{3})(\d{1,4})/, '$1-$2');
+    }
+    return numbers.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
+  }
+
   async function submitDiagnosisForm(event) {
     event.preventDefault();
     var form = document.getElementById('diagnosis-form');
@@ -413,6 +424,13 @@
       var top = ok.getBoundingClientRect().top + window.scrollY - 100;
       window.scrollTo({ top: top, behavior: 'smooth' });
     }
+  }
+
+  const phoneInput = document.getElementById('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function () {
+      this.value = formatPhoneNumber(this.value);
+    });
   }
 
   lucide.createIcons();
