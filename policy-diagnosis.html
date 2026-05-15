@@ -357,7 +357,8 @@
 </footer>
 
 <script>
-  /* 웹앱 배포 URL — docs/policy-diagnosis-gas-setup.md 참고 */
+  // Google Apps Script Web App exec URL 입력
+  // 예: https://script.google.com/macros/s/XXXXX/exec
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
 
   async function submitDiagnosisForm(event) {
@@ -377,12 +378,12 @@
 
     if (typeof GAS_URL === 'string' && GAS_URL.trim()) {
       try {
+        console.log('SEND PAYLOAD', payload);
         var res = await fetch(GAS_URL.trim(), {
           method: 'POST',
-          mode: 'cors',
-          headers: { 'Content-Type': 'application/json; charset=utf-8' },
           body: JSON.stringify(payload)
         });
+        console.log('FETCH RESPONSE', res);
         var text = await res.text();
         var result;
         try {
@@ -396,6 +397,7 @@
           return;
         }
       } catch (err) {
+        console.error('FETCH ERROR', err);
         alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.');
         return;
       }
