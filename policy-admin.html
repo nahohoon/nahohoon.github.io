@@ -400,16 +400,17 @@
           throw new Error('응답 JSON 파싱 실패');
         }
 
-        if (!result.success || !Array.isArray(result.data)) {
+        if (result.success !== true) {
           throw new Error((result && result.error) ? result.error : '데이터 조회에 실패했습니다.');
         }
 
-        pipelineData = result.data;
-        renderSummary(pipelineData);
+        var rows = Array.isArray(result.rows) ? result.rows : [];
+        pipelineData = rows;
+        renderSummary(rows);
         renderList();
-        setLoadStatus('총 ' + (result.count != null ? result.count : pipelineData.length) + '건 · ' + formatNow());
+        setLoadStatus('총 ' + rows.length + '건 · ' + formatNow());
       } catch (err) {
-        console.error('PIPELINE LOAD ERROR', err);
+        console.error(err);
         pipelineData = [];
         renderSummary([]);
         container.innerHTML = '<div class="error-state">데이터를 불러오지 못했습니다.<br>' + escapeHtml(err.message || String(err)) + '</div>';
