@@ -196,11 +196,11 @@
         <div class="pd-form-grid">
           <div class="form-group">
             <label for="companyName">업체명 <span class="req">*</span></label>
-            <input class="form-input" id="companyName" name="companyName" type="text" required autocomplete="organization" placeholder="사업자등록증 상호" lang="ko" />
+            <input class="form-input" id="companyName" name="companyName" type="text" required autocomplete="off" placeholder="사업자등록증 상호" lang="ko" />
           </div>
           <div class="form-group">
             <label for="contactName">대표자명 또는 담당자명 <span class="req">*</span></label>
-            <input class="form-input" id="contactName" name="contactName" type="text" required autocomplete="name" placeholder="성함" lang="ko" />
+            <input class="form-input" id="contactName" name="contactName" type="text" required autocomplete="off" placeholder="성함" lang="ko" />
           </div>
           <div class="form-group">
             <label for="phone">연락처 <span class="req">*</span></label>
@@ -212,11 +212,11 @@
           </div>
           <div class="form-group">
             <label for="region">지역 <span class="req">*</span></label>
-            <input class="form-input" id="region" name="region" type="text" required placeholder="시·도 및 시·군·구" lang="ko" />
+            <input class="form-input" id="region" name="region" type="text" required placeholder="시·도 및 시·군·구" lang="ko" autocomplete="off" />
           </div>
           <div class="form-group">
             <label for="industry">업종 <span class="req">*</span></label>
-            <input class="form-input" id="industry" name="industry" type="text" required placeholder="대표 업종 또는 업태" lang="ko" />
+            <input class="form-input" id="industry" name="industry" type="text" required placeholder="대표 업종 또는 업태" lang="ko" autocomplete="off" />
           </div>
           <div class="form-group">
             <label for="bizType">사업자 유형 <span class="req">*</span></label>
@@ -263,7 +263,7 @@
           </div>
           <div class="form-group pd-span-full">
             <label for="concerns">현재 애로사항</label>
-            <textarea class="form-input" id="concerns" name="concerns" placeholder="자금 필요 배경, 급한 일정, 기존 대출 여부 등을 자유롭게 적어 주세요." lang="ko"></textarea>
+            <textarea class="form-input" id="concerns" name="concerns" placeholder="자금 필요 배경, 급한 일정, 기존 대출 여부 등을 자유롭게 적어 주세요." lang="ko" autocomplete="off"></textarea>
           </div>
           <div class="form-group">
             <label for="taxDelinq">세금 체납 여부 <span class="req">*</span></label>
@@ -385,6 +385,8 @@
     fd.forEach(function (value, key) {
       payload[key] = value;
     });
+    const phoneValue = formatPhoneNumber(document.getElementById('phone').value || '');
+    payload.phone = phoneValue;
     payload.privacyAgree = agree.checked ? '동의' : '미동의';
 
     if (typeof GAS_URL === 'string' && GAS_URL.trim()) {
