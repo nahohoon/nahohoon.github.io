@@ -923,6 +923,18 @@
         전문 분야 보기
       </a>
     </div>
+    <!-- ── Notice Board (NOTICE_BOARD) ── -->
+    <section id="notice-board" class="notice-section" aria-label="최신 정책자금 · 정부지원사업">
+      <div class="container">
+        <div class="text-center fade-up" style="margin-bottom:1.75rem">
+          <span class="section-badge">NOTICE</span>
+          <h2 class="section-title">📢 최신 정책자금 · 정부지원사업</h2>
+        </div>
+        <div id="notice-grid" class="notice-grid">
+          <p class="notice-loading">불러오는 중…</p>
+        </div>
+      </div>
+    </section>
     <div class="hero-choice fade-up fade-up-d4">
       <p class="hero-choice-title">어떤 도움이 필요하신가요?</p>
       <div class="hero-choice-buttons">
@@ -942,19 +954,6 @@
   </div>
   <div class="scroll-indicator">
     <i data-lucide="chevron-down" style="width:26px;height:26px"></i>
-  </div>
-</section>
-
-<!-- ── Notice Board (NOTICE_BOARD) ── -->
-<section id="notice-board" class="notice-section" aria-label="최신 정책자금 · 정부지원사업">
-  <div class="container">
-    <div class="text-center fade-up" style="margin-bottom:1.75rem">
-      <span class="section-badge">NOTICE</span>
-      <h2 class="section-title">📢 최신 정책자금 · 정부지원사업</h2>
-    </div>
-    <div id="notice-grid" class="notice-grid">
-      <p class="notice-loading">불러오는 중…</p>
-    </div>
   </div>
 </section>
 
@@ -1825,6 +1824,16 @@
       .replace(/"/g, '&quot;');
   }
 
+  function normalizeNoticeRowKeys(row) {
+    if (!row || typeof row !== 'object') return {};
+    var out = {};
+    Object.keys(row).forEach(function (key) {
+      var nk = String(key).replace(/^\uFEFF/, '').trim();
+      out[nk] = row[key];
+    });
+    return out;
+  }
+
   function noticePickField(row, keys) {
     if (!row) return '';
     for (var i = 0; i < keys.length; i++) {
@@ -1835,35 +1844,52 @@
   }
 
   function isNoticeYes(val) {
+    if (val === true) return true;
     var s = String(val || '').trim().toUpperCase();
-    return s === 'Y' || s === 'YES' || s === 'TRUE' || s === '1';
+    return s === 'Y' || s === 'YES' || s === 'TRUE' || s === '1' || s === '예' || s === '게시';
   }
 
   function parseNoticeDate(str) {
-    if (!str) return 0;
-    var t = Date.parse(str);
+    if (str === undefined || str === null || str === '') return 0;
+    if (typeof str === 'number' && !isNaN(str)) {
+      var sheetEpoch = new Date(1899, 11, 30).getTime();
+      return sheetEpoch + str * 86400000;
+    }
+    var t = Date.parse(String(str));
     return isNaN(t) ? 0 : t;
   }
 
   function normalizeNotice(row) {
+    var r = normalizeNoticeRowKeys(row);
     return {
-      type: noticePickField(row, ['유형', 'type', 'TYPE']),
-      title: noticePickField(row, ['제목', 'title', 'TITLE']),
-      summary: noticePickField(row, ['요약', 'summary', 'SUMMARY']),
-      buttonText: noticePickField(row, ['버튼문구', 'buttonText', 'BUTTON_TEXT', 'button_text']) || '자세히 보기',
-      linkUrl: noticePickField(row, ['링크URL', 'linkUrl', 'LINK_URL', 'link_url', '링크']),
-      published: noticePickField(row, ['게시여부', 'published', 'PUBLISHED']),
-      important: noticePickField(row, ['중요여부', 'important', 'IMPORTANT']),
-      pinned: noticePickField(row, ['상단고정', 'pinned', 'PINNED']),
-      date: noticePickField(row, ['게시일', 'date', 'DATE', 'publishedAt', 'published_at'])
+      type: noticePickField(r, ['유형', 'type', 'TYPE']),
+      title: noticePickField(r, ['제목', 'title', 'TITLE']),
+      summary: noticePickField(r, ['요약', 'summary', 'SUMMARY']),
+      buttonText: noticePickField(r, ['버튼문구', 'buttonText', 'BUTTON_TEXT', 'button_text']) || '자세히 보기',
+      linkUrl: noticePickField(r, ['링크URL', 'linkUrl', 'LINK_URL', 'link_url', '링크']),
+      published: noticePickField(r, ['게시여부', 'published', 'PUBLISHED']),
+      important: noticePickField(r, ['중요여부', 'important', 'IMPORTANT']),
+      pinned: noticePickField(r, ['상단고정', 'pinned', 'PINNED']),
+      date: noticePickField(r, ['게시일', 'date', 'DATE', 'publishedAt', 'published_at'])
     };
+  }
+
+  function extractNoticeRows(result) {
+    if (!result) return [];
+    if (Array.isArray(result)) return result;
+    var keys = ['rows', 'data', 'notices', 'items'];
+    for (var i = 0; i < keys.length; i++) {
+      if (Array.isArray(result[keys[i]])) return result[keys[i]];
+    }
+    return [];
   }
 
   function renderNotices(rows) {
     var grid = document.getElementById('notice-grid');
     if (!grid) return;
 
-    var list = (Array.isArray(rows) ? rows : [])
+    var raw = Array.isArray(rows) ? rows : extractNoticeRows(rows);
+    var list = raw
       .map(normalizeNotice)
       .filter(function (n) { return isNoticeYes(n.published); });
 
@@ -1873,6 +1899,8 @@
       if (pinB !== pinA) return pinB - pinA;
       return parseNoticeDate(b.date) - parseNoticeDate(a.date);
     });
+
+    list = list.slice(0, 3);
 
     if (!list.length) {
       grid.innerHTML = '<p class="notice-empty">현재 등록된 공지가 없습니다.</p>';
@@ -1904,8 +1932,8 @@
     }).join('');
   }
 
-  async function loadNotices() {
-    var grid = document.getElementById('notice-grid');
+  function loadNotices() {
+    const grid = document.getElementById('notice-grid');
     if (!grid) return;
 
     if (!GAS_WEBAPP_URL || !String(GAS_WEBAPP_URL).trim()) {
@@ -1913,28 +1941,35 @@
       return;
     }
 
-    try {
-      var base = GAS_WEBAPP_URL.trim();
-      var url = base + (base.indexOf('?') >= 0 ? '&' : '?') + 'action=getNotices';
-      var res = await fetch(url);
-      var text = await res.text();
-      var result;
-      try {
-        result = JSON.parse(text);
-      } catch (parseErr) {
-        throw new Error('invalid json');
-      }
-
-      if (!res.ok || result.success !== true) {
-        throw new Error((result && result.error) ? result.error : 'fetch failed');
-      }
-
-      var rows = Array.isArray(result.rows) ? result.rows : [];
+    const callbackName = 'handleNoticeJsonp_' + Date.now();
+    window[callbackName] = function(result) {
+      console.log('NOTICE API RESULT', result);
+      const rows = extractNoticeRows(result);
       renderNotices(rows);
-    } catch (err) {
-      console.error('loadNotices', err);
+      delete window[callbackName];
+      const oldScript = document.getElementById(callbackName);
+      if (oldScript) oldScript.remove();
+    };
+
+    const base = GAS_WEBAPP_URL.trim();
+    const url =
+      base +
+      (base.indexOf('?') >= 0 ? '&' : '?') +
+      'action=getNotices&callback=' +
+      callbackName +
+      '&ts=' +
+      Date.now();
+
+    const script = document.createElement('script');
+    script.id = callbackName;
+    script.src = url;
+    script.onerror = function() {
+      console.error('loadNotices JSONP failed');
       grid.innerHTML = '<p class="notice-empty">현재 등록된 공지가 없습니다.</p>';
-    }
+      delete window[callbackName];
+      script.remove();
+    };
+    document.body.appendChild(script);
   }
 
   loadNotices();
