@@ -395,6 +395,72 @@
     .trust-bar-item span { color: rgba(255,255,255,.55); font-size: .7rem; font-weight: 500; }
     .trust-bar-dot { color: rgba(255,255,255,.18); font-size: .7rem; }
 
+    /* ── Notice Board ── */
+    .notice-section { padding: 3rem 0 2.75rem; background: var(--bg-gray); }
+    .notice-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 720px; margin: 0 auto; }
+    .notice-card {
+      background: #fff; border-radius: .85rem;
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.15rem 1.1rem;
+      display: flex; flex-direction: column; gap: .55rem;
+      transition: box-shadow .25s, border-color .25s;
+    }
+    .notice-card:hover { box-shadow: 0 8px 28px rgba(15,36,72,.08); }
+    .notice-card.notice-important {
+      border-color: rgba(201,168,76,.5);
+      background: linear-gradient(180deg, rgba(201,168,76,.06) 0%, #fff 42%);
+      box-shadow: 0 4px 18px rgba(201,168,76,.14);
+    }
+    .notice-card.notice-important .notice-type {
+      background: rgba(201,168,76,.18); color: #7a5c1e;
+    }
+    .notice-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem .5rem; }
+    .notice-type {
+      display: inline-block; padding: .2rem .55rem; border-radius: .3rem;
+      font-size: .68rem; font-weight: 700;
+      background: rgba(15,36,72,.07); color: var(--navy);
+    }
+    .notice-pin-badge {
+      font-size: .65rem; font-weight: 700; color: var(--navy);
+      padding: .15rem .45rem; border-radius: 999px;
+      background: rgba(15,36,72,.08); border: 1px solid var(--border);
+    }
+    .notice-title {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.12rem);
+      color: var(--navy); letter-spacing: -.03em; line-height: 1.45;
+      word-break: keep-all; overflow-wrap: anywhere;
+    }
+    .notice-summary {
+      font-size: .82rem; color: var(--muted); line-height: 1.65;
+      word-break: keep-all; overflow-wrap: anywhere;
+    }
+    .notice-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: .65rem .75rem;
+      margin-top: .25rem; padding-top: .75rem;
+      border-top: 1px solid var(--border);
+    }
+    .notice-date { font-size: .72rem; color: var(--muted); white-space: nowrap; }
+    .notice-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 44px; padding: .55rem 1.15rem; border-radius: .45rem;
+      font-size: .8rem; font-weight: 700;
+      background: var(--navy); color: #fff;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity .2s, transform .18s;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .notice-btn:hover { opacity: .9; transform: translateY(-1px); }
+    .notice-card.notice-important .notice-btn {
+      background: linear-gradient(135deg, #a8842e 0%, var(--accent) 100%);
+      color: var(--navy-dark);
+    }
+    .notice-empty, .notice-loading {
+      text-align: center; font-size: .85rem; color: var(--muted);
+      padding: 1.5rem .5rem;
+    }
+
     /* ── 전문 컨설팅 분야 (Summary Cards) ── */
     #field-summary { padding: 4rem 0 3.5rem; background: #fff; }
     .field-grid {
@@ -876,6 +942,19 @@
   </div>
   <div class="scroll-indicator">
     <i data-lucide="chevron-down" style="width:26px;height:26px"></i>
+  </div>
+</section>
+
+<!-- ── Notice Board (NOTICE_BOARD) ── -->
+<section id="notice-board" class="notice-section" aria-label="최신 정책자금 · 정부지원사업">
+  <div class="container">
+    <div class="text-center fade-up" style="margin-bottom:1.75rem">
+      <span class="section-badge">NOTICE</span>
+      <h2 class="section-title">📢 최신 정책자금 · 정부지원사업</h2>
+    </div>
+    <div id="notice-grid" class="notice-grid">
+      <p class="notice-loading">불러오는 중…</p>
+    </div>
   </div>
 </section>
 
@@ -1734,6 +1813,131 @@
     });
   }
   window.addEventListener('scroll', updateQnav, { passive: true });
+
+  // ── Notice Board (NOTICE_BOARD via Apps Script)
+  const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
+
+  function noticeEscapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function noticePickField(row, keys) {
+    if (!row) return '';
+    for (var i = 0; i < keys.length; i++) {
+      var v = row[keys[i]];
+      if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim();
+    }
+    return '';
+  }
+
+  function isNoticeYes(val) {
+    var s = String(val || '').trim().toUpperCase();
+    return s === 'Y' || s === 'YES' || s === 'TRUE' || s === '1';
+  }
+
+  function parseNoticeDate(str) {
+    if (!str) return 0;
+    var t = Date.parse(str);
+    return isNaN(t) ? 0 : t;
+  }
+
+  function normalizeNotice(row) {
+    return {
+      type: noticePickField(row, ['유형', 'type', 'TYPE']),
+      title: noticePickField(row, ['제목', 'title', 'TITLE']),
+      summary: noticePickField(row, ['요약', 'summary', 'SUMMARY']),
+      buttonText: noticePickField(row, ['버튼문구', 'buttonText', 'BUTTON_TEXT', 'button_text']) || '자세히 보기',
+      linkUrl: noticePickField(row, ['링크URL', 'linkUrl', 'LINK_URL', 'link_url', '링크']),
+      published: noticePickField(row, ['게시여부', 'published', 'PUBLISHED']),
+      important: noticePickField(row, ['중요여부', 'important', 'IMPORTANT']),
+      pinned: noticePickField(row, ['상단고정', 'pinned', 'PINNED']),
+      date: noticePickField(row, ['게시일', 'date', 'DATE', 'publishedAt', 'published_at'])
+    };
+  }
+
+  function renderNotices(rows) {
+    var grid = document.getElementById('notice-grid');
+    if (!grid) return;
+
+    var list = (Array.isArray(rows) ? rows : [])
+      .map(normalizeNotice)
+      .filter(function (n) { return isNoticeYes(n.published); });
+
+    list.sort(function (a, b) {
+      var pinA = isNoticeYes(a.pinned) ? 1 : 0;
+      var pinB = isNoticeYes(b.pinned) ? 1 : 0;
+      if (pinB !== pinA) return pinB - pinA;
+      return parseNoticeDate(b.date) - parseNoticeDate(a.date);
+    });
+
+    if (!list.length) {
+      grid.innerHTML = '<p class="notice-empty">현재 등록된 공지가 없습니다.</p>';
+      return;
+    }
+
+    grid.innerHTML = list.map(function (n) {
+      var classes = ['notice-card'];
+      if (isNoticeYes(n.important)) classes.push('notice-important');
+      if (isNoticeYes(n.pinned)) classes.push('notice-pinned');
+
+      var btnHtml = '';
+      if (n.linkUrl) {
+        btnHtml = '<a class="notice-btn" href="' + noticeEscapeHtml(n.linkUrl) + '">' + noticeEscapeHtml(n.buttonText) + '</a>';
+      }
+
+      return '<article class="' + classes.join(' ') + '">' +
+        '<div class="notice-top">' +
+          '<span class="notice-type">' + noticeEscapeHtml(n.type || '공지') + '</span>' +
+          (isNoticeYes(n.pinned) ? '<span class="notice-pin-badge">상단 고정</span>' : '') +
+        '</div>' +
+        '<h3 class="notice-title">' + noticeEscapeHtml(n.title || '(제목 없음)') + '</h3>' +
+        (n.summary ? '<p class="notice-summary">' + noticeEscapeHtml(n.summary) + '</p>' : '') +
+        '<footer class="notice-footer">' +
+          (n.date ? '<time class="notice-date">' + noticeEscapeHtml(n.date) + '</time>' : '<span class="notice-date"></span>') +
+          btnHtml +
+        '</footer>' +
+      '</article>';
+    }).join('');
+  }
+
+  async function loadNotices() {
+    var grid = document.getElementById('notice-grid');
+    if (!grid) return;
+
+    if (!GAS_WEBAPP_URL || !String(GAS_WEBAPP_URL).trim()) {
+      grid.innerHTML = '<p class="notice-empty">현재 등록된 공지가 없습니다.</p>';
+      return;
+    }
+
+    try {
+      var base = GAS_WEBAPP_URL.trim();
+      var url = base + (base.indexOf('?') >= 0 ? '&' : '?') + 'action=getNotices';
+      var res = await fetch(url);
+      var text = await res.text();
+      var result;
+      try {
+        result = JSON.parse(text);
+      } catch (parseErr) {
+        throw new Error('invalid json');
+      }
+
+      if (!res.ok || result.success !== true) {
+        throw new Error((result && result.error) ? result.error : 'fetch failed');
+      }
+
+      var rows = Array.isArray(result.rows) ? result.rows : [];
+      renderNotices(rows);
+    } catch (err) {
+      console.error('loadNotices', err);
+      grid.innerHTML = '<p class="notice-empty">현재 등록된 공지가 없습니다.</p>';
+    }
+  }
+
+  loadNotices();
 </script>
 </body>
 </html>
