@@ -395,60 +395,84 @@
     .trust-bar-item span { color: rgba(255,255,255,.55); font-size: .7rem; font-weight: 500; }
     .trust-bar-dot { color: rgba(255,255,255,.18); font-size: .7rem; }
 
-    /* ── Notice Board ── */
-    .notice-section { padding: 3rem 0 2.75rem; background: var(--bg-gray); }
-    .notice-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 720px; margin: 0 auto; }
-    .notice-card {
-      background: #fff; border-radius: .85rem;
-      border: 1px solid var(--border);
-      padding: 1.2rem 1.15rem 1.1rem;
-      display: flex; flex-direction: column; gap: .55rem;
-      transition: box-shadow .25s, border-color .25s;
+    /* ── Notice Board (compact, hero-friendly) ── */
+    .notice-section { padding: 1.1rem 0 0; background: transparent; }
+    #hero #notice-board .section-badge {
+      background: rgba(255,255,255,.1); color: var(--accent);
     }
-    .notice-card:hover { box-shadow: 0 8px 28px rgba(15,36,72,.08); }
+    #hero #notice-board .section-title {
+      color: #fff;
+      font-size: clamp(1.02rem, 2.2vw, 1.28rem);
+      margin-bottom: 0;
+    }
+    #hero #notice-board .notice-section-header { margin-bottom: .85rem !important; }
+    .notice-grid {
+      display: grid; grid-template-columns: 1fr; gap: .65rem;
+      max-width: 640px; margin: 0 auto; width: 100%;
+    }
+    .notice-card {
+      background: rgba(255,255,255,.98); border-radius: .7rem;
+      border: 1px solid rgba(255,255,255,.35);
+      padding: .95rem 1rem .8rem;
+      display: flex; flex-direction: column; gap: .38rem;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .notice-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.12); }
     .notice-card.notice-important {
-      border-color: rgba(201,168,76,.5);
-      background: linear-gradient(180deg, rgba(201,168,76,.06) 0%, #fff 42%);
-      box-shadow: 0 4px 18px rgba(201,168,76,.14);
+      border-color: rgba(201,168,76,.55);
+      background: linear-gradient(180deg, rgba(201,168,76,.08) 0%, #fff 36%);
+      box-shadow: 0 3px 14px rgba(201,168,76,.12);
     }
     .notice-card.notice-important .notice-type {
       background: rgba(201,168,76,.18); color: #7a5c1e;
     }
-    .notice-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .35rem .5rem; }
+    .notice-top {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: .28rem .4rem;
+    }
     .notice-type {
-      display: inline-block; padding: .2rem .55rem; border-radius: .3rem;
-      font-size: .68rem; font-weight: 700;
+      display: inline-block; padding: .15rem .5rem; border-radius: .28rem;
+      font-size: .65rem; font-weight: 700;
       background: rgba(15,36,72,.07); color: var(--navy);
     }
     .notice-pin-badge {
-      font-size: .65rem; font-weight: 700; color: var(--navy);
-      padding: .15rem .45rem; border-radius: 999px;
-      background: rgba(15,36,72,.08); border: 1px solid var(--border);
+      font-size: .62rem; font-weight: 700; color: var(--navy);
+      padding: .12rem .4rem; border-radius: 999px;
+      background: rgba(15,36,72,.06); border: 1px solid var(--border);
     }
     .notice-title {
       font-family: 'Noto Serif KR', serif;
-      font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.12rem);
-      color: var(--navy); letter-spacing: -.03em; line-height: 1.45;
-      word-break: keep-all; overflow-wrap: anywhere;
+      font-weight: 700; font-size: clamp(.9rem, 2.1vw, 1.02rem);
+      color: var(--navy); letter-spacing: -.03em; line-height: 1.38;
+      word-break: keep-all; overflow-wrap: anywhere; margin: 0;
     }
     .notice-summary {
-      font-size: .82rem; color: var(--muted); line-height: 1.65;
-      word-break: keep-all; overflow-wrap: anywhere;
+      font-size: .76rem; color: var(--muted); line-height: 1.48;
+      word-break: keep-all; overflow-wrap: anywhere; margin: 0;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .notice-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: .65rem .75rem;
-      margin-top: .25rem; padding-top: .75rem;
+      display: flex; align-items: center; justify-content: flex-start;
+      flex-wrap: nowrap; gap: .5rem;
+      margin-top: .12rem; padding-top: .5rem;
       border-top: 1px solid var(--border);
+      background: none; min-height: 0;
     }
-    .notice-date { font-size: .72rem; color: var(--muted); white-space: nowrap; }
+    .notice-date {
+      font-size: .67rem; color: var(--muted);
+      background: none; padding: 0; margin: 0;
+      white-space: nowrap; flex: 1; min-width: 0; line-height: 1.3;
+    }
+    .notice-date:empty { display: none; }
     .notice-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      min-height: 44px; padding: .55rem 1.15rem; border-radius: .45rem;
-      font-size: .8rem; font-weight: 700;
+      flex-shrink: 0; margin-left: auto;
+      height: 40px; min-height: 40px; padding: 0 .85rem;
+      border-radius: .4rem; font-size: .74rem; font-weight: 700;
       background: var(--navy); color: #fff;
       text-decoration: none; border: none; cursor: pointer;
-      transition: opacity .2s, transform .18s;
+      transition: opacity .2s, transform .15s;
       font-family: 'Noto Sans KR', sans-serif;
     }
     .notice-btn:hover { opacity: .9; transform: translateY(-1px); }
@@ -457,8 +481,8 @@
       color: var(--navy-dark);
     }
     .notice-empty, .notice-loading {
-      text-align: center; font-size: .85rem; color: var(--muted);
-      padding: 1.5rem .5rem;
+      text-align: center; font-size: .8rem; color: rgba(255,255,255,.55);
+      padding: .85rem .5rem;
     }
 
     /* ── 전문 컨설팅 분야 (Summary Cards) ── */
@@ -793,6 +817,8 @@
       .hero-btns { gap: .6rem; margin-bottom: 1.1rem; }
       .btn-kakao, .btn-outline, .btn-hero-diagnosis { max-width: 280px; padding: .75rem 1.2rem; font-size: .9rem; }
       .hero-badge { font-size: .68rem; padding: .32rem .7rem; }
+      .notice-footer { flex-wrap: wrap; }
+      .notice-btn { width: 100%; margin-left: 0; margin-top: .35rem; }
     }
     @media (max-width: 520px) {
       .field-grid { grid-template-columns: 1fr; }
@@ -926,7 +952,7 @@
     <!-- ── Notice Board (NOTICE_BOARD) ── -->
     <section id="notice-board" class="notice-section" aria-label="최신 정책자금 · 정부지원사업">
       <div class="container">
-        <div class="text-center fade-up" style="margin-bottom:1.75rem">
+        <div class="text-center fade-up notice-section-header" style="margin-bottom:1rem">
           <span class="section-badge">NOTICE</span>
           <h2 class="section-title">📢 최신 정책자금 · 정부지원사업</h2>
         </div>
