@@ -281,9 +281,9 @@
             <label for="taxDelinq">세금 체납 여부 <span class="req">*</span></label>
             <select class="form-input" id="taxDelinq" name="taxDelinq" required>
               <option value="" disabled selected>선택해 주세요</option>
-              <option>없음</option>
-              <option>있음</option>
-              <option>확인 필요</option>
+              <option value="없음">없음</option>
+              <option value="있음">있음</option>
+              <option value="확인 필요">확인 필요</option>
             </select>
           </div>
           <div class="form-group">
@@ -499,6 +499,11 @@
     return numbers.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
   }
 
+  function getValue(id) {
+    var el = document.getElementById(id);
+    return el ? String(el.value || '').trim() : '';
+  }
+
   async function submitDiagnosisForm(event) {
     event.preventDefault();
     var form = document.getElementById('diagnosis-form');
@@ -518,7 +523,8 @@
     });
     const phoneValue = formatPhoneNumber(document.getElementById('phone').value || '');
     payload.phone = phoneValue;
-    payload.businessForm = document.getElementById('businessForm').value;
+    payload.businessForm = getValue('businessForm');
+    payload.taxDelinq = getValue('taxDelinq') || '없음';
     payload.privacyAgree = agree.checked ? '동의' : '미동의';
 
     if (typeof GAS_URL === 'string' && GAS_URL.trim()) {
