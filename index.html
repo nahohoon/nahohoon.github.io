@@ -406,6 +406,9 @@
       margin-bottom: 0;
     }
     #hero #notice-board .notice-section-header { margin-bottom: .85rem !important; }
+    .notice-dynamic {
+      display: contents;
+    }
     .notice-grid {
       display: grid; grid-template-columns: 1fr; gap: .65rem;
       max-width: 640px; margin: 0 auto; width: 100%;
@@ -945,7 +948,7 @@
       </a>
       <a class="btn-hero-diagnosis" href="policy-diagnosis.html">
         <i data-lucide="clipboard-check" style="width:18px;height:18px"></i>
-        정책자금 무료진단 받기
+        정책자금 무료상담 신청
       </a>
       <a class="btn-outline btn-outline-pc" href="#field-summary">
         <i data-lucide="search" style="width:17px;height:17px"></i>
@@ -960,7 +963,21 @@
           <h2 class="section-title">📢 최신 정책자금 · 정부지원사업</h2>
         </div>
         <div id="notice-grid" class="notice-grid">
-          <p class="notice-loading">불러오는 중…</p>
+          <article class="notice-card notice-important notice-pinned">
+            <div class="notice-top">
+              <span class="notice-type">상담 접수</span>
+              <span class="notice-pin-badge">상단 고정</span>
+            </div>
+            <h3 class="notice-title">2026년 정책자금 무료상담 접수 안내</h3>
+            <p class="notice-summary">기업 상황을 검토한 뒤 신청 가능성이 높은 정책자금과 준비자료를 1~2일 이내 안내드립니다.</p>
+            <footer class="notice-footer">
+              <span class="notice-date">2026</span>
+              <a class="notice-btn" href="policy-diagnosis.html">상담 신청하기</a>
+            </footer>
+          </article>
+          <div id="notice-dynamic" class="notice-dynamic">
+            <p class="notice-loading">불러오는 중…</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1914,7 +1931,7 @@
   }
 
   function renderNotices(rows) {
-    var grid = document.getElementById('notice-grid');
+    var grid = document.getElementById('notice-dynamic');
     if (!grid) return;
 
     var raw = Array.isArray(rows) ? rows : extractNoticeRows(rows);
@@ -1962,7 +1979,7 @@
   }
 
   function loadNotices() {
-    const grid = document.getElementById('notice-grid');
+    const grid = document.getElementById('notice-dynamic');
     if (!grid) return;
 
     if (!GAS_WEBAPP_URL || !String(GAS_WEBAPP_URL).trim()) {
