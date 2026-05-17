@@ -32,13 +32,82 @@ const MatchingEngine = (function () {
     '50명 이상': { min: 50, max: 99999 }
   };
 
+  function normalizeRow(row) {
+    if (!row || typeof row !== 'object') return {};
+    var out = {};
+    Object.keys(row).forEach(function (key) {
+      var nk = String(key).replace(/^\uFEFF/, '').trim();
+      out[nk] = row[key];
+    });
+    return out;
+  }
+
+  /** CONSULT_PIPELINE 한글 헤더 단일 키 조회 */
+  function cell(row, key) {
+    var r = normalizeRow(row);
+    var v = r[key];
+    if (v === undefined || v === null) return '';
+    if (v instanceof Date) return v;
+    return String(v).trim();
+  }
+
   function pick(row, keys) {
     if (!row) return '';
     for (var i = 0; i < keys.length; i++) {
-      var v = row[keys[i]];
-      if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim();
+      var v = cell(row, keys[i]);
+      if (v !== '') return typeof v === 'string' ? v : String(v);
     }
     return '';
+  }
+
+  function parseDateValue(v) {
+    if (v === '' || v === null || v === undefined) return 0;
+    if (v instanceof Date && !isNaN(v.getTime())) return v.getTime();
+    var d = new Date(v);
+    if (!isNaN(d.getTime())) return d.getTime();
+    var normalized = String(v).replace(' ', 'T');
+    var d2 = new Date(normalized);
+    if (!isNaN(d2.getTime())) return d2.getTime();
+    return 0;
+  }
+
+  function formatDateKST(value) {
+    if (value === '' || value === null || value === undefined) return '';
+    if (value instanceof Date && !isNaN(value.getTime())) {
+      return formatDateKSTFromDate(value);
+    }
+    var s = String(value).trim();
+    if (!s) return '';
+    if (/^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(s)) {
+      return s.slice(0, 16);
+    }
+    var d = new Date(s);
+    if (isNaN(d.getTime())) {
+      d = new Date(s.replace(' ', 'T'));
+    }
+    if (isNaN(d.getTime())) return s;
+    return formatDateKSTFromDate(d);
+  }
+
+  function formatDateKSTFromDate(d) {
+    try {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).formatToParts(d);
+      var map = {};
+      parts.forEach(function (p) {
+        if (p.type !== 'literal') map[p.type] = p.value;
+      });
+      return map.year + '-' + map.month + '-' + map.day + ' ' + map.hour + ':' + map.minute;
+    } catch (e) {
+      return String(d);
+    }
   }
 
   function normalizeText(s) {
@@ -212,40 +281,45 @@ const MatchingEngine = (function () {
     return { pass: false, score: 0, note: '자금목적 불일치' };
   }
 
+  function deriveExistingLoanFlag(amountStr, flagStr) {
+    if (flagStr === '있음' || flagStr === '없음') return flagStr;
+    var n = parseFloat(String(amountStr || '').replace(/,/g, '').trim());
+    if (!isNaN(n) && n > 0) return '있음';
+    return flagStr || '없음';
+  }
+
+  function displayExistingLoanFlag(row) {
+    var flag = cell(row, '기존대출여부');
+    if (flag === '있음' || flag === '없음') return flag;
+    return deriveExistingLoanFlag(cell(row, '기존대출금액'), flag);
+  }
+
+  /** 매칭 엔진용 (정책 비교) */
   function extractCustomer(row) {
+    var existingLoan = cell(row, '기존대출금액');
     return {
-      company: pick(row, ['업체명']),
-      contact: pick(row, ['담당자']),
-      phone: pick(row, ['연락처']),
-      email: pick(row, ['이메일']),
-      industry: pick(row, ['업종']),
-      years: pick(row, ['업력']),
-      revenue: pick(row, ['연매출']),
-      employees: pick(row, ['종업원수']),
-      fundType: pick(row, ['자금유형']),
-      taxDelinq: pick(row, ['세금체납여부']),
-      credit: pick(row, ['신용상태']),
-      existingLoan: pick(row, ['기존대출금액']),
-      desiredLoan: pick(row, ['희망대출금액']),
-      certifications: pick(row, ['인증보유여부']),
-      otherCert: pick(row, ['기타인증']),
-      creditScore: pick(row, ['신용점수']),
-      debtRatio: pick(row, ['부채비율']),
-      policyExperience: pick(row, ['정책자금신청경험']),
-      financialDocs: pick(row, ['재무자료보유여부']),
-      concerns: pick(row, ['현재애로사항']),
-      privacyAgree: pick(row, ['개인정보동의']),
-      region: pick(row, ['지역']),
-      bizType: pick(row, ['사업자유형']),
-      businessForm: pick(row, ['사업자형태']),
-      receiptNo: pick(row, ['접수번호']),
-      receivedAt: pick(row, ['접수일']),
-      status: pick(row, ['상태'])
+      industry: cell(row, '업종'),
+      years: cell(row, '업력'),
+      revenue: pick(row, ['연매출규모', '연매출']),
+      employees: cell(row, '종업원수'),
+      fundType: cell(row, '자금유형')
     };
   }
 
   function hasCompanyName(row) {
-    return !!pick(row, ['업체명']);
+    return !!cell(row, '업체명');
+  }
+
+  function sortByReceivedAtDesc(rows) {
+    return (rows || []).slice().sort(function (a, b) {
+      return parseDateValue(cell(b, '접수일')) - parseDateValue(cell(a, '접수일'));
+    });
+  }
+
+  function preparePipelineRows(rows) {
+    return sortByReceivedAtDesc(
+      (rows || []).filter(hasCompanyName)
+    );
   }
 
   function extractPolicy(row) {
@@ -312,8 +386,15 @@ const MatchingEngine = (function () {
   }
 
   return {
+    cell: cell,
+    normalizeRow: normalizeRow,
+    parseDateValue: parseDateValue,
+    formatDateKST: formatDateKST,
     pick: pick,
     hasCompanyName: hasCompanyName,
+    sortByReceivedAtDesc: sortByReceivedAtDesc,
+    preparePipelineRows: preparePipelineRows,
+    displayExistingLoanFlag: displayExistingLoanFlag,
     extractCustomer: extractCustomer,
     extractPolicy: extractPolicy,
     recommend: recommend

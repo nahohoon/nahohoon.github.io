@@ -11,32 +11,12 @@
       .replace(/"/g, '&quot;');
   }
 
+  function cell(row, key) {
+    return MatchingEngine.cell(row, key);
+  }
+
   function formatDateKST(value) {
-    if (value === '' || value === null || value === undefined) return '';
-    if (value instanceof Date) {
-      if (isNaN(value.getTime())) return '';
-    } else {
-      var s = String(value).trim();
-      if (!s) return '';
-      if (/^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(s)) {
-        return s.slice(0, 16);
-      }
-    }
-    var d = value instanceof Date ? value : new Date(value);
-    if (isNaN(d.getTime())) return String(value).trim();
-    try {
-      return new Intl.DateTimeFormat('sv-SE', {
-        timeZone: 'Asia/Seoul',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      }).format(d).replace('T', ' ').slice(0, 16);
-    } catch (e) {
-      return String(value).trim();
-    }
+    return MatchingEngine.formatDateKST(value);
   }
 
   function formatLoanAmount(value) {
@@ -74,6 +54,24 @@
     return result;
   }
 
+  function fieldRow(label, value) {
+    var raw = value === undefined || value === null ? '' : value;
+    if (raw instanceof Date) {
+      raw = formatDateKST(raw);
+    }
+    var text = String(raw).trim();
+    var v = text ? escapeHtml(text) : '<span class="muted">-</span>';
+    return '<div class="detail-field"><dt>' + escapeHtml(label) + '</dt><dd>' + v + '</dd></div>';
+  }
+
+  function sectionHead(title) {
+    return (
+      '<' + 'div class="detail-section-head" style="grid-column:1/-1;margin-top:.75rem;padding-top:.55rem;border-top:1px solid #dde4ef;font-size:.78rem;font-weight:700;color:#0f2448">' +
+        escapeHtml(title) +
+      '</' + 'di' + 'v' + '>'
+    );
+  }
+
   function renderCompanyList() {
     var list = document.getElementById('company-list');
     var countEl = document.getElementById('company-count');
@@ -87,14 +85,19 @@
     }
 
     list.innerHTML = diagnosisRows.map(function (row, idx) {
-      var c = MatchingEngine.extractCustomer(row);
       var active = idx === selectedIndex ? ' is-active' : '';
-      var status = c.status ? '<span class="list-badge">' + escapeHtml(c.status) + '</span>' : '';
+      var status = cell(row, '상태');
+      var statusHtml = status
+        ? '<span class="list-badge">' + escapeHtml(status) + '</span>'
+        : '';
       return (
         '<button type="button" class="company-item' + active + '" data-index="' + idx + '">' +
-          '<span class="company-item-name">' + escapeHtml(c.company) + '</span>' +
-          '<span class="company-item-meta">' + escapeHtml(c.industry || '-') + ' · ' + escapeHtml(formatDateKST(c.receivedAt)) + '</span>' +
-          status +
+          '<span class="company-item-name">' + escapeHtml(cell(row, '업체명')) + '</span>' +
+          '<span class="company-item-meta">' +
+            escapeHtml(cell(row, '업종') || '-') + ' · ' +
+            escapeHtml(formatDateKST(cell(row, '접수일'))) +
+          '</span>' +
+          statusHtml +
         '</button>'
       );
     }).join('');
@@ -104,12 +107,6 @@
         selectCompany(parseInt(btn.getAttribute('data-index'), 10));
       });
     });
-  }
-
-  function fieldRow(label, value) {
-    var display = value ? escapeHtml(String(value)) : '';
-    var v = display ? display : '<span class="muted">-</span>';
-    return '<div class="detail-field"><dt>' + escapeHtml(label) + '</dt><dd>' + v + '</dd></div>';
   }
 
   function renderCompanyDetail() {
@@ -122,37 +119,49 @@
     }
 
     var row = diagnosisRows[selectedIndex];
-    var c = MatchingEngine.extractCustomer(row);
+    var receivedLabel = formatDateKST(cell(row, '접수일'));
+    var status = cell(row, '상태');
 
     panel.innerHTML =
       '<div class="detail-header">' +
-        '<h2>' + escapeHtml(c.company) + '</h2>' +
-        '<p class="detail-sub">' + escapeHtml(c.receiptNo || '') + (c.status ? ' · ' + escapeHtml(c.status) : '') + '</p>' +
+        '<h2>' + escapeHtml(cell(row, '업체명')) + '</h2>' +
+        '<p class="detail-sub">' +
+          escapeHtml(cell(row, '접수번호')) +
+          (status ? ' · ' + escapeHtml(status) : '') +
+          (receivedLabel ? ' · ' + escapeHtml(receivedLabel) : '') +
+        '</p>' +
       '</div>' +
       '<dl class="detail-grid">' +
-        fieldRow('접수일', formatDateKST(c.receivedAt)) +
-        fieldRow('담당자', c.contact) +
-        fieldRow('연락처', c.phone) +
-        fieldRow('이메일', c.email) +
-        fieldRow('업종', c.industry) +
-        fieldRow('지역', c.region) +
-        fieldRow('사업자 유형', c.bizType) +
-        fieldRow('사업자 형태', c.businessForm) +
-        fieldRow('업력', c.years) +
-        fieldRow('연매출', c.revenue) +
-        fieldRow('종업원 수', c.employees) +
-        fieldRow('자금 유형', c.fundType) +
-        fieldRow('세금 체납', c.taxDelinq) +
-        fieldRow('신용 상태', c.credit) +
-        fieldRow('기존 대출 금액', formatLoanAmount(c.existingLoan)) +
-        fieldRow('희망 대출 금액', formatLoanAmount(c.desiredLoan)) +
-        fieldRow('인증 보유', c.certifications) +
-        fieldRow('기타 인증', c.otherCert) +
-        fieldRow('신용 점수', c.creditScore) +
-        fieldRow('부채 비율', c.debtRatio) +
-        fieldRow('정책자금 신청 경험', c.policyExperience) +
-        fieldRow('재무자료 보유', c.financialDocs) +
-        fieldRow('현재 애로사항', c.concerns) +
+        fieldRow('접수번호', cell(row, '접수번호')) +
+        fieldRow('접수일', receivedLabel) +
+        fieldRow('상태', status) +
+        sectionHead('기본정보') +
+        fieldRow('업체명', cell(row, '업체명')) +
+        fieldRow('담당자', cell(row, '담당자')) +
+        fieldRow('연락처', cell(row, '연락처')) +
+        fieldRow('이메일', cell(row, '이메일')) +
+        fieldRow('지역', cell(row, '지역')) +
+        fieldRow('업종', cell(row, '업종')) +
+        fieldRow('사업자유형', cell(row, '사업자유형')) +
+        fieldRow('사업자형태', cell(row, '사업자형태')) +
+        sectionHead('진단정보') +
+        fieldRow('연매출규모', cell(row, '연매출규모') || cell(row, '연매출')) +
+        fieldRow('종업원수', cell(row, '종업원수')) +
+        fieldRow('자금유형', cell(row, '자금유형')) +
+        fieldRow('현재애로사항', cell(row, '현재애로사항')) +
+        fieldRow('세금체납여부', cell(row, '세금체납여부')) +
+        fieldRow('신용상태', cell(row, '신용상태')) +
+        sectionHead('정책자금 판단정보') +
+        fieldRow('기존대출여부', MatchingEngine.displayExistingLoanFlag(row)) +
+        fieldRow('기존대출금액', formatLoanAmount(cell(row, '기존대출금액'))) +
+        fieldRow('희망대출금액', formatLoanAmount(cell(row, '희망대출금액'))) +
+        fieldRow('인증보유여부', cell(row, '인증보유여부')) +
+        fieldRow('기타인증', cell(row, '기타인증')) +
+        fieldRow('신용점수', cell(row, '신용점수')) +
+        fieldRow('부채비율', cell(row, '부채비율')) +
+        fieldRow('업력', cell(row, '업력')) +
+        fieldRow('정책자금신청경험', cell(row, '정책자금신청경험')) +
+        fieldRow('재무자료보유여부', cell(row, '재무자료보유여부')) +
       '</dl>';
 
     renderRecommendations();
@@ -250,9 +259,7 @@
       var policies = await fetchGas(CONFIG.API.POLICIES);
 
       var rawRows = Array.isArray(pipeline.rows) ? pipeline.rows : [];
-      diagnosisRows = rawRows.filter(function (row) {
-        return MatchingEngine.hasCompanyName(row);
-      });
+      diagnosisRows = MatchingEngine.preparePipelineRows(rawRows);
       policyRows = Array.isArray(policies.rows) ? policies.rows : [];
 
       if (selectedIndex >= diagnosisRows.length) {
@@ -295,10 +302,16 @@
     }
 
     var filtered = diagnosisRows.filter(function (row) {
-      var c = MatchingEngine.extractCustomer(row);
-      var blob = [c.company, c.industry, c.region, c.receiptNo].join(' ').toLowerCase();
+      var blob = [
+        cell(row, '업체명'),
+        cell(row, '업종'),
+        cell(row, '지역'),
+        cell(row, '접수번호')
+      ].join(' ').toLowerCase();
       return blob.indexOf(q) >= 0;
     });
+
+    filtered = MatchingEngine.sortByReceivedAtDesc(filtered);
 
     var list = document.getElementById('company-list');
     document.getElementById('company-count').textContent = filtered.length + '건';
@@ -310,12 +323,11 @@
 
     list.innerHTML = filtered.map(function (row) {
       var idx = diagnosisRows.indexOf(row);
-      var c = MatchingEngine.extractCustomer(row);
       var active = idx === selectedIndex ? ' is-active' : '';
       return (
         '<button type="button" class="company-item' + active + '" data-index="' + idx + '">' +
-          '<span class="company-item-name">' + escapeHtml(c.company) + '</span>' +
-          '<span class="company-item-meta">' + escapeHtml(c.industry || '-') + '</span>' +
+          '<span class="company-item-name">' + escapeHtml(cell(row, '업체명')) + '</span>' +
+          '<span class="company-item-meta">' + escapeHtml(cell(row, '업종') || '-') + '</span>' +
         '</button>'
       );
     }).join('');
