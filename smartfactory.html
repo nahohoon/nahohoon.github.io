@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>스마트공장·AX 컨설팅 | 나호훈 경영지도사 | 스마트공장 구축·디지털전환</title>
+  <meta name="description" content="대구·경북 제조업을 위한 스마트공장 구축, 재고관리, 생산관리, AX(인공지능 전환) 기반 디지털전환 컨설팅. 현장 문제 진단부터 정부지원사업 연계까지 지원합니다." />
+  <meta name="keywords" content="스마트공장, 스마트팩토리, AX 인공지능 전환, 디지털전환, MES, ERP, 제조업 스마트화, 공정자동화, 스마트공장 구축 지원, 중소기업 디지털전환" />
+  <meta name="author" content="나호훈 경영컨설팅" />
+  <meta property="og:title" content="스마트공장·AX 컨설팅 | 나호훈 경영지도사 | 제조업 디지털전환" />
+  <meta property="og:description" content="스마트공장 구축과 AX(인공지능 전환) 기반 디지털전환 현장 실행 컨설팅. 제조업 맞춤 지원." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACR0lEQVR4nGPkV/H4zzCAgGkgLWdgYGBgIUfT+4M7cMoJ2nuQZBYjsVGAz1JKHEOUA9Atx2cwKWoJOgDZMFKDllj9OBMhpZaj68MVhVgdQA3LiXUE3mxIqeXEmIPhAJgrqWU5uiPQQwElEaJbLifxneHiyoMoGi7d5mPwyDFn+P6DGcOSSWVXGGK9nyAMl/rP0NKsxtCzSBkuhm4H3ih49IKTQdDeg8E33wwupqf6iWFqxWWs6vO6dBgE7T0YTl4WZGCUgvirpvYWPivIK4oDHV8wlMTdxSr34fZ2Bgv3dxhiBB1AatxXJd1m8LJ5RZRaAVVPOBs9LZAUAit2SjMwMEDilpGRgWHZ/LMMmopfSDECA5DkgI75KvC4hdHHdx1mEOL7zcDAgBnUyD7HBUiqDS8eOoBV/N7ZPTj1EHIE0SEA8zGxYNFsWaLUEeWALatPYoj5R5gx/HmCXfuJnUJEWU6UA7BlIQFVT4aDZ4UZaqZqMPx/xsjAwAAApz2DLYi2HMUBuIpK9DhE5s9YI8+wbLs0iiMWNZ9nEBP+idNCkkpCGPAJNWdgYGBg0LN1wJAr6tVmOHNNAM4XEfjFoCj1jRhjiXcAAwMiiNHBz99MDNHVhgzP33AQbSlOB+CKBkLg1Tt2hphqQ4afv/D7B1tpi6ED2RFyEt8Z3h/cwbB54ikGBgYGhosrDzK82b8Tq+HnbvAz5HfrkGQ5AwOONiE1W0SEzMMaZsS05ahhOU4HUMsRxITk4O4X4DOYGEC1nhEpjqFZ35BWAAAtCOvK3xMXRgAAAABJRU5ErkJggg==">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{--navy:#0F2448;--navy-dark:#0a1a35;--accent:#c9a84c;--accent-light:rgba(201,168,76,0.12);--bg-gray:#f7f9fc;--bg-blue:#f0f4f9;--border:#e8edf5;--muted:#6b7280}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Noto Sans KR',sans-serif;color:#1a202c;background:#fff;line-height:1.7;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+    .container{max-width:1152px;margin:0 auto;padding:0 1.5rem}
+    .container-sm{max-width:900px;margin:0 auto;padding:0 1.5rem}
+    .text-center{text-align:center}.text-accent{color:var(--accent)}
+    h1,h2,h3{font-family:'Noto Serif KR',serif;letter-spacing:-.03em;line-height:1.4}
+    #header{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,26,53,.97);box-shadow:0 2px 20px rgba(0,0,0,.22)}
+    .header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:.5rem;text-decoration:none}
+    .logo-bar{width:2.5px;height:38px;border-radius:2px;background:#c9a84c;flex-shrink:0}
+    .logo-text{font-family:'Noto Serif KR',serif;font-weight:700;font-size:.95rem;letter-spacing:-.02em;line-height:1.25;display:flex;align-items:baseline;gap:.28em}
+    .logo-symbol{width:28px;height:28px;object-fit:contain;flex-shrink:0}
+    .logo-name{color:#fff}.logo-brand{color:#c9a84c}
+    .logo-sub{color:rgba(255,255,255,.35);font-family:'Noto Sans KR',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;display:block;margin-top:2px}
+    .nav-desktop{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}
+    .nav-desktop a{color:rgba(255,255,255,.78);font-size:.78rem;font-weight:500;padding:.35rem .5rem;border-radius:.3rem;transition:color .2s,background .2s;white-space:nowrap;text-decoration:none}
+    .nav-desktop a:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-desktop a.active{color:var(--accent)}
+    .nav-cta{display:flex;align-items:center;gap:.4rem;padding:.45rem 1rem;border-radius:.4rem;font-size:.78rem;font-weight:700;background:#FEE500;color:#3A1D1D;border:none;cursor:pointer;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;text-decoration:none}
+    .mobile-toggle{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:.4rem}
+    .mobile-menu{display:none;background:rgba(10,26,53,.98);padding:.5rem 1.25rem 1.25rem;border-top:1px solid rgba(255,255,255,.08)}
+    .mobile-menu.open{display:block}
+    .mobile-menu a{display:block;color:rgba(255,255,255,.8);font-size:.95rem;font-weight:500;border-bottom:1px solid rgba(255,255,255,.08);padding:.7rem 0;text-decoration:none}
+    .mobile-menu a:hover{color:#fff}
+    .mobile-cta{display:block;width:100%;margin-top:.75rem;padding:.75rem;border-radius:.4rem;background:#FEE500;color:#3A1D1D;font-weight:700;font-size:.9rem;border:none;cursor:pointer;text-align:center;font-family:'Noto Sans KR',sans-serif}
+    .page-hero{padding:6.5rem 0 3.5rem;background:linear-gradient(135deg,#0F2448 0%,#1a3a6e 40%,#0d1f3c 100%);text-align:center;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.15)}
+    .ph-blob1{position:absolute;top:40px;right:60px;width:200px;height:200px;border-radius:50%;background:var(--accent);filter:blur(70px);opacity:.06}
+    .ph-blob2{position:absolute;bottom:40px;left:60px;width:160px;height:160px;border-radius:50%;background:#60a5fa;filter:blur(60px);opacity:.06}
+    .ph-inner{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 1.5rem}
+    .page-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.32rem .9rem;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.08em;background:rgba(201,168,76,.15);color:var(--accent);border:1px solid rgba(201,168,76,.3);margin-bottom:1.1rem}
+    .page-hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:800;color:#fff;letter-spacing:-.04em;margin-bottom:.9rem;line-height:1.35;word-break:keep-all}
+    .page-hero p{color:rgba(255,255,255,.72);font-size:clamp(.85rem,2vw,.98rem);line-height:1.75;max-width:560px;margin:0 auto 1.75rem;word-break:keep-all}
+    .ph-tags{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center}
+    .ph-tag{padding:.3rem .8rem;border-radius:999px;font-size:.73rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8)}
+    .section-badge{display:inline-block;padding:.25rem .75rem;border-radius:999px;font-size:.7rem;font-weight:700;background:rgba(15,36,72,.08);color:var(--navy);margin-bottom:.75rem;letter-spacing:.05em}
+    .section-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-weight:800;color:var(--navy);margin-bottom:.6rem;letter-spacing:-.04em;line-height:1.35}
+    .section-sub{color:var(--muted);max-width:560px;margin:0 auto;font-size:.88rem}
+    #problem{padding:4rem 0;background:var(--bg-gray)}
+    .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.25rem}
+    .prob-card{background:#fff;border-radius:1rem;border:1px solid var(--border);padding:1.4rem 1.25rem;transition:box-shadow .3s,transform .3s}
+    .prob-card:hover{box-shadow:0 10px 36px rgba(15,36,72,.1);transform:translateY(-4px)}
+    .prob-icon{width:44px;height:44px;border-radius:.6rem;display:flex;align-items:center;justify-content:center;background:rgba(248,113,113,.1);color:#b91c1c;margin-bottom:.9rem}
+    .prob-card h3{font-family:'Noto Serif KR',serif;font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+    .prob-card p{font-size:.78rem;color:var(--muted);line-height:1.65}
+    #levels{padding:4rem 0;background:#fff}
+    .level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.25rem}
+    .level-card{border-radius:1rem;border:1.5px solid var(--border);padding:1.35rem;background:#fff;transition:box-shadow .3s,transform .3s,border-color .3s;position:relative;overflow:hidden}
+    .level-card:hover{box-shadow:0 10px 36px rgba(15,36,72,.1);transform:translateY(-4px);border-color:var(--navy)}
+    .level-badge{display:inline-block;padding:.2rem .65rem;border-radius:999px;font-size:.68rem;font-weight:700;margin-bottom:.85rem}
+    .lv1{background:rgba(248,113,113,.12);color:#b91c1c}
+    .lv2{background:rgba(251,191,36,.12);color:#92400e}
+    .lv3{background:rgba(52,211,153,.12);color:#065f46}
+    .lv4{background:rgba(96,165,250,.12);color:#1e40af}
+    .level-icon{width:44px;height:44px;border-radius:.6rem;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--accent);margin-bottom:.85rem}
+    .level-title{font-family:'Noto Serif KR',serif;font-weight:700;font-size:.88rem;color:var(--navy);margin-bottom:.45rem}
+    .level-desc{font-size:.75rem;color:var(--muted);line-height:1.65}
+    #solution{padding:4rem 0;background:var(--bg-blue)}
+    .sol-list{display:flex;flex-direction:column;gap:1.25rem;margin-top:2.25rem}
+    .sol-item{display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;background:#fff;border-radius:1rem;border:1px solid var(--border);padding:1.5rem;transition:box-shadow .3s,border-color .3s}
+    .sol-item:hover{box-shadow:0 8px 32px rgba(15,36,72,.09);border-color:var(--navy)}
+    .sol-num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;background:var(--navy);color:var(--accent);flex-shrink:0}
+    .sol-item h3{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+    .sol-item p{font-size:.83rem;color:var(--muted);line-height:1.7}
+    .sol-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem}
+    .sol-tag{display:inline-block;padding:.2rem .6rem;border-radius:.25rem;font-size:.7rem;font-weight:600;background:var(--accent-light);color:#7a5c1e}
+    #effect{padding:4rem 0;background:#fff}
+    .eff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.25rem}
+    .eff-card{background:#fff;border-radius:1rem;border:1px solid var(--border);padding:1.5rem 1.25rem;text-align:center;transition:box-shadow .3s,transform .3s}
+    .eff-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-4px)}
+    .eff-num{font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:900;color:var(--navy);margin-bottom:.3rem}
+    .eff-num span{color:var(--accent)}
+    .eff-card h3{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+    .eff-card p{font-size:.76rem;color:var(--muted);line-height:1.6}
+    .eff-bar{width:40px;height:3px;background:var(--accent);border-radius:2px;margin:.75rem auto}
+    #case{padding:4rem 0;background:var(--bg-gray)}
+    .case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:2.25rem}
+    .case-card{background:#fff;border-radius:1rem;overflow:hidden;border:1px solid var(--border);transition:box-shadow .3s,transform .3s}
+    .case-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-4px)}
+    .case-top{height:4px;background:linear-gradient(90deg,var(--accent),#e8c56a)}
+    .case-body{padding:1.35rem}
+    .case-tag{display:inline-block;padding:.2rem .65rem;border-radius:999px;font-size:.7rem;font-weight:700;background:rgba(15,36,72,.07);color:var(--navy);margin-bottom:.85rem}
+    .case-row{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.65rem}
+    .case-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:.45rem}
+    .dot-red{background:#f87171}.dot-blue{background:#60a5fa}
+    .case-label{font-size:.68rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;min-width:48px;flex-shrink:0}
+    .lbl-red{color:#b91c1c}.lbl-blue{color:#1d4ed8}
+    .case-text{font-size:.8rem;color:#2d3748;line-height:1.6}
+    .case-result-box{margin-top:.85rem;padding:.7rem .9rem;border-radius:.65rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25)}
+    .case-result-text{font-size:.82rem;font-weight:700;color:var(--navy)}
+    #cta{padding:4rem 0;background:linear-gradient(135deg,#0F2448 0%,#1a3a6e 100%)}
+    .cta-inner{max-width:760px;margin:0 auto;text-align:center;padding:0 1.5rem}
+    .cta-inner h2{font-family:'Noto Serif KR',serif;font-size:clamp(1.45rem,3.2vw,2rem);font-weight:800;color:#fff;letter-spacing:-.04em;margin-bottom:.75rem;line-height:1.38;word-break:keep-all;max-width:720px;margin-left:auto;margin-right:auto}
+    .cta-inner p{color:rgba(255,255,255,.65);font-size:.88rem;line-height:1.75;margin:0 auto 2rem;word-break:keep-all;max-width:680px}
+    .cta-btns{display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;margin-bottom:1.25rem}
+    .btn-kakao{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.9rem 1.85rem;border-radius:.6rem;font-weight:700;font-size:.95rem;cursor:pointer;border:none;background:#FEE500;color:#3A1D1D;box-shadow:0 4px 20px rgba(254,229,0,.35);transition:transform .2s,box-shadow .2s;text-decoration:none;font-family:'Noto Sans KR',sans-serif}
+    .btn-kakao:hover{transform:scale(1.04);box-shadow:0 8px 32px rgba(254,229,0,.55)}
+    .btn-tel{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.85rem;border-radius:.6rem;font-weight:600;font-size:.95rem;background:rgba(255,255,255,.09);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2);transition:background .2s,color .2s;text-decoration:none;font-family:'Noto Sans KR',sans-serif}
+    .btn-tel:hover{background:rgba(255,255,255,.16);color:#fff}
+    .cta-assurance{font-size:.7rem;color:rgba(255,255,255,.35);letter-spacing:.03em}
+    .back-section{padding:2.5rem 0;background:var(--bg-gray);text-align:center}
+    .btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.5rem;border-radius:.5rem;font-weight:600;font-size:.85rem;background:var(--navy);color:#fff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;transition:opacity .2s}
+    .btn-back:hover{opacity:.85}
+    footer{padding:2rem 0;background:#0a1a35;border-top:1px solid #1a2e50}
+    .footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding:0 1.5rem;max-width:1200px;margin:0 auto}
+    .footer-logo-text{color:#fff;font-family:'Noto Serif KR',serif;font-weight:700;font-size:.85rem}
+    .footer-tagline{color:rgba(255,255,255,.35);font-size:.7rem;margin-top:.2rem}
+    .footer-copy{color:rgba(255,255,255,.28);font-size:.7rem}
+    #floating-kakao{position:fixed;right:1.5rem;bottom:1.75rem;z-index:300}
+    .float-kakao-btn{display:flex;align-items:center;gap:.55rem;padding:.7rem 1.1rem;border-radius:999px;background:#FEE500;color:#3A1D1D;font-weight:700;font-size:.82rem;box-shadow:0 6px 24px rgba(0,0,0,.22);cursor:pointer;border:none;text-decoration:none;transition:transform .2s,box-shadow .2s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
+    .float-kakao-btn:hover{transform:scale(1.06);box-shadow:0 10px 30px rgba(254,229,0,.5)}
+    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    .fade-up-d1{transition-delay:.08s}.fade-up-d2{transition-delay:.16s}.fade-up-d3{transition-delay:.24s}
+    @media(max-width:768px){.cta-inner{max-width:360px}.cta-inner h2{font-size:1.35rem;line-height:1.45;max-width:330px}.cta-inner p{font-size:.82rem;max-width:320px}}
+    @media(max-width:960px){.nav-desktop{display:none!important}.nav-cta{display:none!important}.mobile-toggle{display:block!important}}
+    @media(max-width:768px){.prob-grid,.eff-grid,.level-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.sol-item{grid-template-columns:1fr}.sol-num{display:none}.level-grid{grid-template-columns:repeat(2,1fr)}.footer-inner{flex-direction:column;align-items:center;text-align:center}#floating-kakao{display:none}.cta-btns{flex-direction:column;align-items:center}.btn-kakao,.btn-tel{width:100%;max-width:300px}}
+    @media(min-width:961px){.header-inner{height:74px}.logo-text{font-size:1.15rem;font-weight:800}.logo-brand{color:#FEE500}}
+  </style>
+</head>
+<body>
+<div id="floating-kakao">
+  <a class="float-kakao-btn" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.554 5.084 3.938 6.562l-1.002 3.73a.3.3 0 0 0 .46.326l4.26-2.837A12.14 12.14 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3Z"/></svg>
+    카카오톡 스마트공장 상담
+  </a>
+</div>
+<header id="header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEwklEQVR4nO1ba2gURxz/zSWpeWDNVWPCia21iRHfiVSlHxpoU72AUFoVH1gFqVRQGoRKfJEWa32UpA9oWoKKhaolLRQxQo5+avwgUYjmgajkiihyRTSNp6HGaLJ+KHvd253dndmZueyd/UG47OzszP/3m//+Z3YeBDaYUBrW7O6lI+LRCKGlWxIzjbgZZiECxotMJw9YOQbsbmQyjFyJOUElBtojzHmDVWGFlvyLeDRCslVWwEPY7VlVghAVrW9HnIeEjDJYIFUAmtEyDFZVLiBJgFS5q4q6hAUwGpSKwCW73oB7FvVGeIGxPpFg68kDxpI4DSL2cHuA38gDYt7AJYAfyevwKoKnGOA38jq82MUsgK6qX8nr0O1j9QImAdKFvA4eEVwFEOli/AA3+5lfgXRpfR2s9joKkG6ubwbLqyA0EswE2I4EWVp/ydwBtH13wbECTQM21leg9Vwxl2EsZQPA4ycBlFQvdczjxEW5BxACNO/pQUV5XH7ZIfEveaoArJG/ozeIYFU48df402vUfHm5I/j54CWEioaYDXMqu2bb4gT53FdGmMuk8XL0AJnBr3jiY7Qc6kRBHrvBNJCQhshvHUlp9/vaHJ9x4qF0TtCMOaUPcay+C+v2VGJ0lLpOkQQ3YjoKy2o825TyXmDZG3fxxdZrTHlFiLHCIkAq+v4tK29i07u3mPIWltVIEcJuTKDMA9xc/HDtVby96J6q6pmhTICDx0sx/MS++OwsDcc/68LMVwdVmcAEZQJ09ATx8ZdzLOl690VCGsYXPEXLoU4UBYcdy2INhl6gNAi2/B7CVyemJ66N5PXfl0se4dSBSxj3wii1DDN5LUYQfn+JtACpvBfYf3QGTv9RYjtqIyENr1cP4PtdvSCmsOHW8jJEUC6ApgHvrfvLNd+K9THs3tSXuKaR12LWwCoqgnIB7IjQyOzYGcXqpTFqOQ2HS6XbBigWgEZ+8M//Bp80EZqbui3PqRwQKRGAhDSc/dX6KVtYVoMP981PGiPQREglpAtAC3bG0Vzk/GTU/1CedN/uldCfVQmLALzTykZ8Uhe1pNEINP0yDT+2TrWk6yLov+1nJyEnW87qvd0QX5oH0N53p9bb8fUstHdOtKQbRXizsh8N26/IMpEKKQLQyC9ftdjxmacjBBvrF6DvVoFjvg3Lb6N27Q0h+5zANCvsBnNLswa2+GAOVtctxN8PchzzffrRdbwl8OHEPSvs5VNYF4E3qt+I5eODvRWOH06EQMqcovJJUa+DlfPdL2F742yZpjDDVgCR3sALTrVNwTcnp7tn5ITbBI+vFkb2HZmBM+186weiYJoVTpUXaBqw5cA8XL4+QUp5LNN73PsDVOPRUBbW7qpE7G6uUDms9rpOiwerwraFOS1ftX57MfH/P0NZmLLsHSaDAOBO/zis2VmJSNMF5OeKrSO49WhMHpDqVwEAeqMvYvPn85nWD8zgmdnm2iaXDsvlvDZ66gX8umvEi11cAsjanakCXrfwcXuAH0UQ2b8otFl6rDdOyqhfaCQ4lt4gS/z/zws89ydGAPmnxtLlzFA8GiFKj83JjAsqXquEAEBqzg766dygfoQ2aaD9vJweNZ4fDtjdyFSYOdoSzjRvsGvcZ1qOAV97oXBKAAAAAElFTkSuQmCC" alt="나호훈 경영컨설팅 심볼" class="logo-symbol">
+      <span class="logo-bar"></span>
+      <div style="display:flex;flex-direction:column;align-items:flex-start">
+        <span class="logo-text"><span class="logo-name">나호훈</span><span class="logo-brand">경영컨설팅</span></span>
+        <span class="logo-sub">Management Consulting</span>
+      </div>
+    </a>
+    <nav class="nav-desktop">
+      <a href="finance.html">재무·원가</a>
+      <a href="funding.html">정책자금</a>
+      <a href="certification.html">인증·평가</a>
+      <a href="smartfactory.html" class="active">스마트공장</a>
+      <a href="index.html#about">컨설턴트 소개</a>
+      <a href="index.html#contact">상담 문의</a>
+    </nav>
+    <a class="nav-cta" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
+      <i data-lucide="message-circle" style="width:13px;height:13px"></i> 무료 진단 요청
+    </a>
+    <button class="mobile-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="메뉴">
+      <i data-lucide="menu" style="width:22px;height:22px"></i>
+    </button>
+  </div>
+  <div class="mobile-menu">
+    <a href="finance.html">재무·원가</a><a href="funding.html">정책자금</a>
+    <a href="certification.html">인증·평가</a><a href="smartfactory.html">스마트공장</a>
+    <a href="index.html#about">컨설턴트 소개</a><a href="index.html#contact">상담 문의</a>
+    <button class="mobile-cta" onclick="window.open('https://open.kakao.com/o/sqxjVgti','_blank')">카카오톡 무료 진단 요청</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="ph-blob1"></div><div class="ph-blob2"></div>
+  <div class="ph-inner">
+    <div class="page-badge"><i data-lucide="cpu" style="width:12px;height:12px"></i> 스마트공장·AX 컨설팅</div>
+    <h1>스마트공장 구축과<br><span style="color:var(--accent)">AX(인공지능 전환)</span>으로<br>제조 경쟁력을 높입니다</h1>
+    <p>스마트공장 도입부터 AX(인공지능 전환) 기반 디지털전환까지 제조업 맞춤 컨설팅을 제공합니다. 정부 지원사업 연계로 비용 부담 없이 스마트 제조를 실현합니다.</p>
+    <div class="ph-tags">
+      <span class="ph-tag">#스마트공장</span>
+      <span class="ph-tag">#AX인공지능전환</span>
+      <span class="ph-tag">#디지털전환</span>
+      <span class="ph-tag">#공정자동화</span>
+      <span class="ph-tag">#MES</span>
+    </div>
+  </div>
+</section>
+
+<!-- 1. 문제 제기 -->
+<section id="problem">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-badge">PROBLEM</span>
+      <h2 class="section-title">이런 문제를 겪고 있으신가요?</h2>
+      <p class="section-sub">제조업 현장에서 스마트공장·AX(인공지능 전환)가 필요한 대표적인 신호입니다.</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card fade-up fade-up-d1">
+        <div class="prob-icon"><i data-lucide="clipboard-x" style="width:22px;height:22px"></i></div>
+        <h3>생산 현황을 실시간으로 파악 못 한다</h3>
+        <p>작업 진행 상황, 불량 발생, 재고 현황을 직원에게 물어봐야만 알 수 있습니다. 데이터 기반 의사결정이 불가능합니다.</p>
+      </div>
+      <div class="prob-card fade-up fade-up-d2">
+        <div class="prob-icon"><i data-lucide="alert-octagon" style="width:22px;height:22px"></i></div>
+        <h3>불량률이 높고 원인 파악이 안 된다</h3>
+        <p>품질 불량이 반복 발생하지만 공정별 데이터가 없어 원인을 분석하기 어렵습니다. AX(인공지능 전환) 기반 품질 분석이 필요합니다.</p>
+      </div>
+      <div class="prob-card fade-up fade-up-d3">
+        <div class="prob-icon"><i data-lucide="users" style="width:22px;height:22px"></i></div>
+        <h3>인력 부족으로 생산성이 한계에 달했다</h3>
+        <p>구인난과 인건비 상승으로 더 이상 인력 확충이 어렵습니다. 자동화와 스마트공장 구축으로 생산성 향상이 필요합니다.</p>
+      </div>
+      <div class="prob-card fade-up fade-up-d1">
+        <div class="prob-icon"><i data-lucide="cog" style="width:22px;height:22px"></i></div>
+        <h3>설비가 자주 고장 나서 생산이 멈춘다</h3>
+        <p>예기치 못한 설비 고장으로 생산 라인이 멈추는 일이 반복됩니다. 예지보전 시스템 도입이 필요합니다.</p>
+      </div>
+      <div class="prob-card fade-up fade-up-d2">
+        <div class="prob-icon"><i data-lucide="layers" style="width:22px;height:22px"></i></div>
+        <h3>수기 작업과 엑셀로 관리한다</h3>
+        <p>생산 지시, 자재 관리, 품질 기록을 모두 수기나 엑셀로 처리합니다. 오류가 빈번하고 히스토리 관리가 안 됩니다.</p>
+      </div>
+      <div class="prob-card fade-up fade-up-d3">
+        <div class="prob-icon"><i data-lucide="help-circle" style="width:22px;height:22px"></i></div>
+        <h3>스마트공장을 도입하고 싶지만 어디서 시작해야 할지 모른다</h3>
+        <p>스마트공장 필요성은 알지만 초기 투자 비용, 시스템 선택, 정부 지원 활용 방법을 몰라 시작하지 못하고 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 스마트공장 수준 단계 -->
+<section id="levels">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-badge">SMART FACTORY LEVEL</span>
+      <h2 class="section-title">스마트공장 구축 <span class="text-accent">단계별 접근</span></h2>
+      <p class="section-sub">모든 기업이 처음부터 AX(인공지능 전환)를 도입할 필요는 없습니다. 현재 수준에서 한 단계씩 올라갑니다.</p>
+    </div>
+    <div class="level-grid">
+      <div class="level-card fade-up">
+        <span class="level-badge lv1">기초 단계</span>
+        <div class="level-icon"><i data-lucide="monitor" style="width:20px;height:20px"></i></div>
+        <div class="level-title">디지털화</div>
+        <p class="level-desc">수기·엑셀 → 기초 ERP, 바코드 재고관리, POP 시스템 도입. 데이터 수집 기반 마련.</p>
+      </div>
+      <div class="level-card fade-up fade-up-d1">
+        <span class="level-badge lv2">운용 단계</span>
+        <div class="level-icon"><i data-lucide="activity" style="width:20px;height:20px"></i></div>
+        <div class="level-title">MES 도입</div>
+        <p class="level-desc">생산 실적 자동 수집, 공정별 품질 관리, 재공품 추적. 스마트공장 핵심 시스템 구축.</p>
+      </div>
+      <div class="level-card fade-up fade-up-d2">
+        <span class="level-badge lv3">고도화 단계</span>
+        <div class="level-icon"><i data-lucide="network" style="width:20px;height:20px"></i></div>
+        <div class="level-title">IoT·자동화</div>
+        <p class="level-desc">설비 데이터 실시간 수집, 예지보전, 로봇 자동화 도입. 공장 전체 연결.</p>
+      </div>
+      <div class="level-card fade-up fade-up-d3">
+        <span class="level-badge lv4">AX 전환 단계</span>
+        <div class="level-icon"><i data-lucide="brain-circuit" style="width:20px;height:20px"></i></div>
+        <div class="level-title">AX(인공지능 전환)</div>
+        <p class="level-desc">AI 불량 예측·품질 검사, AI 기반 생산 최적화. AX(인공지능 전환)으로 자율 운영 실현.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 해결 방법 -->
+<section id="solution">
+  <div class="container-sm">
+    <div class="text-center fade-up">
+      <span class="section-badge">SOLUTION</span>
+      <h2 class="section-title">스마트공장·AX 컨설팅 <span class="text-accent">4단계 실행</span></h2>
+      <p class="section-sub">스마트공장 구축과 AX(인공지능 전환) 도입을 단계별로 실행합니다. 정부 지원사업과 연계하여 비용을 최소화합니다.</p>
+    </div>
+    <div class="sol-list">
+      <div class="sol-item fade-up">
+        <div class="sol-num">01</div>
+        <div>
+          <h3>현장 진단 및 스마트공장 로드맵 수립</h3>
+          <p>생산 공정, 설비, 데이터 수집 현황을 진단하여 현재 스마트공장 수준을 평가합니다. 기업 규모와 예산에 맞는 단계별 스마트공장 구축 로드맵을 수립합니다.</p>
+          <div class="sol-tags"><span class="sol-tag">현장 진단</span><span class="sol-tag">스마트공장 수준 평가</span><span class="sol-tag">단계별 로드맵</span></div>
+        </div>
+      </div>
+      <div class="sol-item fade-up fade-up-d1">
+        <div class="sol-num">02</div>
+        <div>
+          <h3>정부 지원사업 연계 및 시스템 선정</h3>
+          <p>스마트공장 보급·확산 사업, 제조데이터 센터 구축 사업 등 정부 지원사업을 발굴하고 신청합니다. 기업 공정에 맞는 MES, ERP, IoT 시스템을 선정합니다.</p>
+          <div class="sol-tags"><span class="sol-tag">정부지원 연계</span><span class="sol-tag">시스템 선정</span><span class="sol-tag">비용 최적화</span></div>
+        </div>
+      </div>
+      <div class="sol-item fade-up fade-up-d2">
+        <div class="sol-num">03</div>
+        <div>
+          <h3>스마트공장 구축 및 현장 안착</h3>
+          <p>MES·ERP 도입, 설비 IoT 연결, 데이터 수집 체계를 구축합니다. 현장 직원 교육과 변화 관리를 통해 시스템이 실제로 활용되도록 안착을 지원합니다.</p>
+          <div class="sol-tags"><span class="sol-tag">MES 구축</span><span class="sol-tag">IoT 연결</span><span class="sol-tag">직원 교육</span></div>
+        </div>
+      </div>
+      <div class="sol-item fade-up fade-up-d3">
+        <div class="sol-num">04</div>
+        <div>
+          <h3>AX(인공지능 전환) 고도화</h3>
+          <p>축적된 제조 데이터를 기반으로 AX(인공지능 전환)를 단계적으로 적용합니다. AI 불량 예측, AI 품질 검사, AI 생산 스케줄링을 순차적으로 도입하여 자율 제조 환경을 구현합니다.</p>
+          <div class="sol-tags"><span class="sol-tag">AI 품질검사</span><span class="sol-tag">예지보전</span><span class="sol-tag">AX 인공지능 전환</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 기대 효과 -->
+<section id="effect">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-badge">EXPECTED EFFECTS</span>
+      <h2 class="section-title">스마트공장·AX 도입의 <span class="text-accent">실질적 효과</span></h2>
+      <p class="section-sub">스마트공장과 AX(인공지능 전환)을 도입한 제조 현장에서 나타나는 대표적인 성과입니다.</p>
+    </div>
+    <div class="eff-grid">
+      <div class="eff-card fade-up">
+        <div class="eff-num">30<span>%↑</span></div>
+        <div class="eff-bar"></div>
+        <h3>생산성 향상</h3>
+        <p>스마트공장 도입 기업의 평균 생산성이 30% 이상 향상됩니다. 공정 낭비 제거와 설비 가동률 최적화 효과입니다.</p>
+      </div>
+      <div class="eff-card fade-up fade-up-d1">
+        <div class="eff-num">50<span>%↓</span></div>
+        <div class="eff-bar"></div>
+        <h3>불량률 감소</h3>
+        <p>AX(인공지능 전환) 기반 품질 검사 도입 시 불량률이 평균 50% 이상 감소합니다. AI 이미지 검사의 정밀도가 사람을 능가합니다.</p>
+      </div>
+      <div class="eff-card fade-up fade-up-d2">
+        <div class="eff-num">75<span>%</span></div>
+        <div class="eff-bar"></div>
+        <h3>정부 지원 비율</h3>
+        <p>스마트공장 보급·확산 사업 신청 시 구축 비용의 최대 75%를 정부가 지원합니다. 실제 부담이 크게 줄어듭니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 사례 -->
+<section id="case">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-badge">CASE STUDY</span>
+      <h2 class="section-title">실제 <span class="text-accent">스마트공장 구축 사례</span></h2>
+      <p class="section-sub">대구·경북 제조업 현장에서 실행된 스마트공장 및 AX(인공지능 전환) 도입 사례입니다.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case-card fade-up">
+        <div class="case-top"></div>
+        <div class="case-body">
+          <span class="case-tag">대구 금속 제조업 · 직원 38명</span>
+          <div class="case-row">
+            <div class="case-dot dot-red"></div><div class="case-label lbl-red">문제</div>
+            <div class="case-text">생산 실적을 수기로 기록, 불량 발생 시 원인 파악 불가. 납기 지연이 반복되고 재고 파악이 안 됨.</div>
+          </div>
+          <div class="case-row">
+            <div class="case-dot dot-blue"></div><div class="case-label lbl-blue">실행</div>
+            <div class="case-text">스마트공장 보급사업(정부 70% 지원) 연계 MES 도입 → 공정별 실적·불량 자동 수집 → 재고 바코드 관리 → 납기 모니터링 대시보드 구축.</div>
+          </div>
+          <div class="case-result-box"><div class="case-result-text">✓ 불량률 42% 감소, 납기 준수율 91%로 향상</div></div>
+        </div>
+      </div>
+      <div class="case-card fade-up fade-up-d1">
+        <div class="case-top"></div>
+        <div class="case-body">
+          <span class="case-tag">경북 플라스틱 성형업 · 직원 52명</span>
+          <div class="case-row">
+            <div class="case-dot dot-red"></div><div class="case-label lbl-red">문제</div>
+            <div class="case-text">사출 성형기 고장으로 연간 120시간 이상 생산 정지. 예방 정비 기준 없이 고장 발생 후 수리. AX(인공지능 전환) 필요성 인식.</div>
+          </div>
+          <div class="case-row">
+            <div class="case-dot dot-blue"></div><div class="case-label lbl-blue">실행</div>
+            <div class="case-text">설비 IoT 센서 부착 → 진동·온도 데이터 수집 → AX(인공지능 전환) 기반 이상 패턴 감지 알람 → 예지보전 체계 수립.</div>
+          </div>
+          <div class="case-result-box"><div class="case-result-text">✓ 설비 가동률 94%로 향상, 비계획 정지 78% 감소</div></div>
+        </div>
+      </div>
+      <div class="case-card fade-up fade-up-d2">
+        <div class="case-top"></div>
+        <div class="case-body">
+          <span class="case-tag">대구 식품가공업 · 직원 29명</span>
+          <div class="case-row">
+            <div class="case-dot dot-red"></div><div class="case-label lbl-red">문제</div>
+            <div class="case-text">수기 품질 검사로 인력 의존도 높음. 외관 불량 출하로 반품 클레임 발생. HACCP 기준 데이터 기록 부담.</div>
+          </div>
+          <div class="case-row">
+            <div class="case-dot dot-blue"></div><div class="case-label lbl-blue">실행</div>
+            <div class="case-text">AI 비전 카메라 품질 검사 시스템 도입(정부 스마트공장 지원) → HACCP 데이터 자동 수집 → 이력 추적 시스템 구축.</div>
+          </div>
+          <div class="case-result-box"><div class="case-result-text">✓ 외관 불량 출하율 0%, 품질 검사 인력 2명 재배치</div></div>
+        </div>
+      </div>
+      <div class="case-card fade-up fade-up-d3">
+        <div class="case-top"></div>
+        <div class="case-body">
+          <span class="case-tag">대구 전자부품 제조업 · 직원 67명</span>
+          <div class="case-row">
+            <div class="case-dot dot-red"></div><div class="case-label lbl-red">문제</div>
+            <div class="case-text">생산계획을 경험에 의존하여 수립. 자재 부족으로 라인 정지 반복. AX(인공지능 전환) 기반 스케줄링 필요 인식.</div>
+          </div>
+          <div class="case-row">
+            <div class="case-dot dot-blue"></div><div class="case-label lbl-blue">실행</div>
+            <div class="case-text">ERP·MES 통합 구축 → AI 수요 예측 기반 생산계획 수립 → 자동 발주 시스템 연동 → AX(인공지능 전환) 생산 최적화.</div>
+          </div>
+          <div class="case-result-box"><div class="case-result-text">✓ 재고비용 22% 절감, 생산계획 수립 시간 90% 단축</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="seo-note" style="padding:3.2rem 0;background:#fff;">
+  <div class="container-sm">
+    <div class="text-center fade-up">
+      <span class="section-badge">SMART FACTORY CHECK</span>
+      <h2 class="section-title">스마트공장은 시스템보다 <span class="text-accent">현장 문제</span>가 먼저입니다</h2>
+      <p class="section-sub">스마트공장 구축은 MES, ERP, 바코드, 재고관리, 생산관리 기능을 무작정 도입하는 일이 아닙니다. 현재 공장의 병목, 재고 오류, 작업지시 방식, 품질기록 문제를 먼저 진단하고 정부지원 조건과 예산에 맞는 현실적인 구축 범위를 정해야 효과를 체감할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="cta-inner">
+    <h2>스마트공장과 AX(인공지능 전환),<br>우리 공장에 맞는 방법을 찾아드립니다</h2>
+    <p>스마트공장, 재고관리, 생산관리, AX 도입을 고민 중이라면 현재 현장 문제와 정부지원 가능성을 기준으로 구축 방향을 먼저 정리해 드립니다.</p>
+    <div class="cta-btns">
+      <a class="btn-kakao" href="https://open.kakao.com/o/sqxjVgti" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.554 5.084 3.938 6.562l-1.002 3.73a.3.3 0 0 0 .46.326l4.26-2.837A12.14 12.14 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3Z"/></svg>
+        카카오톡 무료 진단 요청
+      </a>
+      <a class="btn-tel" href="tel:010-0000-0000"><i data-lucide="phone" style="width:18px;height:18px"></i> 전화 상담하기</a>
+    </div>
+    <p class="cta-assurance">🔒 상담 내용 비밀 유지 · 1영업일 내 답변</p>
+  </div>
+</section>
+<div class="back-section">
+  <a class="btn-back" href="index.html"><i data-lucide="arrow-left" style="width:16px;height:16px"></i> 홈으로 돌아가기</a>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo-text">나호훈 <span style="color:#c9a84c">경영컨설팅</span></div>
+      <div class="footer-tagline">대구·경북 중소기업·소상공인 현장 중심 실행 컨설팅</div>
+    </div>
+    <div class="footer-copy">© 2025 나호훈 경영컨설팅. All rights reserved.</div>
+  </div>
+</footer>
+<script>
+  lucide.createIcons();
+  const observer = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
