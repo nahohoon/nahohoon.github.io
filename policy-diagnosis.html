@@ -79,6 +79,29 @@
     .pd-success .success-icon{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .85rem;background:rgba(15,36,72,.08);color:var(--navy)}
     .pd-success h3{font-size:1.12rem;font-weight:700;color:var(--navy);margin-bottom:.45rem}
     .pd-success p{color:var(--muted);font-size:.88rem;line-height:1.65;word-break:keep-all}
+    .pd-receipt{font-size:.78rem;color:var(--navy);font-weight:600;margin-top:.5rem}
+    .pd-result-disclaimer{margin-top:1.25rem;padding:.85rem 1rem;border-radius:.5rem;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);font-size:.75rem;color:#4a5568;line-height:1.6;text-align:left;word-break:keep-all}
+    .pd-recommendations{margin-top:1.5rem;text-align:left}
+    .pd-recommendations-head{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.35rem}
+    .pd-recommendations-sub{font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.55}
+    .pd-rec-loading{font-size:.85rem;color:var(--muted);padding:1rem 0;text-align:center}
+    .pd-rec-empty{font-size:.85rem;color:var(--muted);padding:1rem;border-radius:.5rem;background:var(--bg-gray);border:1px solid var(--border);line-height:1.6}
+    .pd-rec-list{display:flex;flex-direction:column;gap:.85rem}
+    .pd-rec-card{border:1px solid var(--border);border-radius:.75rem;padding:1.1rem 1.15rem;background:#fff;box-shadow:0 2px 12px rgba(15,36,72,.05)}
+    .pd-rec-card-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.45rem}
+    .pd-rec-rank{font-size:.72rem;font-weight:700;color:var(--muted)}
+    .pd-rec-score{font-size:.78rem;font-weight:800;color:#15803d;background:#dcfce7;padding:.2rem .55rem;border-radius:999px;white-space:nowrap}
+    .pd-rec-name{font-family:'Noto Serif KR',serif;font-size:.95rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.65rem;word-break:keep-all}
+    .pd-rec-reasons{margin-bottom:.65rem}
+    .pd-rec-reasons-label{font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:.35rem}
+    .pd-rec-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+    .pd-rec-tag{font-size:.68rem;font-weight:600;padding:.18rem .45rem;border-radius:999px;background:rgba(15,36,72,.06);color:var(--navy)}
+    .pd-rec-detail{margin-bottom:.45rem;font-size:.8rem;line-height:1.55}
+    .pd-rec-detail-label{display:block;font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:.15rem}
+    .pd-rec-detail-value{color:#374151;word-break:break-word;white-space:pre-wrap}
+    .pd-rec-actions{margin-top:.75rem;padding-top:.65rem;border-top:1px solid var(--border)}
+    .pd-rec-apply{display:inline-flex;align-items:center;justify-content:center;padding:.55rem 1.1rem;border-radius:.45rem;background:var(--navy);color:#fff;font-size:.8rem;font-weight:700;text-decoration:none;font-family:'Noto Sans KR',sans-serif;transition:opacity .15s}
+    .pd-rec-apply:hover{opacity:.88}
     #pd-checklist{padding:3.5rem 0;background:#fff}
     .pd-checklist-box{max-width:640px;margin:2rem auto 0;text-align:left;background:var(--bg-blue);border:1px solid var(--border);border-radius:.85rem;padding:1.35rem 1.5rem}
     .pd-checklist-box h3{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.85rem}
@@ -426,7 +449,10 @@
     <div id="diagnosis-success" class="pd-form-card pd-success fade-up" style="display:none">
       <div class="success-icon"><i data-lucide="check-circle-2" style="width:30px;height:30px"></i></div>
       <h3>신청이 접수되었습니다.</h3>
-      <p>입력하신 내용을 검토한 후 정책자금 가능성과 준비사항을 안내드리겠습니다.</p>
+      <p id="diagnosis-success-lead">입력하신 정보를 바탕으로 추천 정책자금을 안내드립니다. 최종 안내는 담당자 검토 후 진행됩니다.</p>
+      <p id="receipt-no-display" class="pd-receipt" style="display:none"></p>
+      <div id="recommendation-results" class="pd-recommendations" aria-live="polite"></div>
+      <p class="pd-result-disclaimer">본 추천 결과는 사전 검토용이며, 최종 승인 여부는 기관 심사·세금체납·신용상태·재무상태 등에 따라 달라질 수 있습니다.</p>
     </div>
   </div>
 </section>
@@ -483,10 +509,12 @@
   </div>
 </footer>
 
+<script src="policy-matching-system/matching.js?v=20260601"></script>
 <script>
   // Google Apps Script Web App exec URL 입력
   // 예: https://script.google.com/macros/s/XXXXX/exec
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
+  const MATCH_MIN_SCORE = 60;
 
   function formatPhoneNumber(value) {
     const numbers = String(value || '').replace(/\D/g, '');
@@ -502,6 +530,153 @@
   function getValue(id) {
     var el = document.getElementById(id);
     return el ? String(el.value || '').trim() : '';
+  }
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /** 진단 폼 payload → MatchingEngine.recommend()용 시트 행 형식 */
+  function formPayloadToCustomerRow(payload) {
+    return {
+      '업종': String(payload.industry || '').trim(),
+      '업력': String(payload.businessYears || '').trim(),
+      '연매출규모': String(payload.revenue || '').trim(),
+      '종업원수': String(payload.employees || '').trim(),
+      '자금유형': String(payload.fundType || '').trim()
+    };
+  }
+
+  function policiesApiUrl() {
+    var base = GAS_URL.trim();
+    return base + (base.indexOf('?') >= 0 ? '&' : '?') + 'action=policies&ts=' + Date.now();
+  }
+
+  async function fetchPolicyRows() {
+    var res = await fetch(policiesApiUrl());
+    var text = await res.text();
+    var result;
+    try {
+      result = JSON.parse(text);
+    } catch (e) {
+      throw new Error('정책 DB 응답을 해석할 수 없습니다.');
+    }
+    if (!res.ok || result.success !== true) {
+      throw new Error((result && result.error) || '정책 DB 조회 실패');
+    }
+    return Array.isArray(result.rows) ? result.rows : [];
+  }
+
+  function renderRecommendationResults(out, container) {
+    if (!container) return;
+
+    if (!out || !out.results || !out.results.length) {
+      container.innerHTML =
+        '<p class="pd-rec-empty">현재 입력하신 조건에 맞는 추천 정책자금이 없습니다.<br>담당자가 검토 후 적합한 지원사업을 안내드리겠습니다.</p>';
+      return;
+    }
+
+    var headHtml =
+      '<h4 class="pd-recommendations-head">추천 정책자금 <span class="text-accent">' + out.results.length + '건</span></h4>' +
+      '<p class="pd-recommendations-sub">업종·매출·업력·자금 목적 등을 기준으로 사전 매칭한 결과입니다.</p>';
+
+    var cardsHtml = out.results.map(function (r, i) {
+      var p = r.policy;
+      var reasons = (r.reasons || []).filter(Boolean);
+      var tagsHtml = reasons.map(function (note) {
+        return '<span class="pd-rec-tag">' + escapeHtml(note) + '</span>';
+      }).join('');
+
+      var link = (p.applyLink || '').trim();
+      var linkHtml = '';
+      if (link) {
+        var href = /^https?:\/\//i.test(link) ? link : 'https://' + link;
+        linkHtml =
+          '<div class="pd-rec-actions">' +
+            '<a class="pd-rec-apply" href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">신청 바로가기</a>' +
+          '</div>';
+      }
+
+      function detailBlock(label, value) {
+        if (!value) return '';
+        return (
+          '<div class="pd-rec-detail">' +
+            '<span class="pd-rec-detail-label">' + escapeHtml(label) + '</span>' +
+            '<span class="pd-rec-detail-value">' + escapeHtml(value) + '</span>' +
+          '</div>'
+        );
+      }
+
+      return (
+        '<article class="pd-rec-card">' +
+          '<div class="pd-rec-card-head">' +
+            '<span class="pd-rec-rank">추천 #' + (i + 1) + '</span>' +
+            '<span class="pd-rec-score">적합도 ' + r.score + '점</span>' +
+          '</div>' +
+          '<h4 class="pd-rec-name">' + escapeHtml(p.name) + '</h4>' +
+          (tagsHtml
+            ? '<div class="pd-rec-reasons">' +
+                '<div class="pd-rec-reasons-label">추천 사유</div>' +
+                '<div class="pd-rec-tags">' + tagsHtml + '</div>' +
+              '</div>'
+            : '') +
+          detailBlock('지원내용', p.supportContent) +
+          detailBlock('신청기간', p.applyPeriod) +
+          linkHtml +
+        '</article>'
+      );
+    }).join('');
+
+    container.innerHTML = headHtml + '<div class="pd-rec-list">' + cardsHtml + '</div>';
+  }
+
+  async function loadAndShowRecommendations(payload) {
+    var container = document.getElementById('recommendation-results');
+    if (!container) return;
+
+    if (typeof MatchingEngine === 'undefined' || !MatchingEngine.recommend) {
+      container.innerHTML = '<p class="pd-rec-empty">추천 엔진을 불러오지 못했습니다. 담당자가 검토 후 안내드리겠습니다.</p>';
+      return;
+    }
+
+    container.innerHTML = '<p class="pd-rec-loading">추천 정책자금을 분석하는 중입니다…</p>';
+
+    try {
+      var policyRows = await fetchPolicyRows();
+      var customerRow = formPayloadToCustomerRow(payload);
+      var out = MatchingEngine.recommend(customerRow, policyRows, MATCH_MIN_SCORE);
+      renderRecommendationResults(out, container);
+    } catch (err) {
+      console.error('RECOMMEND ERROR', err);
+      container.innerHTML =
+        '<p class="pd-rec-empty">추천 결과를 불러오지 못했습니다. 신청은 정상 접수되었으며, 담당자가 검토 후 연락드리겠습니다.</p>';
+    }
+  }
+
+  function showDiagnosisSuccess(receiptNo, payload) {
+    document.getElementById('diagnosis-form-wrap').style.display = 'none';
+    document.getElementById('diagnosis-success').style.display = 'block';
+
+    var receiptEl = document.getElementById('receipt-no-display');
+    if (receiptEl && receiptNo) {
+      receiptEl.textContent = '접수번호: ' + receiptNo;
+      receiptEl.style.display = 'block';
+    } else if (receiptEl) {
+      receiptEl.style.display = 'none';
+    }
+
+    lucide.createIcons();
+    loadAndShowRecommendations(payload);
+
+    var ok = document.getElementById('diagnosis-success');
+    if (ok) {
+      var top = ok.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
   }
 
   async function submitDiagnosisForm(event) {
@@ -527,6 +702,12 @@
     payload.taxDelinq = getValue('taxDelinq') || '없음';
     payload.privacyAgree = agree.checked ? '동의' : '미동의';
 
+    var submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+
+    var receiptNo = '';
     if (typeof GAS_URL === 'string' && GAS_URL.trim()) {
       try {
         console.log('SEND PAYLOAD', payload);
@@ -547,23 +728,22 @@
           alert(errMsg);
           return;
         }
+        receiptNo = (result && result.receiptNo) ? String(result.receiptNo).trim() : '';
       } catch (err) {
         console.error('FETCH ERROR', err);
         alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.');
         return;
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+        }
       }
     }
 
-    document.getElementById('diagnosis-form-wrap').style.display = 'none';
-    document.getElementById('diagnosis-success').style.display = 'block';
+    var payloadForMatch = Object.assign({}, payload);
     form.reset();
     if (agree) agree.checked = false;
-    lucide.createIcons();
-    var ok = document.getElementById('diagnosis-success');
-    if (ok) {
-      var top = ok.getBoundingClientRect().top + window.scrollY - 100;
-      window.scrollTo({ top: top, behavior: 'smooth' });
-    }
+    showDiagnosisSuccess(receiptNo, payloadForMatch);
   }
 
   const phoneInput = document.getElementById('phone');
