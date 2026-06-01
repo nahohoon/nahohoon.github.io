@@ -11,82 +11,54 @@
   <link rel="stylesheet" href="./style.css?v=20260601" />
 </head>
 <body>
-  <div id="admin-gate" class="admin-gate">
-    <div class="admin-gate-card">
+  <header class="app-header">
+    <div>
       <span class="internal-badge">INTERNAL</span>
-      <h2 class="admin-gate-title">관리자 인증</h2>
-      <p class="admin-gate-desc">정책자금 매칭 시스템은 관리자 PIN이 필요합니다.</p>
-      <form id="admin-pin-form" class="admin-pin-form" autocomplete="off">
-        <label class="admin-pin-label" for="admin-pin">관리자 PIN (6자리)</label>
-        <input
-          class="admin-pin-input"
-          id="admin-pin"
-          name="adminPin"
-          type="password"
-          inputmode="numeric"
-          pattern="[0-9]{6}"
-          maxlength="6"
-          placeholder="••••••"
-          required
-          autocomplete="off"
-        />
-        <p id="admin-pin-error" class="admin-pin-error" role="alert" aria-live="polite"></p>
-        <button type="submit" class="admin-pin-submit" id="admin-pin-submit">인증하기</button>
-      </form>
+      <h1>정책자금 매칭 시스템</h1>
+      <p>진단 DB vs 정책 DB · 룰 기반 추천 (전문 검토 후 안내용)</p>
     </div>
-  </div>
+    <div class="header-actions">
+      <span id="load-status"></span>
+      <button type="button" class="btn-refresh" id="btn-refresh">새로고침</button>
+    </div>
+  </header>
 
-  <div id="admin-app" hidden>
-    <header class="app-header">
-      <div>
-        <span class="internal-badge">INTERNAL</span>
-        <h1>정책자금 매칭 시스템</h1>
-        <p>진단 DB vs 정책 DB · 룰 기반 추천 (전문 검토 후 안내용)</p>
+  <main class="workspace">
+    <aside class="panel panel-left">
+      <div class="panel-head">
+        <h2>업체 리스트</h2>
+        <p class="panel-head-meta"><span id="company-count">0건</span> · CONSULT_PIPELINE</p>
+        <input type="search" class="panel-search" id="company-search" placeholder="업체명·업종 검색" autocomplete="off" />
       </div>
-      <div class="header-actions">
-        <span id="load-status"></span>
-        <button type="button" class="btn-logout" id="btn-logout">로그아웃</button>
-        <button type="button" class="btn-refresh" id="btn-refresh">새로고침</button>
+      <div class="panel-body" id="company-list">
+        <p class="panel-empty">불러오는 중…</p>
       </div>
-    </header>
+    </aside>
 
-    <main class="workspace">
-      <aside class="panel panel-left">
-        <div class="panel-head">
-          <h2>업체 리스트</h2>
-          <p class="panel-head-meta"><span id="company-count">0건</span> · CONSULT_PIPELINE</p>
-          <input type="search" class="panel-search" id="company-search" placeholder="업체명·업종 검색" autocomplete="off" />
-        </div>
-        <div class="panel-body" id="company-list">
-          <p class="panel-empty">관리자 PIN 인증 후 데이터를 불러옵니다.</p>
-        </div>
-      </aside>
+    <section class="panel panel-center">
+      <div class="panel-head">
+        <h2>업체 상세</h2>
+        <p class="panel-head-meta">고객 진단 데이터</p>
+      </div>
+      <div class="panel-body" id="company-detail">
+        <p class="panel-empty">좌측에서 업체를 선택하세요.</p>
+      </div>
+    </section>
 
-      <section class="panel panel-center">
-        <div class="panel-head">
-          <h2>업체 상세</h2>
-          <p class="panel-head-meta">고객 진단 데이터</p>
-        </div>
-        <div class="panel-body" id="company-detail">
-          <p class="panel-empty">좌측에서 업체를 선택하세요.</p>
-        </div>
-      </section>
+    <section class="panel panel-right">
+      <div class="panel-head">
+        <h2>추천 정책자금</h2>
+        <p class="panel-head-meta"><span id="match-count"></span> · 정책자금매칭 시트</p>
+      </div>
+      <div class="panel-body" id="match-results">
+        <p class="panel-empty">업체 선택 후 추천 정책이 표시됩니다.</p>
+      </div>
+    </section>
+  </main>
 
-      <section class="panel panel-right">
-        <div class="panel-head">
-          <h2>추천 정책자금</h2>
-          <p class="panel-head-meta"><span id="match-count"></span> · 정책자금매칭 시트</p>
-        </div>
-        <div class="panel-body" id="match-results">
-          <p class="panel-empty">업체 선택 후 추천 정책이 표시됩니다.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="app-footer">
-      공개 홈페이지 CTA(상담 신청)와 분리된 내부 분석 도구입니다. 최종 안내는 담당자 검토 후 진행하세요.
-    </footer>
-  </div>
+  <footer class="app-footer">
+    공개 홈페이지 CTA(상담 신청)와 분리된 내부 분석 도구입니다. 최종 안내는 담당자 검토 후 진행하세요.
+  </footer>
 
   <script src="./config.js?v=20260601"></script>
   <script src="./matching.js?v=20260517"></script>
