@@ -92,9 +92,9 @@
     .pd-rec-empty{font-size:.85rem;color:var(--muted);padding:1rem;border-radius:.5rem;background:var(--bg-gray);border:1px solid var(--border);line-height:1.6}
     .pd-rec-list{display:flex;flex-direction:column;gap:.85rem}
     .pd-rec-card{border:1px solid var(--border);border-radius:.75rem;padding:1.1rem 1.15rem;background:#fff;box-shadow:0 2px 12px rgba(15,36,72,.05)}
-    .pd-rec-card-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.45rem}
-    .pd-rec-rank{font-size:.72rem;font-weight:700;color:var(--muted)}
-    .pd-rec-score{font-size:.78rem;font-weight:800;color:#15803d;background:#dcfce7;padding:.2rem .55rem;border-radius:999px;white-space:nowrap}
+    .pd-rec-card-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.45rem;flex-wrap:wrap}
+    .pd-rec-rank{font-size:.85rem;font-weight:800;color:var(--navy);background:rgba(15,36,72,.08);padding:.28rem .7rem;border-radius:999px;white-space:nowrap}
+    .pd-rec-score-ref{font-size:.65rem;font-weight:500;color:var(--muted);white-space:nowrap}
     .pd-rec-name{font-family:'Noto Serif KR',serif;font-size:.95rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.65rem;word-break:keep-all}
     .pd-rec-reasons{margin-bottom:.65rem}
     .pd-rec-reasons-label{font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:.35rem}
@@ -524,6 +524,7 @@
   /** 진단 폼 payload → MatchingEngine.recommend()용 시트 행 형식 */
   function formPayloadToCustomerRow(payload) {
     return {
+      '지역': String(payload.region || '').trim(),
       '업종': String(payload.industry || '').trim(),
       '업력': String(payload.businessYears || '').trim(),
       '연매출규모': String(payload.revenue || '').trim(),
@@ -563,7 +564,7 @@
 
     var headHtml =
       '<h4 class="pd-recommendations-head">추천 정책자금 <span class="text-accent">' + out.results.length + '건</span></h4>' +
-      '<p class="pd-recommendations-sub">업종·매출·업력·자금 목적 등을 기준으로 사전 매칭한 결과입니다.</p>';
+      '<p class="pd-recommendations-sub">입력하신 조건에 맞는 지원사업을 우선순위 순으로 정렬했습니다.</p>';
 
     var cardsHtml = out.results.map(function (r, i) {
       var p = r.policy;
@@ -592,11 +593,17 @@
         );
       }
 
+      var rankLabel = (i + 1) + '순위 추천';
+      var scoreRefHtml =
+        typeof r.score === 'number'
+          ? '<span class="pd-rec-score-ref">내부 적합도 참고 ' + r.score + '</span>'
+          : '';
+
       return (
         '<article class="pd-rec-card">' +
           '<div class="pd-rec-card-head">' +
-            '<span class="pd-rec-rank">추천 #' + (i + 1) + '</span>' +
-            '<span class="pd-rec-score">적합도 ' + r.score + '점</span>' +
+            '<span class="pd-rec-rank">' + rankLabel + '</span>' +
+            scoreRefHtml +
           '</div>' +
           '<h4 class="pd-rec-name">' + escapeHtml(p.name) + '</h4>' +
           (tagsHtml

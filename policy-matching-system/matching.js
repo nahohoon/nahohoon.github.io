@@ -2,7 +2,8 @@
  * 룰 기반 정책자금 매칭 엔진
  * 정책 DB 시트 헤더: 사업명, 주관기관, 지원대상, 지역, 업종,
  * 창업연수최소, 창업연수최대, 매출최소, 매출최대, 종업원최소, 종업원최대,
- * 자금목적, 지원내용, 신청기간, 신청링크, 필요서류, 비고
+ * 자금목적, 지원내용, 신청기간, 신청링크, 필요서류, 비고,
+ * 정책유형, 우선순위, 가점조건
  * 매출 단위: 만원 (예: 8억 = 80000, 상한 10억 = 100000)
  */
 const MatchingEngine = (function () {
@@ -30,6 +31,14 @@ const MatchingEngine = (function () {
     '5~9명': { min: 5, max: 9 },
     '10~49명': { min: 10, max: 49 },
     '50명 이상': { min: 50, max: 99999 }
+  };
+
+  /** 고객 자금유형 → 정책유형 가산 매핑 (pass/fail 영향 없음) */
+  const POLICY_TYPE_BONUS_MAP = {
+    '운전자금': ['정책자금', '소상공인'],
+    '시설자금': ['스마트공장', '정책자금', '제조업'],
+    '창업자금': ['창업', 'R&D', '재도전'],
+    '긴급경영안정자금': ['정책자금', '재도전']
   };
 
   function normalizeRow(row) {
@@ -281,6 +290,108 @@ const MatchingEngine = (function () {
     return { pass: false, score: 0, note: '자금목적 불일치' };
   }
 
+  function splitTokens(text) {
+    return String(text || '')
+      .split(/[,/|·]/)
+      .map(function (k) { return normalizeText(k); })
+      .filter(Boolean);
+  }
+
+  function tokensOverlap(a, b) {
+    return a.some(function (left) {
+      return b.some(function (right) {
+        return left.indexOf(right) >= 0 || right.indexOf(left) >= 0;
+      });
+    });
+  }
+
+  /** 지역 가산 (pass/fail 영향 없음) */
+  function matchRegionBonus(customerRegion, policyRegion) {
+    var pNorm = normalizeText(policyRegion);
+    var cNorm = normalizeText(customerRegion);
+
+    if (!pNorm || pNorm === '전국' || pNorm.indexOf('전국') >= 0) {
+      return { bonus: 5, note: '전국 대상' };
+    }
+    if (!cNorm) {
+      return { bonus: 3, note: '지역 미입력' };
+    }
+
+    var policyTokens = splitTokens(policyRegion);
+    if (!policyTokens.length) policyTokens = [pNorm];
+
+    var hit = tokensOverlap([cNorm], policyTokens) ||
+      cNorm.indexOf(pNorm) >= 0 ||
+      pNorm.indexOf(cNorm) >= 0;
+
+    return hit
+      ? { bonus: 8, note: '지역 적합' }
+      : { bonus: 0, note: '' };
+  }
+
+  /** 정책유형 가산 (pass/fail 영향 없음) */
+  function matchPolicyTypeBonus(customerFundType, policyType) {
+    var fundKey = String(customerFundType || '').trim();
+    var targets = POLICY_TYPE_BONUS_MAP[fundKey];
+    if (!targets || !policyType) return { bonus: 0, note: '' };
+
+    var types = splitTokens(policyType);
+    var hit = targets.some(function (target) {
+      var nt = normalizeText(target);
+      return types.some(function (pt) {
+        return pt.indexOf(nt) >= 0 || nt.indexOf(pt) >= 0;
+      });
+    });
+
+    return hit
+      ? { bonus: 8, note: '정책유형 적합' }
+      : { bonus: 0, note: '' };
+  }
+
+  /** 우선순위 가산 (pass/fail 영향 없음) */
+  function matchPriorityBonus(priority) {
+    var n = parseInt(String(priority || '').trim(), 10);
+    if (isNaN(n) || n <= 0) return { bonus: 0, note: '' };
+    return { bonus: Math.min(n * 2, 10), note: '우선순위 ' + n };
+  }
+
+  function parsePriorityValue(priority) {
+    var n = parseInt(String(priority || '').trim(), 10);
+    return isNaN(n) ? 0 : n;
+  }
+
+  /** 가점조건 가산 (pass/fail 영향 없음) */
+  function matchBonusConditionsBonus(customer, bonusText) {
+    var text = normalizeText(bonusText);
+    if (!text) return { bonus: 0, note: '' };
+
+    var hits = [];
+    var keys = [
+      normalizeText(customer.industry),
+      normalizeText(customer.region),
+      normalizeText(customer.fundType)
+    ].filter(Boolean);
+
+    keys.forEach(function (k) {
+      if (text.indexOf(k) >= 0 && hits.indexOf(k) < 0) hits.push(k);
+    });
+
+    splitTokens(bonusText).forEach(function (part) {
+      if (customer.industry) {
+        var ci = normalizeText(customer.industry);
+        if (ci.indexOf(part) >= 0 || part.indexOf(ci) >= 0) {
+          if (hits.indexOf(part) < 0) hits.push(part);
+        }
+      }
+    });
+
+    var bonus = Math.min(hits.length * 2, 8);
+    return {
+      bonus: bonus,
+      note: bonus > 0 ? '가점조건 ' + hits.length + '건 충족' : ''
+    };
+  }
+
   function deriveExistingLoanFlag(amountStr, flagStr) {
     if (flagStr === '있음' || flagStr === '없음') return flagStr;
     var n = parseFloat(String(amountStr || '').replace(/,/g, '').trim());
@@ -296,8 +407,8 @@ const MatchingEngine = (function () {
 
   /** 매칭 엔진용 (정책 비교) */
   function extractCustomer(row) {
-    var existingLoan = cell(row, '기존대출금액');
     return {
+      region: cell(row, '지역'),
       industry: cell(row, '업종'),
       years: cell(row, '업력'),
       revenue: pick(row, ['연매출규모', '연매출']),
@@ -336,6 +447,9 @@ const MatchingEngine = (function () {
       employeesMin: pick(row, ['종업원최소']),
       employeesMax: pick(row, ['종업원최대']),
       fundPurpose: pick(row, ['자금목적']),
+      policyType: pick(row, ['정책유형']),
+      priority: pick(row, ['우선순위']),
+      bonusConditions: pick(row, ['가점조건']),
       supportContent: pick(row, ['지원내용']),
       applyPeriod: pick(row, ['신청기간']),
       applyLink: pick(row, ['신청링크']),
@@ -355,16 +469,34 @@ const MatchingEngine = (function () {
     ];
 
     var failed = checks.filter(function (c) { return !c.pass; });
-    var score = checks.reduce(function (sum, c) { return sum + (c.score || 0); }, 0);
-    var maxScore = 74;
-    var percent = Math.min(100, Math.round((score / maxScore) * 100));
+    var baseScore = checks.reduce(function (sum, c) { return sum + (c.score || 0); }, 0);
+    var maxScore = 77;
+    var basePercent = Math.min(100, Math.round((baseScore / maxScore) * 100));
+
+    var regionBonus = matchRegionBonus(customer.region, policy.region);
+    var typeBonus = matchPolicyTypeBonus(customer.fundType, policy.policyType);
+    var priorityBonus = matchPriorityBonus(policy.priority);
+    var bonusCond = matchBonusConditionsBonus(customer, policy.bonusConditions);
+    var bonusTotal = regionBonus.bonus + typeBonus.bonus + priorityBonus.bonus + bonusCond.bonus;
+    var bonusApplied = Math.round(bonusTotal * 0.25);
+    var bonusScore = Math.min(10, bonusApplied);
+    var score = basePercent;
+    var sortScore = basePercent + bonusScore;
+
+    var reasons = checks.map(function (c) { return c.note; }).filter(Boolean);
+    if (regionBonus.note) reasons.push(regionBonus.note);
+    if (typeBonus.note) reasons.push(typeBonus.note);
+    if (priorityBonus.note) reasons.push(priorityBonus.note);
+    if (bonusCond.note) reasons.push(bonusCond.note);
 
     return {
       policy: policy,
-      score: percent,
+      score: score,
+      sortScore: sortScore,
+      bonusScore: bonusScore,
       passed: failed.length === 0,
       checks: checks,
-      reasons: checks.map(function (c) { return c.note; }).filter(Boolean)
+      reasons: reasons
     };
   }
 
@@ -380,7 +512,11 @@ const MatchingEngine = (function () {
       })
       .filter(Boolean)
       .filter(function (r) { return r.passed && r.score >= threshold; })
-      .sort(function (a, b) { return b.score - a.score; });
+      .sort(function (a, b) {
+        if (b.sortScore !== a.sortScore) return b.sortScore - a.sortScore;
+        if (b.score !== a.score) return b.score - a.score;
+        return parsePriorityValue(b.policy.priority) - parsePriorityValue(a.policy.priority);
+      });
 
     return { customer: customer, results: results };
   }

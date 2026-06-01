@@ -222,11 +222,19 @@
         );
       }
 
+      var rankLabel = (i + 1) + '순위 추천';
+      var scoreRefHtml =
+        typeof r.score === 'number'
+          ? '<span style="font-size:.65rem;font-weight:500;color:var(--muted);white-space:nowrap">내부 적합도 참고 ' + r.score + '</span>'
+          : '';
+
       return (
         '<article class="match-card">' +
           '<div class="match-card-head">' +
-            '<span class="match-rank">#' + (i + 1) + '</span>' +
-            '<span class="match-score">' + r.score + '점</span>' +
+            '<span class="match-rank" style="font-size:.85rem;font-weight:800;color:var(--navy);background:rgba(15,36,72,.08);padding:.28rem .7rem;border-radius:999px;white-space:nowrap">' +
+              escapeHtml(rankLabel) +
+            '</span>' +
+            scoreRefHtml +
           '</div>' +
           '<h3 class="match-name">' + escapeHtml(p.name) + '</h3>' +
           '<p class="match-org">' + escapeHtml(p.org || '-') + '</p>' +
