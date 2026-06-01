@@ -34,12 +34,15 @@
   }
 
   function gasUrl(action) {
-    var base = (CONFIG.GAS_URL || '').trim();
-    if (!base) throw new Error('CONFIG.GAS_URL이 설정되지 않았습니다.');
-    return base + (base.indexOf('?') >= 0 ? '&' : '?') + 'action=' + encodeURIComponent(action) + '&ts=' + Date.now();
+    var needsAuth = action === CONFIG.API.PIPELINE;
+    var extra = needsAuth ? AdminAuth.authParams() : null;
+    return AdminAuth.buildGasUrl(action, extra);
   }
 
   async function fetchGas(action) {
+    if (action === CONFIG.API.PIPELINE && !AdminAuth.hasToken()) {
+      throw new Error('관리자 인증이 필요합니다.');
+    }
     var res = await fetch(gasUrl(action));
     var text = await res.text();
     var result;
@@ -339,8 +342,98 @@
     });
   }
 
+  function resetPanelsForGate() {
+    diagnosisRows = [];
+    policyRows = [];
+    selectedIndex = -1;
+    var list = document.getElementById('company-list');
+    if (list) {
+      list.innerHTML = '<p class="panel-empty">관리자 PIN 인증 후 데이터를 불러옵니다.</p>';
+    }
+    var detail = document.getElementById('company-detail');
+    if (detail) {
+      detail.innerHTML = '<p class="panel-empty">좌측에서 업체를 선택하세요.</p>';
+    }
+    var match = document.getElementById('match-results');
+    if (match) {
+      match.innerHTML = '<p class="panel-empty">업체 선택 후 추천 정책이 표시됩니다.</p>';
+    }
+    var countEl = document.getElementById('company-count');
+    if (countEl) countEl.textContent = '0건';
+    var matchCount = document.getElementById('match-count');
+    if (matchCount) matchCount.textContent = '';
+    setStatus('');
+  }
+
+  function showAdminGate() {
+    var gate = document.getElementById('admin-gate');
+    var app = document.getElementById('admin-app');
+    if (gate) gate.hidden = false;
+    if (app) app.hidden = true;
+  }
+
+  function showAdminApp() {
+    var gate = document.getElementById('admin-gate');
+    var app = document.getElementById('admin-app');
+    if (gate) gate.hidden = true;
+    if (app) app.hidden = false;
+  }
+
+  async function handlePinSubmit(event) {
+    event.preventDefault();
+    var pinInput = document.getElementById('admin-pin');
+    var errEl = document.getElementById('admin-pin-error');
+    var submitBtn = document.getElementById('admin-pin-submit');
+    if (!pinInput || !errEl) return;
+
+    errEl.textContent = '';
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      var result = await AdminAuth.verifyPin(pinInput.value);
+      if (result.ok) {
+        pinInput.value = '';
+        showAdminApp();
+        await loadAll();
+      } else {
+        errEl.textContent = result.error || 'PIN이 올바르지 않습니다.';
+      }
+    } catch (err) {
+      errEl.textContent = err.message || '인증 중 오류가 발생했습니다.';
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  }
+
+  function handleLogout() {
+    AdminAuth.clearToken();
+    resetPanelsForGate();
+    showAdminGate();
+    var errEl = document.getElementById('admin-pin-error');
+    if (errEl) errEl.textContent = '';
+  }
+
+  function initAdmin() {
+    var pinForm = document.getElementById('admin-pin-form');
+    if (pinForm) {
+      pinForm.addEventListener('submit', handlePinSubmit);
+    }
+    var logoutBtn = document.getElementById('btn-logout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', handleLogout);
+    }
+
+    if (AdminAuth.hasToken()) {
+      showAdminApp();
+      loadAll();
+    } else {
+      resetPanelsForGate();
+      showAdminGate();
+    }
+  }
+
   document.getElementById('btn-refresh').addEventListener('click', loadAll);
   document.getElementById('company-search').addEventListener('input', filterCompanies);
 
-  loadAll();
+  initAdmin();
 })();

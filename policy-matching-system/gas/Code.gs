@@ -44,10 +44,34 @@ var CONSULT_PIPELINE_HEADERS = [
   '상담메모'
 ];
 
+/** Script Properties ADMIN_PIN(6자리)과 일치하는지 검증 */
+function requireAdminAuth_(token) {
+  var expected = PropertiesService.getScriptProperties().getProperty('ADMIN_PIN');
+  if (!expected) {
+    throw new Error('unauthorized');
+  }
+  var provided = String(token || '').trim();
+  if (!provided || provided !== String(expected).trim()) {
+    throw new Error('unauthorized');
+  }
+}
+
+function unauthorizedResponse_() {
+  return jsonResponse_({ success: false, error: 'unauthorized' });
+}
+
 function doGet(e) {
   var action = (e && e.parameter && e.parameter.action) || '';
+  var params = (e && e.parameter) || {};
+  var adminToken = params.adminToken || '';
+
   try {
+    if (action === 'verifyAdmin') {
+      requireAdminAuth_(adminToken);
+      return jsonResponse_({ success: true });
+    }
     if (action === 'pipeline') {
+      requireAdminAuth_(adminToken);
       return jsonResponse_({ success: true, rows: getSheetRows_(SHEET_PIPELINE) });
     }
     if (action === 'policies') {
@@ -58,6 +82,9 @@ function doGet(e) {
     }
     return jsonResponse_({ success: false, error: 'unknown action: ' + action });
   } catch (err) {
+    if (String(err.message || err) === 'unauthorized') {
+      return unauthorizedResponse_();
+    }
     return jsonResponse_({ success: false, error: String(err) });
   }
 }
@@ -74,14 +101,19 @@ function doPost(e) {
     var action = body.action || '';
 
     if (action === 'updateStatus') {
+      requireAdminAuth_(body.adminToken);
       return jsonResponse_(updateStatus_(body.receiptNo, body.status));
     }
     if (action === 'updateMemoAction') {
+      requireAdminAuth_(body.adminToken);
       return jsonResponse_(updateMemoAction_(body.receiptNo, body.nextAction, body.memo));
     }
 
     return jsonResponse_(saveDiagnosis_(body));
   } catch (err) {
+    if (String(err.message || err) === 'unauthorized') {
+      return unauthorizedResponse_();
+    }
     return jsonResponse_({ success: false, error: String(err) });
   }
 }

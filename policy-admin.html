@@ -209,15 +209,132 @@
       font-family: 'Noto Sans KR', sans-serif;
     }
     .btn-save-memo:hover { background: var(--navy-dark); }
+    .admin-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #0F2448 0%, #1a3a6e 100%);
+    }
+    .admin-gate-card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: .85rem;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .22);
+    }
+    .admin-gate-badge {
+      display: inline-block;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: .2rem .5rem;
+      border-radius: 999px;
+      background: rgba(15, 36, 72, .08);
+      color: var(--navy);
+      letter-spacing: .06em;
+    }
+    .admin-gate-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin: .65rem 0 .35rem;
+    }
+    .admin-gate-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+    .admin-pin-form { display: flex; flex-direction: column; gap: .65rem; }
+    .admin-pin-label { font-size: .78rem; font-weight: 600; color: var(--navy); }
+    .admin-pin-input {
+      width: 100%;
+      padding: .75rem .95rem;
+      border-radius: .45rem;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 1.1rem;
+      letter-spacing: .35em;
+      text-align: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--navy);
+    }
+    .admin-pin-input:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(15, 36, 72, .09);
+    }
+    .admin-pin-error {
+      min-height: 1.1rem;
+      font-size: .75rem;
+      color: #b91c1c;
+      line-height: 1.4;
+    }
+    .admin-pin-submit {
+      margin-top: .25rem;
+      padding: .75rem 1rem;
+      border-radius: .45rem;
+      border: none;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .admin-pin-submit:disabled { opacity: .6; cursor: wait; }
+    .btn-logout {
+      display: inline-flex;
+      align-items: center;
+      padding: .55rem 1rem;
+      border-radius: .45rem;
+      font-size: .82rem;
+      font-weight: 600;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.28);
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,.14); }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div id="admin-gate" class="admin-gate">
+    <div class="admin-gate-card">
+      <span class="admin-gate-badge">INTERNAL</span>
+      <h2 class="admin-gate-title">관리자 인증</h2>
+      <p class="admin-gate-desc">정책자금 상담관리는 관리자 PIN이 필요합니다.</p>
+      <form id="admin-pin-form" class="admin-pin-form" autocomplete="off">
+        <label class="admin-pin-label" for="admin-pin">관리자 PIN (6자리)</label>
+        <input
+          class="admin-pin-input"
+          id="admin-pin"
+          name="adminPin"
+          type="password"
+          inputmode="numeric"
+          pattern="[0-9]{6}"
+          maxlength="6"
+          placeholder="••••••"
+          required
+          autocomplete="off"
+        />
+        <p id="admin-pin-error" class="admin-pin-error" role="alert" aria-live="polite"></p>
+        <button type="submit" class="admin-pin-submit" id="admin-pin-submit">인증하기</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="admin-app" class="wrap" hidden>
     <header class="top-bar">
       <h1>정책자금 상담관리</h1>
       <p>무료상담 신청 현황 및 상담 진행상태 관리 · <a href="policy-matching-system/index.html" style="color:rgba(255,255,255,.85)">정책 매칭</a></p>
       <div class="top-actions">
         <button type="button" class="btn-refresh" id="btn-refresh">새로고침</button>
+        <button type="button" class="btn-logout" id="btn-logout">로그아웃</button>
         <select class="filter-select" id="status-filter" aria-label="상태 필터">
           <option value="">전체</option>
           <option value="신규">신규</option>
@@ -240,15 +357,16 @@
         <span class="list-count" id="list-count"></span>
       </h2>
       <div id="list-container">
-        <div class="loading" id="loading">데이터를 불러오는 중…</div>
+        <div class="empty-state">관리자 PIN 인증 후 데이터를 불러옵니다.</div>
       </div>
     </section>
 
     <a class="back-link" href="index.html">← 홈으로</a>
   </div>
 
+  <script src="policy-matching-system/config.js?v=20260601"></script>
   <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR3AtUMSmYhx4vEjnuB8-kM07ziaaDRstZRIhrGCvparuzAllKDGK16Vd8aJfYP0Ov/exec';
+    const GAS_URL = CONFIG.GAS_URL;
 
     const STATUS_LIST = ['신규', '상담중', '자료요청', '진행중', '보류', '완료', '부결'];
     const NEXT_ACTION_LIST = ['전화상담', '자료요청', '현장방문', '신청서작성', '기관연결', '재연락예정'];
@@ -345,7 +463,12 @@
       try {
         var res = await fetch(GAS_URL, {
           method: 'POST',
-          body: JSON.stringify({ action: 'updateMemoAction', receiptNo: receiptNo, nextAction: nextAction, memo: memo })
+          body: JSON.stringify(AdminAuth.appendTokenToBody({
+            action: 'updateMemoAction',
+            receiptNo: receiptNo,
+            nextAction: nextAction,
+            memo: memo
+          }))
         });
         var text = await res.text();
         var result;
@@ -374,7 +497,11 @@
       try {
         var res = await fetch(GAS_URL, {
           method: 'POST',
-          body: JSON.stringify({ action: 'updateStatus', receiptNo: receiptNo, status: newStatus })
+          body: JSON.stringify(AdminAuth.appendTokenToBody({
+            action: 'updateStatus',
+            receiptNo: receiptNo,
+            status: newStatus
+          }))
         });
         var text = await res.text();
         var result;
@@ -455,6 +582,12 @@
       var btn = document.getElementById('btn-refresh');
       var container = document.getElementById('list-container');
 
+      if (!AdminAuth.hasToken()) {
+        container.innerHTML = '<div class="empty-state">관리자 PIN 인증 후 데이터를 불러옵니다.</div>';
+        setLoadStatus('');
+        return;
+      }
+
       if (!GAS_URL || !String(GAS_URL).trim()) {
         container.innerHTML = '<div class="error-state">GAS_URL이 설정되지 않았습니다.</div>';
         setLoadStatus('');
@@ -466,7 +599,7 @@
       container.innerHTML = '<div class="loading">데이터를 불러오는 중…</div>';
 
       try {
-        var url = GAS_URL.trim() + (GAS_URL.indexOf('?') >= 0 ? '&' : '?') + 'action=pipeline';
+        var url = AdminAuth.buildGasUrl('pipeline', AdminAuth.authParams());
         var res = await fetch(url);
         var text = await res.text();
         var result;
@@ -503,10 +636,71 @@
       return p(d.getHours()) + ':' + p(d.getMinutes()) + ' 갱신';
     }
 
-    document.getElementById('btn-refresh').addEventListener('click', loadPipeline);
-    document.getElementById('status-filter').addEventListener('change', renderList);
+    function resetAdminView() {
+      pipelineData = [];
+      renderSummary([]);
+      document.getElementById('list-container').innerHTML =
+        '<div class="empty-state">관리자 PIN 인증 후 데이터를 불러옵니다.</div>';
+      document.getElementById('list-count').textContent = '';
+      setLoadStatus('');
+    }
 
-    loadPipeline();
+    function showAdminGate() {
+      document.getElementById('admin-gate').hidden = false;
+      document.getElementById('admin-app').hidden = true;
+    }
+
+    function showAdminApp() {
+      document.getElementById('admin-gate').hidden = true;
+      document.getElementById('admin-app').hidden = false;
+    }
+
+    async function handlePinSubmit(event) {
+      event.preventDefault();
+      var pinInput = document.getElementById('admin-pin');
+      var errEl = document.getElementById('admin-pin-error');
+      var submitBtn = document.getElementById('admin-pin-submit');
+      errEl.textContent = '';
+      if (submitBtn) submitBtn.disabled = true;
+      try {
+        var result = await AdminAuth.verifyPin(pinInput.value);
+        if (result.ok) {
+          pinInput.value = '';
+          showAdminApp();
+          await loadPipeline();
+        } else {
+          errEl.textContent = result.error || 'PIN이 올바르지 않습니다.';
+        }
+      } catch (err) {
+        errEl.textContent = err.message || '인증 중 오류가 발생했습니다.';
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    }
+
+    function handleLogout() {
+      AdminAuth.clearToken();
+      resetAdminView();
+      showAdminGate();
+      document.getElementById('admin-pin-error').textContent = '';
+    }
+
+    function initAdmin() {
+      document.getElementById('admin-pin-form').addEventListener('submit', handlePinSubmit);
+      document.getElementById('btn-logout').addEventListener('click', handleLogout);
+      document.getElementById('btn-refresh').addEventListener('click', loadPipeline);
+      document.getElementById('status-filter').addEventListener('change', renderList);
+
+      if (AdminAuth.hasToken()) {
+        showAdminApp();
+        loadPipeline();
+      } else {
+        resetAdminView();
+        showAdminGate();
+      }
+    }
+
+    initAdmin();
   </script>
 </body>
 </html>
